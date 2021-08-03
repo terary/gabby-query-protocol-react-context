@@ -1,0 +1,14 @@
+{
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "cSpell.words": [
+    "CONSTS",
+    "betweeni",
+    "betweenx",
+    "datetime",
+    "firstname",
+    "lastname",
+    "projectable"
+  ]
+}

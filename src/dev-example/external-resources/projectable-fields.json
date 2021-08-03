@@ -1,0 +1,44 @@
+{
+  "projectableSubjects": {
+    "firstname": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "First Name"
+    },
+    "lastname": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Last Name"
+    },
+    "annualRevenue": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Annual Revenue"
+    },
+    "numberOfEmployees": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Workforce Size"
+    },
+    "region": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Region"
+    },
+    "favoriteFruit": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Favorite Fruit"
+    },
+    "favoriteNumber": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Favorite Number"
+    },
+    "startDate": {
+      "isSortable": true,
+      "datatype": "string",
+      "defaultLabel": "Start Date"
+    }
+  }
+}

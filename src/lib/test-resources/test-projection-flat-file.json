@@ -1,0 +1,34 @@
+{
+  "projection": [
+    {
+      "subjectId": "firstname",
+      "sortOrder": -1,
+      "columnOrder": -1,
+      "label": "Jackson 5 II"
+    },
+    {
+      "subjectId": "lastname",
+      "sortOrder": -1,
+      "columnOrder": 0,
+      "label": "Zero point one"
+    },
+    {
+      "subjectId": "annualRevenue",
+      "sortOrder": -1,
+      "columnOrder": 0,
+      "label": "Zero point two"
+    },
+    {
+      "subjectId": "region",
+      "sortOrder": 0,
+      "columnOrder": 1,
+      "label": "Revised"
+    },
+    {
+      "subjectId": "favoriteFruit",
+      "sortOrder": 0,
+      "columnOrder": 3,
+      "label": "Three dog night"
+    }
+  ]
+}
