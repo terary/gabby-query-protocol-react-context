@@ -26,7 +26,6 @@ import * as opLabels from "../external-resources/operator-labels";
 
 import { ProjectionComponent } from "../Projection";
 
-// import awesomeTreeNumber1Json from "../external-resources/awesome-query-number1.json";
 const awesomeTreeNumber1Json = EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON.predicateTreeJson;
 
 const { projectionJson } = exampleData;
