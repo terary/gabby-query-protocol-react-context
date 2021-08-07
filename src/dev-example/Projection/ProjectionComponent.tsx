@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
 import { TProjectionProperties } from "gabby-query-protocol-lib";
-import { useProjectionProperties } from "../../lib/GabbyQueryProtocolContext";
+import { useProjectionSubjects } from "../../lib/GabbyQueryProtocolContext";
 
 import { ProjectedSubject } from "./ProjectedSubject";
 import { ProjectionSubjectCreator } from "./ProjectionCreator";
@@ -9,11 +10,11 @@ import { ProjectionSubjectCreator } from "./ProjectionCreator";
 /* eslint-disable import/prefer-default-export */
 export const ProjectionComponent = (): JSX.Element => {
   const { projectionList, addProjectionItem, removeProjectionItem } =
-    useProjectionProperties();
-  const [showProjectableCreator, setShowProjectableCreator] =
-    React.useState(true);
+    useProjectionSubjects();
+
+  const [showProjectableCreator, setShowProjectableCreator] = React.useState(true);
   // will this cause 10,000 re-render?
-  // does it cause re-render becasue projectionList() returns a new control everytime?
+  // does it cause re-render because projectionList() returns a new control every time?
   const projection = projectionList();
 
   const handleAddSubject = (newProjectionItem: TProjectionProperties) => {
@@ -29,9 +30,8 @@ export const ProjectionComponent = (): JSX.Element => {
     <div>
       <h3>This is the Projection</h3>
       <span>
-        Need to make/find common state for this component? individual subject
-        update as expected but not able to update the whole thing (columnOrder
-        should adjust)
+        Need to make/find common state for this component? individual subject update as
+        expected but not able to update the whole thing (columnOrder should adjust)
       </span>
       <button
         onClick={() => {

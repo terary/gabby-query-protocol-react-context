@@ -1,21 +1,23 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/order */
 /* eslint-disable import/first */
 import QueryPredicateTreeProvider, { GabbyQueryProtocolContext } from "./context";
 
 import {
-  useProjectionProperties,
+  useProjectionSubjects,
   useProjectionSubjectProperties,
   useJunctionProperties,
   usePredicateProperties,
 } from "./hooks";
 
 import type { TGabbyQueryProtocolContextType } from "./context";
+import type { TPredicateOperatorLabels } from "./type";
 
 export default QueryPredicateTreeProvider;
 
 export {
   GabbyQueryProtocolContext,
-  useProjectionProperties,
+  useProjectionSubjects,
   useProjectionSubjectProperties,
   useJunctionProperties,
   usePredicateProperties,
@@ -27,35 +29,42 @@ export type { TGabbyQueryProtocolContextType };
 // ----------------------------------   ReExport
 import {
   PredicateTree,
-  QuerySubjectDictionary,
-  Projection,
+  PredicateSubjectDictionary,
+  ProjectionManager,
   ProjectableSubjects,
 } from "gabby-query-protocol-lib";
 
 import type {
-  TPredicateOperator,
-  TPredicateOperatorLabels,
+  TPredicateJunctionOperator,
+  // TPredicateOperatorLabels,
+  TProjectionDictionary,
   TProjectionProperties,
-  TQueryNode,
-  TQueryPredicate,
-  TQueryPredicateArrayValue,
-  TQuerySubjectWithId,
-  TSerializedTree,
-  TSubjectDocument,
+  TPredicateNode,
+  TPredicateProperties,
+  TPredicatePropertiesArrayValue,
+  TPredicateSubjectWithId,
+  TSerializedPredicateTree,
+  TPredicateSubjectDictionary,
   TValueLabelList,
 } from "gabby-query-protocol-lib";
 
 export type {
-  TPredicateOperator,
-  TPredicateOperatorLabels,
+  TPredicateJunctionOperator,
+  TProjectionDictionary, // is this not used?
   TProjectionProperties,
-  TQueryNode,
-  TQueryPredicate,
-  TQueryPredicateArrayValue,
-  TQuerySubjectWithId,
-  TSerializedTree,
-  TSubjectDocument,
+  TPredicateNode,
+  TPredicateOperatorLabels,
+  TPredicateProperties,
+  TPredicatePropertiesArrayValue,
+  TPredicateSubjectWithId,
+  TSerializedPredicateTree,
+  TPredicateSubjectDictionary,
   TValueLabelList,
 };
 
-export { PredicateTree, QuerySubjectDictionary, Projection, ProjectableSubjects };
+export {
+  PredicateTree,
+  PredicateSubjectDictionary,
+  ProjectionManager,
+  ProjectableSubjects,
+};

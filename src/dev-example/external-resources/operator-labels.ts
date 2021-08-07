@@ -1,5 +1,6 @@
 // cspell:disable
-import type { TPredicateOperatorLabels } from "gabby-query-protocol-lib";
+// import type { TPredicateOperatorLabels } from "gabby-query-protocol-lib";
+import { TPredicateOperatorLabels } from "../../lib/GabbyQueryProtocolContext";
 
 const EN: TPredicateOperatorLabels = {
   $eq: "Equals",

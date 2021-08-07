@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { queryHelpers } from "@testing-library/react";
 import React, { useState } from "react";
-import type { TQueryPredicate } from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "gabby-query-protocol-lib";
 import { PredicateEditor } from ".";
 import type { TGabbyQueryProtocolContextType } from "../../lib/GabbyQueryProtocolContext";
 
@@ -13,9 +13,9 @@ import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
 const noop = () => {};
 
 interface Props {
-  initialPredicate?: TQueryPredicate;
+  initialPredicate?: TPredicateProperties;
   onCancel?: () => void;
-  onFinish?: (revised: TQueryPredicate) => void;
+  onFinish?: (revised: TPredicateProperties) => void;
 }
 
 export const DebugPredicateEditorHost = ({
@@ -33,9 +33,7 @@ export const DebugPredicateEditorHost = ({
     ...initialPredicate,
   });
 
-  const handleSelectedSubjectChange = (
-    ev: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleSelectedSubjectChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
     const subjectId = ev.target.value;
     const subjectProps = subjectDictionary.getSubject(subjectId);
 
@@ -43,7 +41,7 @@ export const DebugPredicateEditorHost = ({
     setSelectedSubject(x);
   };
 
-  const handleFinish = (predicate: TQueryPredicate) => {
+  const handleFinish = (predicate: TPredicateProperties) => {
     setAddPredicateMessage(`Add Predicate: ${JSON.stringify(predicate)}`);
     onFinish({
       ...predicate,
@@ -52,10 +50,7 @@ export const DebugPredicateEditorHost = ({
   };
   const SubjectSelector = () => {
     return (
-      <select
-        value={selectedSubject.subjectId}
-        onChange={handleSelectedSubjectChange}
-      >
+      <select value={selectedSubject.subjectId} onChange={handleSelectedSubjectChange}>
         {Object.entries(subjectDictionary.getAllSubjects()).map(
           ([subjectId, subject]) => {
             return (

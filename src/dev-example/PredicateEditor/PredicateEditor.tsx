@@ -3,10 +3,10 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import type {
-  TQueryPredicate,
+  TPredicateProperties,
   TPredicateOperator,
-  TQueryPredicateArrayValue,
-  TQuerySubjectWithId,
+  TPredicatePropertiesArrayValue,
+  TPredicateSubjectWithId,
 } from "gabby-query-protocol-lib";
 import type { TGabbyQueryProtocolContextType } from "../../lib/GabbyQueryProtocolContext";
 
@@ -22,12 +22,12 @@ const noop = (...args: unknown[]) => {
 };
 
 const emptyPredicate = (
-  subject: TQuerySubjectWithId
-): TQueryPredicate | TQueryPredicateArrayValue => {
+  subject: TPredicateSubjectWithId
+): TPredicateProperties | TPredicatePropertiesArrayValue => {
   const { subjectId, validOperators } = { ...subject };
 
   if (subjectId === undefined || validOperators === undefined) {
-    return {} as TQueryPredicate;
+    return {} as TPredicateProperties;
   }
 
   const operator = Object.keys(validOperators).shift();
@@ -36,18 +36,18 @@ const emptyPredicate = (
     value: "",
     subjectId,
     operator,
-  } as TQueryPredicate;
+  } as TPredicateProperties;
 };
 
 interface PredicateEditorProps {
   // readonly querySubject: TQuerySubjectWithId;
   subjectId: string;
-  initialPredicate?: TQueryPredicate | TQueryPredicateArrayValue;
-  onFinish?: (predicate: TQueryPredicate) => void;
+  initialPredicate?: TPredicateProperties | TPredicatePropertiesArrayValue;
+  onFinish?: (predicate: TPredicateProperties) => void;
   onCancel?: () => void;
 }
 export const PredicateEditor = ({
-  initialPredicate = {} as TQueryPredicate | TQueryPredicateArrayValue,
+  initialPredicate = {} as TPredicateProperties | TPredicatePropertiesArrayValue,
   subjectId,
   onFinish = noop,
   onCancel = noop,
@@ -58,39 +58,37 @@ export const PredicateEditor = ({
 
   const querySubject = subjectDictionary.getSubject(subjectId);
 
-  const [currentPredicate, setCurrentPredicate] = useState({
+  const [currenTPredicateProperties, setCurrenTPredicateProperties] = useState({
     ...emptyPredicate(querySubject),
     ...initialPredicate,
-  } as TQueryPredicate | TQueryPredicateArrayValue);
+  } as TPredicateProperties | TPredicatePropertiesArrayValue);
 
   const optionLists = subjectDictionary.getOptionsList(subjectId);
 
   useEffect(() => {
-    setCurrentPredicate({
+    setCurrenTPredicateProperties({
       ...emptyPredicate(querySubject),
       ...initialPredicate,
     });
   }, [subjectId]);
 
-  const handleOperatorChange = (
-    ev: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
+  const handleOperatorChange = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
     const newPredicate = {
-      ...currentPredicate,
+      ...currenTPredicateProperties,
       ...{ operator: ev.target.value as TPredicateOperator },
     };
-    setCurrentPredicate(newPredicate);
+    setCurrenTPredicateProperties(newPredicate);
   };
 
   const handleMultiValueChange = (newValue: (string | number)[]) => {
-    setCurrentPredicate({
-      ...currentPredicate,
+    setCurrenTPredicateProperties({
+      ...currenTPredicateProperties,
       ...{ value: newValue },
-    } as TQueryPredicateArrayValue);
+    } as TPredicatePropertiesArrayValue);
   };
   const handleValueChange = (newValue: string | number) => {
-    setCurrentPredicate({
-      ...currentPredicate,
+    setCurrenTPredicateProperties({
+      ...currenTPredicateProperties,
       ...{ value: newValue },
     });
   };
@@ -99,7 +97,7 @@ export const PredicateEditor = ({
     return (
       <>
         <select
-          value={currentPredicate.operator}
+          value={currenTPredicateProperties.operator}
           onChange={handleOperatorChange}
         >
           {Object.keys(querySubject.validOperators).map((op) => {
@@ -115,18 +113,18 @@ export const PredicateEditor = ({
   };
 
   const handleFinish = () => {
-    onFinish(currentPredicate);
+    onFinish(currenTPredicateProperties);
   };
 
   const isSelectOperator = () => {
     return (
-      currentPredicate.operator === "$anyOf" ||
-      currentPredicate.operator === "$oneOf"
+      currenTPredicateProperties.operator === "$anyOf" ||
+      currenTPredicateProperties.operator === "$oneOf"
     );
   };
 
   const isMultiSelect = () => {
-    return currentPredicate.operator === "$anyOf";
+    return currenTPredicateProperties.operator === "$anyOf";
   };
   return (
     <>
@@ -134,25 +132,25 @@ export const PredicateEditor = ({
       {isSelectOperator() && isMultiSelect() && (
         <SelectMultipleGeneric
           options={
-            optionLists[currentPredicate.operator as "$anyOf" | "$oneOf"]
+            optionLists[currenTPredicateProperties.operator as "$anyOf" | "$oneOf"]
           }
-          value={currentPredicate.value}
+          value={currenTPredicateProperties.value}
           onChange={handleMultiValueChange}
         />
       )}
       {isSelectOperator() && !isMultiSelect() && (
         <SelectGeneric
           options={
-            optionLists[currentPredicate.operator as "$anyOf" | "$oneOf"]
+            optionLists[currenTPredicateProperties.operator as "$anyOf" | "$oneOf"]
           }
-          value={currentPredicate.value}
+          value={currenTPredicateProperties.value}
           onChange={handleValueChange}
         />
       )}
 
       {!isSelectOperator() && (
         <InputGeneric
-          value={currentPredicate.value}
+          value={currenTPredicateProperties.value}
           onChange={handleValueChange}
         />
       )}

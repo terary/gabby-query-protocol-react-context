@@ -3,22 +3,18 @@
 
 import { useState } from "react";
 import type { TProjectionProperties } from "gabby-query-protocol-lib";
-import { useProjectionProperties } from "../../lib/GabbyQueryProtocolContext";
-// import type { TProjectableSubjectProperties, TProjectionProperties } from "../../lib";
-
-// type NewProjectableType = TProjectableSubjectProperties & { subjectId: string };
-
+// import { useProjectionProperties } from "../../lib/GabbyQueryProtocolContext";
+import { useProjectionSubjects } from "../../lib/GabbyQueryProtocolContext";
+// useProjectionSubjectProperties
 interface Props {
   onCancel: () => void;
   onFinish: (newProjection: TProjectionProperties) => void;
 }
 export const ProjectionSubjectCreator = ({ onCancel, onFinish }: Props) => {
-  const { projectableSubjects, addProjectionItem } = useProjectionProperties();
+  const { projectableSubjects, addProjectionItem } = useProjectionSubjects();
   const [newSubject, setNewSubject] = useState({} as TProjectionProperties);
 
-  const handleSubjectIdChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleSubjectIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const subjectId = event.currentTarget.value;
     const subject = projectableSubjects.getSubjectById(subjectId);
     setNewSubject({

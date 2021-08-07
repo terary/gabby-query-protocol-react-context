@@ -1,10 +1,7 @@
 /// cspell:ignore componentized
 /* eslint-disable import/prefer-default-export */
 import * as React from "react";
-import type {
-  TQueryPredicate,
-  TPredicateOperatorLabels,
-} from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "gabby-query-protocol-lib";
 import styles from "./componentized.module.css";
 import { DebugPredicateEditorHost } from "../PredicateEditor/DebugPredicateEditorHost";
 
@@ -30,7 +27,7 @@ LeafViewerProps): JSX.Element => {
     queryPredicate,
   });
 
-  const handleFinishEdit = (revisedPredicate: TQueryPredicate) => {
+  const handleFinishEdit = (revisedPredicate: TPredicateProperties) => {
     // setIsOpenForEdit(false);
     updateMe(revisedPredicate);
     setThisState({
@@ -51,7 +48,7 @@ LeafViewerProps): JSX.Element => {
       ...{ isOpenForEdit: !thisState.isOpenForEdit },
     });
     // setIsOpenForEdit(!isOpenForEdit);
-    // queryPredicate = (getPredicateById(nodeId) || {}) as TQueryPredicate;
+    // queryPredicate = (getPredicateById(nodeId) || {}) as TPredicateProperties;
   };
 
   const ReadOnlyView = () => (

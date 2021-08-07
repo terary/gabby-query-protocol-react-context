@@ -2,16 +2,13 @@
 // cSpell:ignore Componentized
 /* eslint-disable import/prefer-default-export */
 import * as React from "react";
-import type { TQueryPredicate } from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "gabby-query-protocol-lib";
 // TODO -tmc- this should be coming form ../../lib not ../../lib/GabbyQueryProtocolContext
 import { useJunctionProperties } from "../../lib/GabbyQueryProtocolContext";
 import styles from "./componentized.module.css";
 import defaultOpLabels from "../external-resources/default-op-labels";
 
-export const BranchViewer = ({
-  nodeId,
-  children,
-}: BranchViewerProps): JSX.Element => {
+export const BranchViewer = ({ nodeId, children }: BranchViewerProps): JSX.Element => {
   const {
     queryPredicate,
     makeEmptyPredicate,
