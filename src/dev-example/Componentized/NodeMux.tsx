@@ -5,8 +5,8 @@ import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
 // import * as OpLabels from "../operator-labels";
 import type {
   TGabbyQueryProtocolContextType,
-  // TQueryPredicateJunction,
-  // TQueryPredicate,
+  // TPredicatePropertiesJunction,
+  // TPredicateProperties,
 } from "../../lib/GabbyQueryProtocolContext";
 
 type NodeMuxProps = {
@@ -15,11 +15,7 @@ type NodeMuxProps = {
   branchView: (leafElement: BranchViewerProps) => JSX.Element;
 };
 
-const NodeMux = ({
-  nodeId,
-  branchView,
-  leafView,
-}: NodeMuxProps): JSX.Element => {
+const NodeMux = ({ nodeId, branchView, leafView }: NodeMuxProps): JSX.Element => {
   // could use a hook but for demonstration purposes querying Context
   const { getChildrenIds } = React.useContext(
     GabbyQueryProtocolContext

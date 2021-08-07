@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import React from "react";
-import type { TQueryPredicate } from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "gabby-query-protocol-lib";
 import { GabbyQueryProtocolContext, TGabbyQueryProtocolContextType } from "../context";
 
 export const usePredicateProperties = (nodeId: string) => {
@@ -14,16 +14,16 @@ export const usePredicateProperties = (nodeId: string) => {
   } = React.useContext(GabbyQueryProtocolContext) as TGabbyQueryProtocolContextType;
 
   return {
-    appendPredicate: (newPredicate: TQueryPredicate) => {
+    appendPredicate: (newPredicate: TPredicateProperties) => {
       appendPredicate(nodeId, newPredicate);
     },
     makeEmptyPredicate,
     operatorLabels,
-    queryPredicate: getPredicateById(nodeId) as TQueryPredicate,
+    queryPredicate: getPredicateById(nodeId) as TPredicateProperties,
     removeMe: () => {
       removePredicate(nodeId);
     },
-    updateMe: (change: TQueryPredicate) => {
+    updateMe: (change: TPredicateProperties) => {
       updatePredicate(nodeId, change);
     },
   };

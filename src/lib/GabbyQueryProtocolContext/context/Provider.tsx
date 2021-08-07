@@ -1,34 +1,37 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 import * as React from "react";
 import {
   PredicateTree,
-  TSerializedTree,
-  QuerySubjectDictionary,
-  Projection,
+  // TSerializedTree,
+  TSerializedPredicateTree, // type should be imported as type
+  ProjectionManager,
 } from "gabby-query-protocol-lib";
 
 import type {
-  TQueryNode,
-  TQueryPredicate,
-  TPredicateOperatorLabels,
+  TPredicateNode,
+  PredicateSubjectDictionary, // is this a type?
+  TPredicateProperties,
+  // TPredicateOperatorLabels,
   TProjectionProperties,
   TProjectionPropertiesUpdatable,
 } from "gabby-query-protocol-lib";
+import { TPredicateOperatorLabels } from "../type";
+
 import { defaultOperatorLabels } from "./defaultOpLabels";
 
 import type { TGabbyQueryProtocolContextType } from "./type";
 
-export const GabbyQueryProtocolContext = React.createContext<TGabbyQueryProtocolContextType | null>(
-  null
-);
+export const GabbyQueryProtocolContext =
+  React.createContext<TGabbyQueryProtocolContextType | null>(null);
 
 interface Props {
   children?: React.ReactNode;
   predicateTree: PredicateTree;
-  projection: Projection;
-  subjectDictionary: QuerySubjectDictionary;
+  projection: ProjectionManager;
+  subjectDictionary: PredicateSubjectDictionary;
   operatorLabels?: TPredicateOperatorLabels;
-  onChange?: (flatTree: TSerializedTree<TQueryNode>) => void;
+  onChange?: (flatTree: TSerializedPredicateTree) => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = (...a: unknown[]) => {};
@@ -43,9 +46,9 @@ const PredicateTreeProvider = ({
 }: Props): JSX.Element => {
   // empty comment
 
-  const [_queryExpression, setQueryExpression] = React.useState<
-    TSerializedTree<TQueryNode>
-  >(PredicateTree.toFlatObject(predicateTree));
+  const [_queryExpression, setQueryExpression] = React.useState<TSerializedPredicateTree>(
+    PredicateTree.toFlatObject(predicateTree)
+  );
 
   const [currentProjection, setCurrentProjection] = React.useState(
     projection.getProjectionOrderByColumPosition()
@@ -57,12 +60,12 @@ const PredicateTreeProvider = ({
   };
 
   // private (not exported)
-  const updateState = (newState: TSerializedTree<TQueryNode>) => {
+  const updateState = (newState: TSerializedPredicateTree) => {
     onChange(newState); // pretty sure this is for debug only
     setQueryExpression(newState);
   };
 
-  const appendPredicate = (parentNodeId: string, term: TQueryPredicate): string => {
+  const appendPredicate = (parentNodeId: string, term: TPredicateProperties): string => {
     const newPredicateId = predicateTree.appendPredicate(parentNodeId, term);
     updateState({
       ...PredicateTree.toFlatObject(predicateTree),
@@ -76,7 +79,7 @@ const PredicateTreeProvider = ({
 
   const getPredicateById = (nodeId: string) => predicateTree.getPredicateById(nodeId);
 
-  const updatePredicate = (nodeId: string, node: TQueryNode) => {
+  const updatePredicate = (nodeId: string, node: TPredicateNode) => {
     predicateTree.replacePredicate(nodeId, node);
     updateState({
       ...PredicateTree.toFlatObject(predicateTree),

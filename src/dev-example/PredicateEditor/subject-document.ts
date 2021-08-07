@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import type { TSubjectDocument } from "gabby-query-protocol-lib";
+// import type { TSubjectDocument } from "gabby-query-protocol-lib";
+import type { TPredicateSubjectDictionary } from "gabby-query-protocol-lib";
 
 const regionsList = [
   { label: "US West", value: "US-WEST" },
@@ -18,7 +19,7 @@ const numberList = [
   { label: "Three", value: 3 },
 ];
 
-export const subjectsDocument: TSubjectDocument = {
+export const subjectsDocument: TPredicateSubjectDictionary = {
   firstname: {
     validOperators: { $eq: true, $gt: true, $like: true },
     datatype: "string",

@@ -1,16 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 import * as React from "react";
 import { render } from "@testing-library/react";
 import {
-  QuerySubjectDictionary,
-  Projection,
+  ProjectionManager,
   ProjectableSubjects,
+  PredicateSubjectDictionary,
   PredicateTree,
 } from "gabby-query-protocol-lib";
+
 import {
   useJunctionProperties,
   usePredicateProperties,
-  useProjectionProperties,
+  useProjectionSubjects,
   useProjectionSubjectProperties,
 } from ".";
 
@@ -19,12 +21,12 @@ import subjectsDocumentJson from "../../test-resources/test-subject-document.jso
 import * as projectableSubjectsJson from "../../test-resources/test-projectable-fields.json";
 import * as blueSky from "../../test-resources/test-projection-flat-file.json";
 
-const subjectDictionary = QuerySubjectDictionary.fromJson(subjectsDocumentJson);
+const subjectDictionary = PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
 const projectableSubjects = ProjectableSubjects.fromJson(
   projectableSubjectsJson.projectableSubjects
 );
 
-const contextProjection = Projection.fromFlatFile(
+const contextProjection = ProjectionManager.fromFlatFile(
   blueSky.projection,
   projectableSubjects
 );
@@ -60,7 +62,7 @@ describe("useJunctionNodeProperties", () => {
       const junctionMethods = useJunctionProperties("nodeId");
       expect(typeof junctionMethods.appendPredicate).toBe("function");
       expect(typeof junctionMethods.getChildrenIds).toBe("function");
-      expect(typeof junctionMethods.getPredicate).toBe("function");
+      expect(typeof junctionMethods.geTPredicateProperties).toBe("function");
       expect(typeof junctionMethods.makeEmptyPredicate).toBe("function");
       expect(typeof junctionMethods.queryPredicate).toBe("object");
       expect(typeof junctionMethods.removeMe).toBe("function");
@@ -71,7 +73,7 @@ describe("useJunctionNodeProperties", () => {
       expect(junctionMethods.appendPredicate).toThrow(
         "Could not find parentId: 'nodeId'"
       );
-      expect(junctionMethods.getPredicate).not.toThrow();
+      expect(junctionMethods.geTPredicateProperties).not.toThrow();
       expect(junctionMethods.getChildrenIds).toThrow(/could not find parent/i);
       expect(junctionMethods.removeMe).toThrow(/does not exist/);
       expect(junctionMethods.setConjunction).toThrow(
@@ -126,13 +128,13 @@ describe("usePredicateNodeProperties", () => {
 describe("useProjection", () => {
   test("Should return a projection instance", () => {
     const MyInjector = () => {
-      const projection = useProjectionProperties();
+      const projection = useProjectionSubjects();
       const k = Object.keys(projection);
       expect(typeof projection).toBe("object");
       expect(typeof projection.addProjectionItem).toBe("function");
       expect(typeof projection.projectionList).toBe("function");
       expect(typeof projection.removeProjectionItem).toBe("function");
-      expect(typeof projection.projectableSubjects).toBe("object");
+      expect(typeof projection).toBe("object");
       expect(projection.projectableSubjects.constructor.name).toBe("ProjectableSubjects");
       expect(Object.keys(projection).length).toBe(4);
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { GabbyQueryProtocolContext, TGabbyQueryProtocolContextType } from "../context";
 
-export const useProjectionProperties = () => {
+export const useProjectionSubjects = () => {
   const {
     addProjectionItem,
     getOrderedProjectionList,
@@ -13,7 +13,8 @@ export const useProjectionProperties = () => {
   return {
     addProjectionItem,
     projectionList: getOrderedProjectionList,
-    projectableSubjects: projection.getProjectableSubjects(),
+
+    projectableSubjects: projection.getProjectableSubjectsDictionary(),
     removeProjectionItem,
   };
 };

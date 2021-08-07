@@ -1,6 +1,6 @@
 // import { PredicateTree } from '../../lib/GabbyQueryProtocolContext/PredicateTree';
 import { PredicateTree } from "gabby-query-protocol-lib";
-import type { TQueryPredicate } from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "gabby-query-protocol-lib";
 
 const existingTree = new PredicateTree("pTree01", {
   subjectId: "firstname",
@@ -11,22 +11,22 @@ const child0 = {
   subjectId: "firstname",
   operator: "$eq",
   value: "Child A",
-} as TQueryPredicate;
+} as TPredicateProperties;
 const child1 = {
   subjectId: "annualRevenue",
   operator: "$gte",
   value: "Child B",
-} as TQueryPredicate;
+} as TPredicateProperties;
 const grandchild0 = {
   subjectId: "numberOfEmployees",
   operator: "$lt",
   value: "Grandchild A-00",
-} as TQueryPredicate;
+} as TPredicateProperties;
 const grandchild1 = {
   subjectId: "region",
   operator: "$eq",
   value: "Grandchild A-01",
-} as TQueryPredicate;
+} as TPredicateProperties;
 
 const child0Id = existingTree.appendPredicate(existingTree.rootNodeId, child0);
 existingTree.appendPredicate(existingTree.rootNodeId, child1);

@@ -1,10 +1,10 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react";
 import type {
-  TQueryPredicate,
-  TPredicateOperatorLabels,
-  TSubjectProperties,
-  TPredicateOperator,
+  // TPredicateProperties,
+  // TPredicateOperatorLabels,
+  // TSubjectProperties,
+  // TPredicatePropertiesOperator,
   TValueLabelList,
 } from "gabby-query-protocol-lib";
 
@@ -27,8 +27,8 @@ const SelectMultipleGeneric = ({
   };
 
   // if (
-  //   currentPredicate.operator === "$anyOf" ||
-  //   currentPredicate.operator === "$oneOf"
+  //   currenTPredicateProperties.operator === "$anyOf" ||
+  //   currenTPredicateProperties.operator === "$oneOf"
   // ) {
   return (
     <select value={value} onChange={handleValueChange} multiple>

@@ -1,33 +1,33 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
-  TPredicateOperatorLabels,
-  Projection,
-  QuerySubjectDictionary,
+  // TPredicateOperatorLabels,
+  ProjectionManager,
+  PredicateSubjectDictionary,
 } from "gabby-query-protocol-lib";
 import type {
-  TQueryNode,
-  TQueryPredicate,
+  TPredicateNode,
+  TPredicateProperties,
   TProjectionProperties,
   TProjectionPropertiesUpdatable,
-  TProjection,
+  TProjectionDictionary,
 } from "gabby-query-protocol-lib";
-import { PassThrough } from "stream";
-import { ModuleResolutionKind } from "typescript";
+import { TPredicateOperatorLabels } from "../type";
 
 export type TGabbyQueryProtocolContextType = {
-  appendPredicate: (parentNodeId: string, node: TQueryPredicate) => string;
+  appendPredicate: (parentNodeId: string, node: TPredicateProperties) => string;
   getChildrenIds: (predicateId: string) => string[];
-  getPredicateById: (predicateId: string) => TQueryNode | null;
-  makeEmptyPredicate: () => TQueryPredicate;
+  getPredicateById: (predicateId: string) => TPredicateNode | null;
+  makeEmptyPredicate: () => TPredicateProperties;
   operatorLabels: TPredicateOperatorLabels;
-  projection: Projection;
+  projection: ProjectionManager;
   removePredicate: (predicateId: string) => void;
   setConjunction: (predicateId: string) => void;
   setDisjunction: (predicateId: string) => void;
-  subjectDictionary: QuerySubjectDictionary;
-  updatePredicate: (predicateId: string, node: TQueryNode) => void;
+  subjectDictionary: PredicateSubjectDictionary;
+  updatePredicate: (predicateId: string, node: TPredicateNode) => void;
 
   // projection
-  getOrderedProjectionList: () => TProjection;
+  getOrderedProjectionList: () => TProjectionDictionary;
   getProjectionItem: (projectionKey: string) => TProjectionProperties;
   addProjectionItem: (projectionItem: TProjectionProperties) => string;
   removeProjectionItem: (projectionKey: string) => void;

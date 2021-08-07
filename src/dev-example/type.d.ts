@@ -1,5 +1,5 @@
 interface LeafViewerProps {
-  initialPredicate?: TQueryPredicate;
+  initialPredicate?: TPredicateProperties;
   nodeId: string;
   // operatorLabels?: TPredicateOperatorLabels;
 }

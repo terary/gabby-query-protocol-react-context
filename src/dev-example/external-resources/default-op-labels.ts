@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // This file is intended to stay with the controls
 // The other opLabel file 'operator-labels.ts' is
 
-import { TPredicateOperatorLabels } from "gabby-query-protocol-lib";
+import { TPredicateOperatorLabels } from "../../lib/GabbyQueryProtocolContext";
 
 // a dev/debug file.. I18N sorta thing.
 const defaultOpLabels: TPredicateOperatorLabels = {

@@ -28,6 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/lib/**/*.ts* ",
+    "gabby:relink": "npm i &&  npm link ../gabby-query-protocol-lib/",
     "gabby:uninstall": "npm uninstall gabby-query-protocol-lib",
     "gabby:install": "npm i http://terarychambers.com/gabby-query-protocol/gabby-query-protocol-lib-1.0.0.tgz",
     "gabby:reinstall": "npm run gabby:uninstall && npm run gabby:install",

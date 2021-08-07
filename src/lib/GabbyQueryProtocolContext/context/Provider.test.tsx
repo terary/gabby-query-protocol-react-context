@@ -1,16 +1,21 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-
 import {
-  QuerySubjectDictionary,
-  Projection,
+  // PredicateSubjectDictionary,
+  PredicateSubjectDictionary,
+  ProjectionManager,
   ProjectableSubjects,
   PredicateTree,
 } from "gabby-query-protocol-lib";
 
-import type { TQueryPredicateJunction, TQueryPredicate } from "gabby-query-protocol-lib";
+import type {
+  TPredicatePropertiesJunction,
+  TPredicateProperties,
+} from "gabby-query-protocol-lib";
+
 import PredicateTreeProvider, { GabbyQueryProtocolContext } from ".";
 import type { TGabbyQueryProtocolContextType } from "./type";
 
@@ -18,12 +23,12 @@ import subjectsDocumentJson from "../../test-resources/test-subject-document.jso
 import * as projectableSubjectsJson from "../../test-resources/test-projectable-fields.json";
 import * as blueSky from "../../test-resources/test-projection-flat-file.json";
 
-const subjectDictionary = QuerySubjectDictionary.fromJson(subjectsDocumentJson);
+const subjectDictionary = PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
 const projectableSubjects = ProjectableSubjects.fromJson(
   projectableSubjectsJson.projectableSubjects
 );
 
-const contextProjection = Projection.fromFlatFile(
+const contextProjection = ProjectionManager.fromFlatFile(
   blueSky.projection,
   projectableSubjects
 );
@@ -178,14 +183,16 @@ test(".getOrderedProjectionList should return list of projectableSubject order b
   );
 });
 
-test(".getPredicate works as expected", () => {
+test(".getPredicateProperties works as expected", () => {
   const MyInjector = () => {
     const { getPredicateById } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const root = getPredicateById(pTree.rootNodeId) as TQueryPredicateJunction;
-    const child0 = getPredicateById(predicateIds.child0) as TQueryPredicate;
-    const child1 = getPredicateById(predicateIds.child1) as TQueryPredicate;
+
+    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
+
+    const child0 = getPredicateById(predicateIds.child0) as TPredicateProperties;
+    const child1 = getPredicateById(predicateIds.child1) as TPredicateProperties;
     return (
       <>
         <span>root: {root.operator}</span>
@@ -210,14 +217,14 @@ test(".getPredicate works as expected", () => {
   expect(child1Text).toBeInTheDocument();
 });
 
-test(".getPredicate works as expected (2)", () => {
+test(".geTPredicateProperties works as expected (2)", () => {
   const MyInjector = () => {
     const { getPredicateById } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const root = getPredicateById(pTree.rootNodeId) as TQueryPredicateJunction;
-    const child0 = getPredicateById(predicateIds.child0) as TQueryPredicate;
-    const child1 = getPredicateById(predicateIds.child1) as TQueryPredicate;
+    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
+    const child0 = getPredicateById(predicateIds.child0) as TPredicateProperties;
+    const child1 = getPredicateById(predicateIds.child1) as TPredicateProperties;
     return (
       <>
         <span>root: {root.operator}</span>
@@ -247,7 +254,7 @@ test(".setDisjunction, .setConjunction works as expected", () => {
     const { getPredicateById, setDisjunction, setConjunction } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const root = getPredicateById(pTree.rootNodeId) as TQueryPredicateJunction;
+    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
     const handleSetDisjunction = () => {
       setDisjunction(pTree.rootNodeId);
     };
@@ -339,7 +346,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
     const childrenIds = getChildrenIds(pTree.rootNodeId);
 
     const handleAppend = () => {
-      const addPredicate: TQueryPredicate = {
+      const addPredicate: TPredicateProperties = {
         subjectId: "newPredicate",
         operator: "$gte",
         value: "The New Predicate",
@@ -350,7 +357,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
     };
 
     const handleUpdate = () => {
-      const revisedPredicate: TQueryPredicate = {
+      const revisedPredicate: TPredicateProperties = {
         subjectId: "revPredicate",
         operator: "$gte",
         value: "The Revised Predicate",

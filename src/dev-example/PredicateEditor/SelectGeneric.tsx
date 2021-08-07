@@ -1,19 +1,12 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react";
-import type {
-  TQueryPredicate,
-  TPredicateOperatorLabels,
-  TSubjectProperties,
-  TPredicateOperator,
-  TValueLabelList,
-} from "gabby-query-protocol-lib";
+import type { TValueLabelList } from "gabby-query-protocol-lib";
 // import type {
-//   TQueryPredicate,
-//   TPredicateOperatorLabels,
-//   TSubjectProperties,
+//   TPredicateProperties,
 //   TPredicateOperator,
-//   TValueLabelList,
-// } from "../../lib";
+//   TPredicatePropertiesArrayValue,
+//   TPredicateSubjectWithId,
+// } from "gabby-query-protocol-lib";
 
 interface Props {
   value?: number | string;
@@ -27,8 +20,8 @@ const SelectGeneric = ({ value = "", options = [], onChange }: Props): JSX.Eleme
   };
 
   // if (
-  //   currentPredicate.operator === "$anyOf" ||
-  //   currentPredicate.operator === "$oneOf"
+  //   currenTPredicateProperties.operator === "$anyOf" ||
+  //   currenTPredicateProperties.operator === "$oneOf"
   // ) {
   return (
     <select value={value} onChange={handleValueChange}>
