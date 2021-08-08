@@ -3,14 +3,20 @@
 import type { TPredicateOperatorLabels } from "..";
 
 export const defaultOperatorLabels: TPredicateOperatorLabels = {
+  $and: "All of these",
+  $anyOf: "Any Of",
+  $empty: "Is Empty",
   $eq: "Equals",
   $gt: "Greater Than",
   $gte: "Greater Than Equal",
+  $isnull: "Is Null",
   $lt: "Less Than",
   $lte: "Less Than Equal",
   $like: "Contains",
-  $anyOf: "Any Of",
   $oneOf: "One Of",
-  $and: "All of These",
-  $or: "Any of These",
+  $nand: "Not And",
+  $nanyOf: "Not Any",
+  $ne: "Not Equal",
+  $nor: "Not Or",
+  $or: "Any of these",
 };

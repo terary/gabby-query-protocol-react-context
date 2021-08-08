@@ -1,12 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react";
 import type { TValueLabelList } from "gabby-query-protocol-lib";
-// import type {
-//   TPredicateProperties,
-//   TPredicateOperator,
-//   TPredicatePropertiesArrayValue,
-//   TPredicateSubjectWithId,
-// } from "gabby-query-protocol-lib";
 
 interface Props {
   value?: number | string;
@@ -18,11 +12,6 @@ const SelectGeneric = ({ value = "", options = [], onChange }: Props): JSX.Eleme
   const handleValueChange = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
     onChange(ev.target.value);
   };
-
-  // if (
-  //   currenTPredicateProperties.operator === "$anyOf" ||
-  //   currenTPredicateProperties.operator === "$oneOf"
-  // ) {
   return (
     <select value={value} onChange={handleValueChange}>
       {options.map((opt) => {
