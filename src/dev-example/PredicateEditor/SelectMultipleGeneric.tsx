@@ -1,12 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react";
-import type {
-  // TPredicateProperties,
-  // TPredicateOperatorLabels,
-  // TSubjectProperties,
-  // TPredicatePropertiesOperator,
-  TValueLabelList,
-} from "gabby-query-protocol-lib";
+import type { TValueLabelList } from "gabby-query-protocol-lib";
 
 interface Props {
   value?: number | string;
@@ -20,16 +14,10 @@ const SelectMultipleGeneric = ({
   onChange,
 }: Props): JSX.Element => {
   const handleValueChange = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
-    //    console.log(ev.target.value);
     const values = Array.from(ev.target.selectedOptions, (option) => option.value);
-    console.log("values", values);
     onChange(values);
   };
 
-  // if (
-  //   currenTPredicateProperties.operator === "$anyOf" ||
-  //   currenTPredicateProperties.operator === "$oneOf"
-  // ) {
   return (
     <select value={value} onChange={handleValueChange} multiple>
       {options.map((opt) => {

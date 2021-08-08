@@ -118,13 +118,14 @@ export const PredicateEditor = ({
 
   const isSelectOperator = () => {
     return (
+      currenTPredicateProperties.operator === "$nanyOf" ||
       currenTPredicateProperties.operator === "$anyOf" ||
       currenTPredicateProperties.operator === "$oneOf"
     );
   };
 
   const isMultiSelect = () => {
-    return currenTPredicateProperties.operator === "$anyOf";
+    return ["$nanyOf", "$anyOf"].includes(currenTPredicateProperties.operator);
   };
   return (
     <>
@@ -132,7 +133,9 @@ export const PredicateEditor = ({
       {isSelectOperator() && isMultiSelect() && (
         <SelectMultipleGeneric
           options={
-            optionLists[currenTPredicateProperties.operator as "$anyOf" | "$oneOf"]
+            optionLists[
+              currenTPredicateProperties.operator as "$nanyOf" | "$anyOf" | "$oneOf"
+            ]
           }
           value={currenTPredicateProperties.value}
           onChange={handleMultiValueChange}
@@ -141,7 +144,9 @@ export const PredicateEditor = ({
       {isSelectOperator() && !isMultiSelect() && (
         <SelectGeneric
           options={
-            optionLists[currenTPredicateProperties.operator as "$anyOf" | "$oneOf"]
+            optionLists[
+              currenTPredicateProperties.operator as "$nanyOf" | "$anyOf" | "$oneOf"
+            ]
           }
           value={currenTPredicateProperties.value}
           onChange={handleValueChange}
