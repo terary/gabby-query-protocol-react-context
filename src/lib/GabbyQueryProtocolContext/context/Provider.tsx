@@ -2,13 +2,16 @@
 /* eslint-disable react/require-default-props */
 import * as React from "react";
 import {
-  PredicateTree,
+  // PredicateTree,
+  // PredicateTreeBuilder,
+  ProjectionManager,
   // TSerializedTree,
   TSerializedPredicateTree, // type should be imported as type
-  ProjectionManager,
 } from "gabby-query-protocol-lib";
 
 import type {
+  IPredicateTree,
+  // IPredicateTreeBuilder,
   TPredicateNode,
   PredicateSubjectDictionary, // is this a type?
   TPredicateProperties,
@@ -27,7 +30,7 @@ export const GabbyQueryProtocolContext =
 
 interface Props {
   children?: React.ReactNode;
-  predicateTree: PredicateTree;
+  predicateTree: IPredicateTree;
   projection: ProjectionManager;
   subjectDictionary: PredicateSubjectDictionary;
   operatorLabels?: TPredicateOperatorLabels;
@@ -47,7 +50,9 @@ const PredicateTreeProvider = ({
   // empty comment
 
   const [_queryExpression, setQueryExpression] = React.useState<TSerializedPredicateTree>(
-    PredicateTree.toFlatObject(predicateTree)
+    predicateTree.toJson()
+    // PredicateTreeBuilder.toJson(predicateTree)
+    // PredicateTree.toFlatObject(predicateTree)
   );
 
   const [currentProjection, setCurrentProjection] = React.useState(
@@ -68,7 +73,7 @@ const PredicateTreeProvider = ({
   const appendPredicate = (parentNodeId: string, term: TPredicateProperties): string => {
     const newPredicateId = predicateTree.appendPredicate(parentNodeId, term);
     updateState({
-      ...PredicateTree.toFlatObject(predicateTree),
+      ...predicateTree.toJson(),
     });
     return newPredicateId;
   };
@@ -82,28 +87,30 @@ const PredicateTreeProvider = ({
   const updatePredicate = (nodeId: string, node: TPredicateNode) => {
     predicateTree.replacePredicate(nodeId, node);
     updateState({
-      ...PredicateTree.toFlatObject(predicateTree),
+      ...predicateTree.toJson(),
     });
   };
 
   const removePredicate = (nodeId: string) => {
     predicateTree.removePredicate(nodeId);
     updateState({
-      ...PredicateTree.toFlatObject(predicateTree),
+      ...predicateTree.toJson(),
     });
   };
+
+  // TODO - tmc - can all these updateState be refactored to one call (or is it already)?
 
   const setDisjunction = (predicateId: string) => {
     predicateTree.replacePredicate(predicateId, { operator: "$or" });
     updateState({
-      ...PredicateTree.toFlatObject(predicateTree),
+      ...predicateTree.toJson(),
     });
   };
 
   const setConjunction = (predicateId: string) => {
     predicateTree.replacePredicate(predicateId, { operator: "$and" });
     updateState({
-      ...PredicateTree.toFlatObject(predicateTree),
+      ...predicateTree.toJson(),
     });
   };
 
