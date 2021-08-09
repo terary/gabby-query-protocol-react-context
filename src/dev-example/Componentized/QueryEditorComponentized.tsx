@@ -7,14 +7,15 @@ import * as React from "react";
 
 import {
   EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON as exampleData,
-  PredicateTree,
+  // PredicateTree,
+  PredicateTreeBuilder,
   PredicateSubjectDictionary,
   ProjectionManager,
   ProjectableSubjects,
   EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON,
 } from "gabby-query-protocol-lib";
 
-import type { TSerializedPredicateTree } from "gabby-query-protocol-lib";
+import type { TSerializedPredicateTree, IPredicateTree } from "gabby-query-protocol-lib";
 
 import QueryPredicateTreeProvider from "../../lib/GabbyQueryProtocolContext";
 
@@ -41,12 +42,16 @@ const contextProjection = ProjectionManager.fromFlatFile(
 const predicateSubjectDictionary = PredicateSubjectDictionary.fromJson(
   predicateSubjectsDictionaryJson
 );
-const awesomeTreeNumber1 = PredicateTree.fromFlatObject(
+// IPredicateTree
+// const awesomeTreeNumber1 = PredicateTree.fromFlatObject(
+//   awesomeTreeNumber1Json as TSerializedPredicateTree
+// );
+const awesomeTreeNumber1 = PredicateTreeBuilder.fromJson(
   awesomeTreeNumber1Json as TSerializedPredicateTree
 );
 
 interface Props {
-  predicateTree?: PredicateTree;
+  predicateTree?: IPredicateTree;
 }
 
 function QueryEditorComponentized({
@@ -55,7 +60,8 @@ function QueryEditorComponentized({
   predicateTree = awesomeTreeNumber1,
 }: Props): JSX.Element {
   const [flatFile, setFlatFile] = React.useState<TSerializedPredicateTree>(
-    PredicateTree.toFlatObject(predicateTree)
+    predicateTree.toJson()
+    // PredicateTree.toFlatObject(predicateTree)
   );
   const updateFlatFile = (newFlatFile: TSerializedPredicateTree) => {
     setFlatFile(newFlatFile);
