@@ -1,7 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import type { TPredicateSubjectDictionaryJson } from "gabby-query-protocol-lib";
+import type {
+  PredicateTreeError,
+  TPredicateSubjectDictionaryJson,
+} from "gabby-query-protocol-lib";
 import { CONSTS } from "gabby-query-protocol-lib";
 
 import cloneDeep from "lodash.clonedeep";
@@ -10,21 +13,6 @@ import type { TGabbyAssetsJson } from "./index";
 import subjectDictionaryBlueSkies from "../test-resources/test-subject-document.json";
 
 const ALL_OPERATORS = CONSTS.PREDICATE_OPERATORS.concat(CONSTS.JUNCTION_OPERATORS);
-
-// export type TGabbyAssets = {
-//   predicateFormulaEditor: PredicateFormulaEditor;
-//   projectionEditor: IProjectionEditor;
-//   operatorLabels: TPredicateOperatorLabels;
-// };
-
-// export type TGabbyAssetsJson = {
-//   subjectDictionaryJson: TPredicateSubjectDictionaryJson;
-//   predicateTreeJson?: TSerializedPredicateTree;
-//   projectionJson?: TProjectionPropertiesJson[];
-//   projectableSubjectsJson?: TProjectableSubjectsDictionaryJson;
-//   operatorLabelsJson?: TPredicateOperatorLabels;
-//   newRootId?: string;
-// };
 
 describe("GabbyAssetFactory", () => {
   describe("fromJson", () => {
@@ -89,8 +77,8 @@ describe("GabbyAssetFactory", () => {
         try {
           willThrow();
         } catch (e) {
-          expect(e.debugMessages.length).toBeGreaterThan(0);
-          expect(e.constructor.name).toBe("Error");
+          expect((e as PredicateTreeError).debugMessages.length).toBeGreaterThan(0);
+          expect((e as PredicateTreeError).constructor.name).toBe("Error");
         }
       });
       it("Should throw error if not provided", () => {
@@ -112,8 +100,8 @@ describe("GabbyAssetFactory", () => {
         try {
           willThrow();
         } catch (e) {
-          expect(e.debugMessages.length).toBeGreaterThan(0);
-          expect(e.constructor.name).toBe("Error");
+          expect((e as PredicateTreeError).debugMessages.length).toBeGreaterThan(0);
+          expect((e as PredicateTreeError).constructor.name).toBe("Error");
         }
       });
     });

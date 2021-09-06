@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/lib/**/*.ts* ",
     "gabby:build": "rm -rf dist && NODE_ENV=production tsc -p tsconfig.dist.json",
-    "gabby:pack": "npm run gabby:build && npm pack",
+    "gabby:pack": "npm run gabby:build && npm pack"
   },
   "eslintConfig": {
     "extends": [
@@ -65,6 +65,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "typedoc": "^0.21.9"
   }
 }
