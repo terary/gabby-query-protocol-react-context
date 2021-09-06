@@ -3,6 +3,7 @@ import React from "react";
 import type {
   TPredicatePropertiesJunction,
   TPredicateProperties,
+  TPredicateJunctionOperator,
 } from "gabby-query-protocol-lib";
 import { GabbyQueryProtocolContext, TGabbyQueryProtocolContextType } from "../context";
 
@@ -10,32 +11,48 @@ export const useJunctionProperties = (nodeId: string) => {
   const {
     appendPredicate,
     getChildrenIds,
-    getPredicateById,
+    // getPredicateById,
+    getJunctionById,
     makeEmptyPredicate,
     removePredicate,
-    setConjunction,
-    setDisjunction,
+    setConjunction: setNodeConjunction,
+    setDisjunction: setNodeDisjunction,
   } = React.useContext(GabbyQueryProtocolContext) as TGabbyQueryProtocolContextType;
+  //
   return {
-    queryPredicate: getPredicateById(nodeId) as TPredicatePropertiesJunction,
+    queryPredicate: getJunctionById(nodeId) as TPredicatePropertiesJunction,
+
     appendPredicate: (newPredicate: TPredicateProperties) => {
       appendPredicate(nodeId, newPredicate);
     },
+
     getChildrenIds: () => {
       return getChildrenIds(nodeId);
     },
-    geTPredicateProperties: () => {
-      return getPredicateById(nodeId);
+
+    getPredicateProperties: (): TPredicatePropertiesJunction => {
+      return getJunctionById(nodeId);
     },
     makeEmptyPredicate,
+
     removeMe: () => {
       removePredicate(nodeId);
     },
+
     setConjunction: () => {
-      return setConjunction(nodeId);
+      // untestable
+      // tests gives: "Maximum update depth exceeded"
+      // doesn't seem to be an issue when running in dev/prod.
+      // not sure why tests do it
+      setNodeConjunction(nodeId);
     },
+
     setDisjunction: () => {
-      return setDisjunction(nodeId);
+      // untestable
+      // tests gives: "Maximum update depth exceeded"
+      // doesn't seem to be an issue when running in dev/prod.
+      // not sure why tests do it
+      setNodeDisjunction(nodeId);
     },
   };
 };

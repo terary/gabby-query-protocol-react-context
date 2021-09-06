@@ -30,41 +30,41 @@ export type { TGabbyQueryProtocolContextType };
 import {
   PredicateTree,
   PredicateSubjectDictionary,
-  ProjectionManager,
-  ProjectableSubjects,
+  // ProjectionManager,
+  // ProjectableSubjects,
 } from "gabby-query-protocol-lib";
 
 import type {
   TPredicateJunctionOperator,
   // TPredicateOperatorLabels,
-  TProjectionDictionary,
-  TProjectionProperties,
+  // TProjectionDictionary,
+  // TProjectionProperties,
   TPredicateNode,
   TPredicateProperties,
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
   TSerializedPredicateTree,
-  TPredicateSubjectDictionary,
+  // TPredicateSubjectDictionary,
   TValueLabelList,
 } from "gabby-query-protocol-lib";
 
 export type {
   TPredicateJunctionOperator,
-  TProjectionDictionary, // is this not used?
-  TProjectionProperties,
+  // TProjectionDictionary, // is this not used?
+  // TProjectionProperties,
   TPredicateNode,
   TPredicateOperatorLabels,
   TPredicateProperties,
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
   TSerializedPredicateTree,
-  TPredicateSubjectDictionary,
+  // TPredicateSubjectDictionary,
   TValueLabelList,
 };
 
 export {
   PredicateTree,
   PredicateSubjectDictionary,
-  ProjectionManager,
-  ProjectableSubjects,
+  // ProjectionManager,
+  // ProjectableSubjects,
 };

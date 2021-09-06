@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { useState } from "react";
-import type { TProjectionProperties } from "gabby-query-protocol-lib";
+import type { TProjectionProperties } from "gabby-query-protocol-projection";
 // import { useProjectionProperties } from "../../lib/GabbyQueryProtocolContext";
 import { useProjectionSubjects } from "../../lib/GabbyQueryProtocolContext";
 // useProjectionSubjectProperties

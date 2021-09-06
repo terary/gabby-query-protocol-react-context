@@ -4,11 +4,21 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
+  Projection,
+  ProjectableDictionaryFactory,
+  ProjectableSubjectDictionary,
+  TProjectableSubjectsDictionaryJson,
+} from "gabby-query-protocol-projection";
+import {
+  PredicateFormulaEditor,
+  PredicateFormulaEditorFactory,
   // PredicateSubjectDictionary,
   PredicateSubjectDictionary,
-  ProjectionManager,
-  ProjectableSubjects,
+  PredicateSubjectDictionaryFactory,
+  // ProjectionManager,
+  // ProjectableSubjects,
   PredicateTree,
+  TPredicateSubjectDictionaryJson,
 } from "gabby-query-protocol-lib";
 
 import type {
@@ -23,44 +33,82 @@ import subjectsDocumentJson from "../../test-resources/test-subject-document.jso
 import * as projectableSubjectsJson from "../../test-resources/test-projectable-fields.json";
 import * as blueSky from "../../test-resources/test-projection-flat-file.json";
 
-const subjectDictionary = PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
-const projectableSubjects = ProjectableSubjects.fromJson(
-  projectableSubjectsJson.projectableSubjects
+// PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
+
+const predicateSubjectDictionary = PredicateSubjectDictionaryFactory.fromJson(
+  subjectsDocumentJson as TProjectableSubjectsDictionaryJson
+);
+// const predicateSubjectDictionary = PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
+
+const projectableSubjects = ProjectableDictionaryFactory.fromJson(
+  projectableSubjectsJson.projectableSubjects as TProjectableSubjectsDictionaryJson
 );
 
-const contextProjection = ProjectionManager.fromFlatFile(
+// const projectableSubjects = ProjectableSubjects.fromJson(
+//   projectableSubjectsJson.projectableSubjects
+// );
+
+const contextProjection = Projection.fromFlatFile(
   blueSky.projection,
   projectableSubjects
 );
 
-const pTree = new PredicateTree("testTree", {
-  subjectId: "someSubjectId",
+// import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
+const predicateIds: { [predicateName: string]: string } = {};
+const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
+  subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+  { newRootId: "testTree" }
+);
+predicateFormulaEditor.predicatesAppend("testTree", {
+  subjectId: "firstname",
   operator: "$eq",
   value: "Component Default Tree",
 });
+predicateIds.child0 = predicateFormulaEditor.predicatesAppend(
+  predicateFormulaEditor.rootNodeId,
+  {
+    subjectId: "firstname",
+    operator: "$eq",
+    value: "valueOfChild0",
+  }
+);
 
-const predicateIds: { [predicateName: string]: string } = {};
-predicateIds.child0 = pTree.appendPredicate(pTree.rootNodeId, {
-  subjectId: "subjectId_child0",
-  operator: "$eq",
-  value: "valueOfChild0",
-});
-predicateIds.child1 = pTree.appendPredicate(pTree.rootNodeId, {
-  subjectId: "subjectId_child1",
-  operator: "$eq",
-  value: "valueOfChild1",
-});
+predicateIds.child1 = predicateFormulaEditor.predicatesAppend(
+  predicateFormulaEditor.rootNodeId,
+  {
+    subjectId: "firstname",
+    operator: "$eq",
+    value: "valueOfChild1",
+  }
+);
+
+// const pTree = new PredicateTree("testTree", {
+//   subjectId: "someSubjectId",
+//   operator: "$eq",
+//   value: "Component Default Tree",
+// });
+
+// const predicateIds: { [predicateName: string]: string } = {};
+// predicateIds.child0 = pTree.appendPredicate(pTree.rootNodeId, {
+//   subjectId: "subjectId_child0",
+//   operator: "$eq",
+//   value: "valueOfChild0",
+// });
+// predicateIds.child1 = pTree.appendPredicate(pTree.rootNodeId, {
+//   subjectId: "subjectId_child1",
+//   operator: "$eq",
+//   value: "valueOfChild1",
+// });
 
 interface Props {
-  predicateTree?: PredicateTree;
+  // predicateTree?: PredicateTree;
   children?: JSX.Element;
 }
-function QueryContainer({ predicateTree = pTree, children }: Props) {
+function QueryContainer({ children }: Props) {
   return (
     <PredicateTreeProvider
-      subjectDictionary={subjectDictionary}
-      predicateTree={predicateTree}
-      projection={contextProjection}
+      predicateFormulaEditor={predicateFormulaEditor}
+      projectionEditor={contextProjection}
     >
       {children}
     </PredicateTreeProvider>
@@ -189,7 +237,9 @@ test(".getPredicateProperties works as expected", () => {
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
 
-    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
+    const root = getPredicateById(
+      predicateFormulaEditor.rootNodeId
+    ) as TPredicatePropertiesJunction;
 
     const child0 = getPredicateById(predicateIds.child0) as TPredicateProperties;
     const child1 = getPredicateById(predicateIds.child1) as TPredicateProperties;
@@ -217,12 +267,14 @@ test(".getPredicateProperties works as expected", () => {
   expect(child1Text).toBeInTheDocument();
 });
 
-test(".geTPredicateProperties works as expected (2)", () => {
+test(".getPredicateProperties works as expected (2)", () => {
   const MyInjector = () => {
     const { getPredicateById } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
+    const root = getPredicateById(
+      predicateFormulaEditor.rootNodeId
+    ) as TPredicatePropertiesJunction;
     const child0 = getPredicateById(predicateIds.child0) as TPredicateProperties;
     const child1 = getPredicateById(predicateIds.child1) as TPredicateProperties;
     return (
@@ -254,12 +306,14 @@ test(".setDisjunction, .setConjunction works as expected", () => {
     const { getPredicateById, setDisjunction, setConjunction } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const root = getPredicateById(pTree.rootNodeId) as TPredicatePropertiesJunction;
+    const root = getPredicateById(
+      predicateFormulaEditor.rootNodeId
+    ) as TPredicatePropertiesJunction;
     const handleSetDisjunction = () => {
-      setDisjunction(pTree.rootNodeId);
+      setDisjunction(predicateFormulaEditor.rootNodeId);
     };
     const handleSetConjunction = () => {
-      setConjunction(pTree.rootNodeId);
+      setConjunction(predicateFormulaEditor.rootNodeId);
     };
     return (
       <>
@@ -302,7 +356,7 @@ test(".removePredicate & .getChildrenIds works as expected", () => {
     const { getChildrenIds, removePredicate } = React.useContext(
       GabbyQueryProtocolContext
     ) as TGabbyQueryProtocolContextType;
-    const childrenIds = getChildrenIds(pTree.rootNodeId);
+    const childrenIds = getChildrenIds(predicateFormulaEditor.rootNodeId);
     const handleRemovePredicate = () => {
       removePredicate(predicateIds.child0);
     };
@@ -325,12 +379,14 @@ test(".removePredicate & .getChildrenIds works as expected", () => {
 
   // preCondition
   expect(
-    screen.queryByText('children: ["testTree:0","testTree:1","testTree:2"]')
+    screen.queryByText('children: ["testTree:0","testTree:1","testTree:2","testTree:3"]')
   ).toBeInTheDocument();
 
   // exercise
   fireEvent.click(removeChildButton);
-  expect(screen.queryByText('children: ["testTree:0","testTree:2"]')).toBeInTheDocument();
+  expect(
+    screen.queryByText('children: ["testTree:0","testTree:1","testTree:3"]')
+  ).toBeInTheDocument();
 });
 
 test(".appendPredicate & .updatePredicate works as expected", () => {
@@ -338,32 +394,32 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
     const { appendPredicate, updatePredicate, getChildrenIds, getPredicateById } =
       React.useContext(GabbyQueryProtocolContext) as TGabbyQueryProtocolContextType;
 
-    const [thisPredicateId, setThisPredicateId] = React.useState("");
-    const [thisPredicate, setThisPredicate] = React.useState(
-      getPredicateById(thisPredicateId)
-    );
+    const [newPredicateId, setNewPredicateId] = React.useState("");
+    const [newPredicate, setNewPredicate] = React.useState({});
 
-    const childrenIds = getChildrenIds(pTree.rootNodeId);
-
+    const childrenIds = getChildrenIds(predicateFormulaEditor.rootNodeId);
+    const childrenTag = `Children: ${JSON.stringify(childrenIds)}`;
     const handleAppend = () => {
-      const addPredicate: TPredicateProperties = {
-        subjectId: "newPredicate",
-        operator: "$gte",
+      const predicateToBeAppended: TPredicateProperties = {
+        subjectId: "firstname",
+        operator: "$eq",
         value: "The New Predicate",
       };
-      const newPredicateId = appendPredicate(pTree.rootNodeId, addPredicate);
-      setThisPredicateId(newPredicateId);
-      setThisPredicate(getPredicateById(newPredicateId));
+      const newChildId = appendPredicate(
+        predicateFormulaEditor.rootNodeId,
+        predicateToBeAppended
+      );
+      setNewPredicateId(newChildId);
+      setNewPredicate(predicateToBeAppended);
     };
 
     const handleUpdate = () => {
-      const revisedPredicate: TPredicateProperties = {
-        subjectId: "revPredicate",
-        operator: "$gte",
-        value: "The Revised Predicate",
-      };
-      updatePredicate(thisPredicateId, revisedPredicate);
-      setThisPredicate(getPredicateById(thisPredicateId));
+      const revisedPredicate = {
+        ...newPredicate,
+        ...{ operator: "$gte" },
+      } as TPredicateProperties;
+      updatePredicate(newPredicateId, revisedPredicate);
+      setNewPredicate(getPredicateById(newPredicateId) || {});
     };
     return (
       <>
@@ -373,9 +429,9 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
         <button type="button" onClick={handleUpdate}>
           Update Predicate
         </button>
-        <span>New Child ID: {thisPredicateId}</span>
-        <span>Children: {JSON.stringify(childrenIds)}</span>
-        <span>New Predicate: {JSON.stringify(thisPredicate)}</span>
+        <span>New Child ID: {newPredicateId}</span>
+        <span>{childrenTag}</span>
+        <span>New Predicate: {JSON.stringify(newPredicate)}</span>
       </>
     );
   };
@@ -389,27 +445,36 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
   const updateButton = screen.getByText("Update Predicate");
 
   // preCondition
-  expect(screen.queryByText("New Child ID:")).toBeInTheDocument();
-  expect(screen.queryByText('Children: ["testTree:0","testTree:2"]')).toBeInTheDocument();
-  expect(screen.queryByText("New Predicate: null")).toBeInTheDocument();
+  expect(screen.queryByText(/New Child ID:/)).toBeInTheDocument();
 
-  // exercise 1
+  const displayTextBefore = screen.queryByText(
+    'Children: ["testTree:0","testTree:1","testTree:3"]'
+  );
+  expect(displayTextBefore).toBeInTheDocument();
+  expect(screen.queryByText("New Predicate: {}")).toBeInTheDocument();
+
+  // exercise 1  -- append
   fireEvent.click(appendButton);
-  expect(screen.queryByText("New Child ID: testTree:3")).toBeInTheDocument();
-  expect(
-    screen.queryByText('Children: ["testTree:0","testTree:2","testTree:3"]')
-  ).toBeInTheDocument();
+
+  const newChildIdDisplay = screen.queryByText("New Child ID: testTree:4");
+  expect(newChildIdDisplay).toBeInTheDocument();
+
+  const displayTextAfter = screen.queryByText(
+    'Children: ["testTree:0","testTree:1","testTree:3","testTree:4"]'
+  );
+
+  expect(displayTextAfter).toBeInTheDocument();
   expect(
     screen.queryByText(
-      'New Predicate: {"subjectId":"newPredicate","operator":"$gte","value":"The New Predicate"}'
+      'New Predicate: {"subjectId":"firstname","operator":"$eq","value":"The New Predicate"}'
     )
   ).toBeInTheDocument();
 
-  // exercise 2
+  // exercise 2  -- update
   fireEvent.click(updateButton);
   expect(
     screen.queryByText(
-      'New Predicate: {"subjectId":"revPredicate","operator":"$gte","value":"The Revised Predicate"}'
+      'New Predicate: {"subjectId":"firstname","operator":"$gte","value":"The New Predicate"}'
     )
   ).toBeInTheDocument();
 });

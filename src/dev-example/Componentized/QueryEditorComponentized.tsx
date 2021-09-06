@@ -1,21 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 // cSpell:ignore Componentized
 import * as React from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
-// EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON as exampleData,
+import { EXAMPLE_JSON_BLUE_SKIES as projectionExampleData } from "gabby-query-protocol-projection";
 
 import {
-  EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON as exampleData,
-  // PredicateTree,
-  PredicateTreeBuilder,
-  PredicateSubjectDictionary,
-  ProjectionManager,
-  ProjectableSubjects,
-  EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON,
+  EXAMPLE_JSON_BLUE_SKIES as exampleData,
+  PredicateFormulaEditor,
 } from "gabby-query-protocol-lib";
 
-import type { TSerializedPredicateTree, IPredicateTree } from "gabby-query-protocol-lib";
+import type { TSerializedPredicateTree } from "gabby-query-protocol-lib";
 
 import QueryPredicateTreeProvider from "../../lib/GabbyQueryProtocolContext";
 
@@ -27,41 +20,45 @@ import * as opLabels from "../external-resources/operator-labels";
 
 import { ProjectionComponent } from "../Projection";
 
-const awesomeTreeNumber1Json = EXAMPLE_QUERY_DEFINITION_DOCUMENT_JSON.predicateTreeJson;
+import { GabbyAssetFactory } from "../../lib/GabbyAssetFactory";
+import type { TGabbyAssetsJson, TGabbyAssets } from "../../lib/GabbyAssetFactory";
 
-const { projectionJson } = exampleData;
-const { projectableSubjectsJson } = exampleData;
-const { predicateSubjectsDictionaryJson } = exampleData;
+// export type TGabbyResources = {
+//   predicateFormulaEditor: PredicateFormulaEditor;
+//   projectionEditor: IProjectionEditor;
+//   operatorLabels: TPredicateOperatorLabels;
+// };
 
-const projectableSubjects = ProjectableSubjects.fromJson(projectableSubjectsJson);
-const contextProjection = ProjectionManager.fromFlatFile(
-  projectionJson,
-  projectableSubjects
-);
+// export type TGabbyAssetsJson = {
+//   subjectDictionaryJson: TPredicateSubjectDictionaryJson;
+//   predicateTreeJson?: TSerializedPredicateTree;
+//   projectionJson?: TProjectionPropertiesJson[];
+//   projectableSubjectsJson?: TProjectableSubjectsDictionaryJson;
+//   operatorLabelsJson?: TPredicateOperatorLabels;
+//   newRootId?: string;
+// };
+// projectionItemsJson: projectionExampleData.projectionJson,
+// projectableSubjectDictionaryJson:
+//   projectionExampleData.projectableSubjectDictionaryJson,
+const gabbyAssetsJson: TGabbyAssetsJson = {
+  subjectDictionaryJson: exampleData.predicateSubjectsDictionaryJson,
+  predicateTreeJson: exampleData.predicateTreeJson,
+  projectableSubjectsJson: projectionExampleData.projectableSubjectDictionaryJson,
+  projectionJson: projectionExampleData.projectionJson,
+  operatorLabelsJson: opLabels.AR,
+};
 
-const predicateSubjectDictionary = PredicateSubjectDictionary.fromJson(
-  predicateSubjectsDictionaryJson
-);
-// IPredicateTree
-// const awesomeTreeNumber1 = PredicateTree.fromFlatObject(
-//   awesomeTreeNumber1Json as TSerializedPredicateTree
-// );
-const awesomeTreeNumber1 = PredicateTreeBuilder.fromJson(
-  awesomeTreeNumber1Json as TSerializedPredicateTree
-);
+const gabbyAssets = GabbyAssetFactory.fromJson(gabbyAssetsJson);
 
 interface Props {
-  predicateTree?: IPredicateTree;
+  predicateFormulaEditor?: PredicateFormulaEditor;
 }
 
 function QueryEditorComponentized({
-  // predicateTree = defaultPredictTree,
-  // predicateTree = emptyPredicateTree,
-  predicateTree = awesomeTreeNumber1,
+  predicateFormulaEditor = gabbyAssets.predicateFormulaEditor,
 }: Props): JSX.Element {
   const [flatFile, setFlatFile] = React.useState<TSerializedPredicateTree>(
-    predicateTree.toJson()
-    // PredicateTree.toFlatObject(predicateTree)
+    predicateFormulaEditor.toJson().predicateTreeJson
   );
   const updateFlatFile = (newFlatFile: TSerializedPredicateTree) => {
     setFlatFile(newFlatFile);
@@ -70,10 +67,9 @@ function QueryEditorComponentized({
   return (
     <QueryPredicateTreeProvider
       onChange={updateFlatFile}
-      subjectDictionary={predicateSubjectDictionary}
-      predicateTree={predicateTree}
-      operatorLabels={opLabels.AR}
-      projection={contextProjection}
+      predicateFormulaEditor={predicateFormulaEditor}
+      operatorLabels={gabbyAssets.operatorLabels}
+      projectionEditor={gabbyAssets.projectionEditor}
     >
       <main className="App">
         <div style={{ marginLeft: "30%", paddingBottom: "30px" }}>
@@ -102,7 +98,7 @@ function QueryEditorComponentized({
         {JSON.stringify(flatFile)}
         <hr />
         <NodeMux
-          nodeId={predicateTree.rootNodeId}
+          nodeId={predicateFormulaEditor.rootNodeId}
           leafView={LeafViewer}
           branchView={BranchViewer}
         />

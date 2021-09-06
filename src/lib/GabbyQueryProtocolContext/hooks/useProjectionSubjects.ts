@@ -7,14 +7,14 @@ export const useProjectionSubjects = () => {
     addProjectionItem,
     getOrderedProjectionList,
     removeProjectionItem,
-    projection,
+    projectionEditor,
   } = React.useContext(GabbyQueryProtocolContext) as TGabbyQueryProtocolContextType;
 
   return {
     addProjectionItem,
     projectionList: getOrderedProjectionList,
 
-    projectableSubjects: projection.getProjectableSubjectsDictionary(),
+    projectableSubjects: projectionEditor.getProjectableSubjectsDictionary(),
     removeProjectionItem,
   };
 };

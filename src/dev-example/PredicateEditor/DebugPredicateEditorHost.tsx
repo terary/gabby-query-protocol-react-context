@@ -51,19 +51,30 @@ export const DebugPredicateEditorHost = ({
   const SubjectSelector = () => {
     return (
       <select value={selectedSubject.subjectId} onChange={handleSelectedSubjectChange}>
-        {Object.entries(subjectDictionary.getAllSubjects()).map(
-          ([subjectId, subject]) => {
-            return (
-              <option value={subjectId} key={subjectId}>
-                {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  subject.defaultLabel
-                }
-              </option>
-            );
-          }
-        )}
+        {subjectDictionary.getSubjectIds().map((subjectId) => {
+          const subject = subjectDictionary.getSubject(subjectId);
+          return (
+            <option value={subjectId} key={subjectId}>
+              {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                subject.defaultLabel
+              }
+            </option>
+          );
+        })}
+        {/* {Object.entries(subjectDictionary. .getSubjects()).map(([subjectId, subject]) => {
+          return (
+            <option value={subjectId} key={subjectId}>
+              {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                subject.defaultLabel
+              }
+            </option>
+          );
+        })}
+        */}
       </select>
     );
   };

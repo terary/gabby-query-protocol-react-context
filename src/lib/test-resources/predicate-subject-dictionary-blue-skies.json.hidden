@@ -1,0 +1,111 @@
+{
+  "firstName": {
+    "validOperators": {
+      "$eq": true,
+      "$gt": true,
+      "$like": true
+    },
+    "datatype": "string",
+    "defaultLabel": "First Name"
+  },
+  "lastName": {
+    "validOperators": {
+      "$eq": true,
+      "$gt": true,
+      "$like": true
+    },
+    "datatype": "string",
+    "defaultLabel": "Last Name"
+  },
+  "postalCode": {
+    "validOperators": {
+      "$eq": true,
+      "$ne": true,
+      "$like": true
+    },
+    "datatype": "string",
+    "defaultLabel": "Postal Code"
+  },
+  "annualIncome": {
+    "validOperators": {
+      "$gt": true,
+      "$gte": true,
+      "$lt": true,
+      "$lte": true,
+      "$eq": true,
+      "$ne": true
+    },
+    "datatype": "decimal",
+    "defaultLabel": "Annual Income"
+  },
+  "region": {
+    "validOperators": {
+      "$eq": true,
+      "$anyOf": {
+        "optionList": [
+          {
+            "label": "US West",
+            "value": "US-WEST"
+          },
+          {
+            "label": "US East",
+            "value": "US-EAST"
+          },
+          {
+            "label": "US South",
+            "value": "US-SOUTH"
+          },
+          {
+            "label": "US North",
+            "value": "US-NORTH"
+          }
+        ]
+      }
+    },
+    "datatype": "string",
+    "defaultLabel": "Region"
+  },
+  "favoriteFruit": {
+    "validOperators": {
+      "$eq": true,
+      "$oneOf": {
+        "optionList": [
+          {
+            "label": "Apples",
+            "value": "APPLE001"
+          },
+          {
+            "label": "Grapes",
+            "value": "GRAPE001"
+          },
+          {
+            "label": "Oranges",
+            "value": "ORANGE001"
+          }
+        ]
+      }
+    },
+    "datatype": "string",
+    "defaultLabel": "Favorite Fruit"
+  },
+  "startDate": {
+    "validOperators": {
+      "$eq": true,
+      "$gt": true,
+      "$gte": true,
+      "$lt": true,
+      "$lte": true
+    },
+    "datatype": "datetime",
+    "defaultLabel": "Start Date"
+  },
+  "numberOfChildren": {
+    "validOperators": {
+      "$eq": true,
+      "$gt": true,
+      "$lt": true
+    },
+    "datatype": "integer",
+    "defaultLabel": "Number of Children"
+  }
+}
