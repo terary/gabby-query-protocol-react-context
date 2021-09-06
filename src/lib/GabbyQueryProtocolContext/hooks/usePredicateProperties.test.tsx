@@ -1,11 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
+
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
   PredicateFormulaEditor,
   PredicateFormulaEditorFactory,
   TPredicateSubjectDictionaryJson,
+  TPredicateProperties,
 } from "gabby-query-protocol-lib";
 import {
   Projection,
@@ -66,22 +68,27 @@ function QueryContainer({ predicateFormulaEditor = formulaEditor, children }: Pr
     </PredicateTreeProvider>
   );
 }
+describe("usePredicateProperties", () => {
+  it("Should return necessary properties and nothing more", () => {
+    // here to satisfy coverage.  These function are tested elsewhere.
+    // useJunctionNodeProperties are wrappers for underlying functions
 
-describe("useProjection", () => {
-  test("Should return a projection instance", () => {
     const MyInjector = () => {
-      const projection = useProjectionSubjects();
-      const k = Object.keys(projection);
-      expect(typeof projection).toBe("object");
-      expect(typeof projection.addProjectionItem).toBe("function");
-      expect(typeof projection.projectionList).toBe("function");
-      expect(typeof projection.removeProjectionItem).toBe("function");
-      expect(typeof projection).toBe("object");
-      expect(projection.projectableSubjects.constructor.name).toBe(
-        "ProjectableSubjectDictionary"
+      const predicateMethods = usePredicateProperties("nodeId");
+      expect(typeof predicateMethods.appendPredicate).toBe("function");
+      expect(typeof predicateMethods.makeEmptyPredicate).toBe("function");
+      expect(typeof predicateMethods.operatorLabels).toBe("object");
+      expect(typeof predicateMethods.queryPredicate).toBe("object");
+      expect(typeof predicateMethods.removeMe).toBe("function");
+      expect(typeof predicateMethods.updateMe).toBe("function");
+      expect(Object.keys(predicateMethods).length).toBe(6);
+
+      expect(predicateMethods.queryPredicate).toBeNull();
+      expect(predicateMethods.appendPredicate).toThrow(
+        /appendPredicate, predicate failed validation/i
       );
-      expect(Object.keys(projection).length).toBe(4);
-
+      expect(predicateMethods.removeMe).toThrow(/does not exist/);
+      // expect(predicateMethods.updateMe).toThrow('setPayload: node not found "nodeId"');
       return <span>dummy text to make sense of this world</span>;
     };
 
@@ -91,24 +98,30 @@ describe("useProjection", () => {
       </QueryContainer>
     );
   });
-}); // describe("useProjection"
-
-describe("useProjectionSubject", () => {
-  test("Should return a projection instance", () => {
+  it("Should set conjunction/disjunction", () => {
+    const newValue = "update test";
     const MyInjector = () => {
-      const subject = useProjectionSubjectProperties("key0");
-      expect(typeof subject).toBe("object");
-      expect(typeof subject.projectedSubject).toBe("object");
-      expect(typeof subject.updateProjectionSubject).toBe("function");
-      expect(Object.keys(subject).length).toBe(2);
-
-      React.useEffect(() => {
-        const expectedFunctionCall = () => {
-          subject.updateProjectionSubject({});
+      const predicateMethods = usePredicateProperties(childNode1);
+      const { queryPredicate } = predicateMethods;
+      const handleUpdatePredicate = () => {
+        const newPredicate: TPredicateProperties = {
+          ...queryPredicate,
+          ...{ value: newValue },
         };
-        expect(expectedFunctionCall).not.toThrow();
-      }, []);
-      return <span>dummy text to make sense of this world</span>;
+
+        predicateMethods.updateMe(newPredicate);
+      };
+      return (
+        <div>
+          <p>
+            <button type="button" onClick={handleUpdatePredicate}>
+              Update
+            </button>
+            Predicate: {JSON.stringify(queryPredicate)}
+            <span>value: {queryPredicate.value}</span>
+          </p>
+        </div>
+      );
     };
 
     render(
@@ -116,5 +129,16 @@ describe("useProjectionSubject", () => {
         <MyInjector />
       </QueryContainer>
     );
+    // preCondition
+    const preconditionText = "value: Component Default Tree";
+    expect(screen.queryByText(preconditionText)).toBeInTheDocument();
+
+    // exercise  - set disjunction
+    const disjunctionButton = screen.getByText("Update");
+    fireEvent.click(disjunctionButton);
+
+    // post condition
+    const disjunctionText = "value: update test";
+    expect(screen.queryByText(disjunctionText)).toBeInTheDocument();
   });
-}); // describe("useProjection"
+}); // describe usePredicateProperties

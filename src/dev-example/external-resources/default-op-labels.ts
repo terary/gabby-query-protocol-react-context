@@ -12,7 +12,7 @@ const defaultOpLabels: TPredicateOperatorLabels = {
   $eq: "Equals",
   $gt: "Greater Than",
   $gte: "Greater Than Equal",
-  $isnull: "Is Null",
+  $isNull: "Is Null",
   $lt: "Less Than",
   $lte: "Less Than Equal",
   $like: "Contains",

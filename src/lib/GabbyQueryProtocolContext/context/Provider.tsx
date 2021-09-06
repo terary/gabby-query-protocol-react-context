@@ -1,24 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 import * as React from "react";
+import type {
+  IProjectionEditor,
+  TProjectionProperties,
+  TProjectionPropertiesUpdatable,
+} from "gabby-query-protocol-projection";
+
 import {
-  // PredicateTree,
-  // PredicateTreeBuilder,
-  ProjectionManager,
-  // TSerializedTree,
-  TSerializedPredicateTree, // type should be imported as type
+  // TSerializedPredicateTree, // type should be imported as type
+  PredicateSubjectDictionary, // is this a type?
+  PredicateFormulaEditor,
 } from "gabby-query-protocol-lib";
 
 import type {
-  IPredicateTree,
-  // IPredicateTreeBuilder,
+  TSerializedPredicateTree,
   TPredicateNode,
-  PredicateSubjectDictionary, // is this a type?
   TPredicateProperties,
-  // TPredicateOperatorLabels,
-  TProjectionProperties,
-  TProjectionPropertiesUpdatable,
 } from "gabby-query-protocol-lib";
+
 import { TPredicateOperatorLabels } from "../type";
 
 import { defaultOperatorLabels } from "./defaultOpLabels";
@@ -30,10 +30,10 @@ export const GabbyQueryProtocolContext =
 
 interface Props {
   children?: React.ReactNode;
-  predicateTree: IPredicateTree;
-  projection: ProjectionManager;
-  subjectDictionary: PredicateSubjectDictionary;
+  predicateFormulaEditor: PredicateFormulaEditor;
+  projectionEditor: IProjectionEditor;
   operatorLabels?: TPredicateOperatorLabels;
+  // gabbyQueryResources: IGabbyQueryResources;
   onChange?: (flatTree: TSerializedPredicateTree) => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -42,26 +42,24 @@ const noop = (...a: unknown[]) => {};
 const PredicateTreeProvider = ({
   children,
   onChange = noop,
+  projectionEditor,
   operatorLabels = defaultOperatorLabels,
-  predicateTree,
-  projection,
-  subjectDictionary,
-}: Props): JSX.Element => {
-  // empty comment
-
+  predicateFormulaEditor,
+}: // gabbyQueryResources,
+// operatorLabels = defaultOperatorLabels,
+Props): JSX.Element => {
+  //
   const [_queryExpression, setQueryExpression] = React.useState<TSerializedPredicateTree>(
-    predicateTree.toJson()
-    // PredicateTreeBuilder.toJson(predicateTree)
-    // PredicateTree.toFlatObject(predicateTree)
+    predicateFormulaEditor.toJson().predicateTreeJson
   );
 
   const [currentProjection, setCurrentProjection] = React.useState(
-    projection.getProjectionOrderByColumPosition()
+    projectionEditor.getProjectionOrderByColumPosition()
   );
 
   // private (not exported)
   const updateProjectionState = () => {
-    setCurrentProjection(projection.getProjectionOrderByColumPosition());
+    setCurrentProjection(projectionEditor.getProjectionOrderByColumPosition());
   };
 
   // private (not exported)
@@ -71,51 +69,60 @@ const PredicateTreeProvider = ({
   };
 
   const appendPredicate = (parentNodeId: string, term: TPredicateProperties): string => {
-    const newPredicateId = predicateTree.appendPredicate(parentNodeId, term);
+    const newPredicateId = predicateFormulaEditor.predicatesAppend(parentNodeId, term);
     updateState({
-      ...predicateTree.toJson(),
+      ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
     return newPredicateId;
   };
 
   const makeEmptyPredicate = () => {
-    return subjectDictionary.makeEmptyPredicate();
+    return predicateFormulaEditor.makeEmptyPredicate();
   };
 
-  const getPredicateById = (nodeId: string) => predicateTree.getPredicateById(nodeId);
+  const getPredicateById = (nodeId: string) =>
+    predicateFormulaEditor.predicatesGetById(nodeId);
+
+  const getJunctionById = (nodeId: string) => {
+    // should throw?
+    return predicateFormulaEditor.predicatesGetJunctionById(nodeId);
+  };
 
   const updatePredicate = (nodeId: string, node: TPredicateNode) => {
-    predicateTree.replacePredicate(nodeId, node);
+    predicateFormulaEditor.predicatesReplace(nodeId, node);
     updateState({
-      ...predicateTree.toJson(),
+      ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
   };
 
   const removePredicate = (nodeId: string) => {
-    predicateTree.removePredicate(nodeId);
+    predicateFormulaEditor.predicatesRemove(nodeId);
     updateState({
-      ...predicateTree.toJson(),
+      ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
   };
 
-  // TODO - tmc - can all these updateState be refactored to one call (or is it already)?
-
   const setDisjunction = (predicateId: string) => {
-    predicateTree.replacePredicate(predicateId, { operator: "$or" });
+    predicateFormulaEditor.predicatesReplace(predicateId, {
+      operator: "$or",
+    });
+
     updateState({
-      ...predicateTree.toJson(),
+      ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
   };
 
   const setConjunction = (predicateId: string) => {
-    predicateTree.replacePredicate(predicateId, { operator: "$and" });
+    predicateFormulaEditor.predicatesReplace(predicateId, {
+      operator: "$and",
+    });
     updateState({
-      ...predicateTree.toJson(),
+      ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
   };
 
-  const getChildrenIds = (nodeId: string): string[] =>
-    predicateTree.getChildrenIds(nodeId);
+  const getChildrenIds = (predicateId: string): string[] =>
+    predicateFormulaEditor.predicatesGetChildrenIds(predicateId);
 
   // **************************************     projection
   const addProjectionItem = (projectionSubject: TProjectionProperties): string => {
@@ -123,33 +130,30 @@ const PredicateTreeProvider = ({
     //        rekeys? the keys should remain the same but this will return {newKey:{sameKey:properties}}
     //        ** MAYBE, I THINK **
 
-    const newProjectionKey = projection.addSubject(projectionSubject);
+    const newProjectionKey = projectionEditor.addSubject(projectionSubject);
     updateProjectionState();
 
     return newProjectionKey;
   };
 
   const getProjectionItem = (projectionKey: string) => {
-    return projection.getProjectionSubject(projectionKey);
+    return projectionEditor.getProjectionSubject(projectionKey);
   };
 
   const getOrderedProjectionList = () => {
     return currentProjection;
-    // this or projection.getProjectionOrderByColumPosition()
-    // currentProjection is the right choice.
   };
 
   const removeProjectionItem = (projectionKey: string): void => {
-    projection.removeProjectionSubject(projectionKey);
+    projectionEditor.removeProjectionSubject(projectionKey);
     updateProjectionState();
   };
 
   const updateProjectionSubject = (
     projectionKey: string,
-
     updateProps: TProjectionPropertiesUpdatable
   ) => {
-    projection.updateSubject(projectionKey, updateProps);
+    projectionEditor.updateSubject(projectionKey, updateProps);
     updateProjectionState();
   };
 
@@ -158,13 +162,14 @@ const PredicateTreeProvider = ({
     appendPredicate,
     getChildrenIds,
     getPredicateById,
+    getJunctionById,
     makeEmptyPredicate,
     operatorLabels,
-    projection,
+    projectionEditor,
     removePredicate,
     setConjunction,
     setDisjunction,
-    subjectDictionary,
+    subjectDictionary: predicateFormulaEditor.subjectDictionary,
     updatePredicate,
 
     // projection
