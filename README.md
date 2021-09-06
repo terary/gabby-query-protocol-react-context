@@ -1,6 +1,10 @@
-[Gabby Query Protocol Project site](https://terary.github.io/gabby-query-protocol-www/)
+[Documentation](https://terary.github.io/gabby-query-protocol-react-context/)
 
 # gabby-query-protocol-react-context
+
+React Wrapper for gabby-query-protocol-lib and gabby-query-protocol-projection
+
+
 
 ### npm run
 
