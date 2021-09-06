@@ -1,7 +1,7 @@
 {
   "name": "gabby-query-protocol-react-context",
-  "version": "1.2.0",
-  "private": true,
+  "version": "1.0.0-beta.0",
+  "private": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -25,26 +25,19 @@
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"
   },
+  "homepage": "https://terary.github.io/gabby-query-protocol-react-context/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terary/gabby-query-protocol-react-context"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/lib/**/*.ts* ",
-    "gabby:relink:projection": " npm run  gabby:uninstall:projection && npm run gabby:link:projection",
-    "gabby:link:projection": "npm link /mypart/tmc/projects/gabby-query-protocol-projection/",
-    "gabby:uninstall:projection": "npm uninstall gabby-query-protocol-projection",
-    "gabby:relink": "npm i && npm run gabby:link:lib && npm run gabby:link:projection",
-    "gabby:link:lib": "npm link ../gabby-query-protocol-lib/",
-    "gabby:uninstall": "npm uninstall gabby-query-protocol-lib gabby-query-protocol-projection",
-    "gabby:install:lib": "npm i http://terarychambers.com/gabby-query-protocol/gabby-query-protocol-lib-2.1.1.tgz",
-    "gabby:install:projection": "npm i http://terarychambers.com/gabby-query-protocol/gabby-query-protocol-projection-1.0.2.tgz",
-    "gabby:install": "npm run gabby:install:lib && npm run gabby:install:projection",
-    "gabby:reinstall": "npm run gabby:uninstall && npm run gabby:install",
     "gabby:build": "rm -rf dist && NODE_ENV=production tsc -p tsconfig.dist.json",
-    "gabby:pack": "npm run gabby:build && npm pack",
-    "gabby:scp": "scp -P 33233 *.tgz terarychambers.com:/www/terarychambers.com/web/public_html/gabby-query-protocol/",
-    "gabby:ship": "rm *tgz && npm run gabby:pack && npm run gabby:scp"
+    "gabby:pack": "npm run gabby:build && npm pack"
   },
   "eslintConfig": {
     "extends": [
