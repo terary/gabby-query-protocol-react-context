@@ -14,12 +14,7 @@ import {
 } from "gabby-query-protocol-projection";
 import type { TProjectableSubjectsDictionaryJson } from "gabby-query-protocol-projection";
 
-import {
-  useJunctionProperties,
-  usePredicateProperties,
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
-} from ".";
+import { useJunctionProperties } from ".";
 
 import PredicateTreeProvider from "../context";
 import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
@@ -80,7 +75,9 @@ describe("useJunctionNodeProperties", () => {
       expect(typeof junctionMethods.removeMe).toBe("function");
       expect(typeof junctionMethods.setConjunction).toBe("function");
       expect(typeof junctionMethods.setDisjunction).toBe("function");
-      expect(Object.keys(junctionMethods).length).toBe(8);
+      expect(typeof junctionMethods.operatorLabels).toBe("object");
+
+      expect(Object.keys(junctionMethods).length).toBe(9);
 
       expect(junctionMethods.appendPredicate).toThrow(
         "appendPredicate, predicate failed validation"

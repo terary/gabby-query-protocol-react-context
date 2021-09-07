@@ -14,8 +14,8 @@ import {
   TProjectableSubjectsDictionaryJson,
 } from "gabby-query-protocol-projection";
 import type { TProjectionPropertiesJson } from "gabby-query-protocol-projection";
-import type { TGabbyAssetsJson, TGabbyAssets } from "./type";
-import { defaultOperatorLabels } from "../GabbyQueryProtocolContext/context/defaultOpLabels";
+import type { TGabbyAssetsJson, TGabbyAssets, TGabbyQueryUpdatedDocuments } from "./type";
+import { defaultOperatorLabels } from "../defaultOpLabels";
 
 export const GabbyAssetFactory = {
   //
@@ -56,6 +56,13 @@ export const GabbyAssetFactory = {
       predicateFormulaEditor: formulaEditor,
       projectionEditor,
       operatorLabels: resourcesJson.operatorLabelsJson || defaultOperatorLabels,
+    };
+  },
+
+  toJson: (gabbyAssets: TGabbyAssets): TGabbyQueryUpdatedDocuments => {
+    return {
+      projection: gabbyAssets.projectionEditor.toJson(),
+      predicateFormula: gabbyAssets.predicateFormulaEditor.toJson(),
     };
   },
 };

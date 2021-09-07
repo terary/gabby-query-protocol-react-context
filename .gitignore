@@ -33,3 +33,5 @@ notes-tmc.txt
 
 
 *.tgz
+
+*.sh

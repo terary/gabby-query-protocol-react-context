@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { useState } from "react";
-import { useProjectionSubjectProperties } from "../../lib/GabbyQueryProtocolContext";
+import { useProjectionSubjectProperties } from "../../lib";
 
 // TProjectionProperties
 interface Props {
@@ -111,8 +111,7 @@ export const ProjectedSubject = ({ projectionKey }: Props): JSX.Element => {
     <div style={style}>
       <ColumnOrder />
       {isOpenForEdit && <EditableLabel />}
-      {!isOpenForEdit && <ReadOnlyLabel />}({subject.subjectId})
-      {subject.columnOrder}
+      {!isOpenForEdit && <ReadOnlyLabel />}({subject.subjectId}){subject.columnOrder}
       {subject.sortOrder}
       <SortElement />
     </div>

@@ -1,14 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable react/require-default-props */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { queryHelpers } from "@testing-library/react";
 import React, { useState } from "react";
-import type { TPredicateProperties } from "gabby-query-protocol-lib";
 import { PredicateEditor } from ".";
-import type { TGabbyQueryProtocolContextType } from "../../lib/GabbyQueryProtocolContext";
+import type { TGabbyQueryProtocolContextType, TPredicateProperties } from "../../lib";
 
-// import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
-import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
+import { GabbyQueryProtocolContext } from "../../lib";
 
 const noop = () => {};
 

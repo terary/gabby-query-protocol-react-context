@@ -1,6 +1,5 @@
-// import { PredicateTree } from '../../lib/GabbyQueryProtocolContext/PredicateTree';
-import { PredicateTree } from "gabby-query-protocol-lib";
-import type { TPredicateProperties } from "gabby-query-protocol-lib";
+import { PredicateTree } from "../../lib";
+import type { TPredicateProperties } from "../../lib";
 
 const existingTree = new PredicateTree("pTree01", {
   subjectId: "firstname",

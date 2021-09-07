@@ -7,14 +7,13 @@ import type {
   TPredicateOperator,
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
-} from "gabby-query-protocol-lib";
-import type { TGabbyQueryProtocolContextType } from "../../lib/GabbyQueryProtocolContext";
+  TGabbyQueryProtocolContextType,
+} from "../../lib";
 
 import InputGeneric from "./InputGeneric";
 import SelectGeneric from "./SelectGeneric";
 import SelectMultipleGeneric from "./SelectMultipleGeneric";
-// import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
-import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
+import { GabbyQueryProtocolContext } from "../../lib";
 
 const noop = (...args: unknown[]) => {
   // console.log("PredicateBuilder noop called");

@@ -1,13 +1,8 @@
 import * as React from "react";
 
-import { GabbyQueryProtocolContext } from "../../lib/GabbyQueryProtocolContext";
+import { GabbyQueryProtocolContext } from "../../lib";
 
-// import * as OpLabels from "../operator-labels";
-import type {
-  TGabbyQueryProtocolContextType,
-  // TPredicatePropertiesJunction,
-  // TPredicateProperties,
-} from "../../lib/GabbyQueryProtocolContext";
+import type { TGabbyQueryProtocolContextType } from "../../lib";
 
 type NodeMuxProps = {
   nodeId: string;
