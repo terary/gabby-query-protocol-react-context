@@ -1,50 +1,35 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react/require-default-props */
 // cSpell:ignore Componentized
 import * as React from "react";
-import { EXAMPLE_JSON_BLUE_SKIES as projectionExampleData } from "gabby-query-protocol-projection";
 
 import {
-  EXAMPLE_JSON_BLUE_SKIES as exampleData,
+  CONSTS,
+  EXAMPLE_JSON_BLUE_SKIES,
+  GabbyQueryProtocolContextProvider,
+  GabbyAssetFactory,
   PredicateFormulaEditor,
-} from "gabby-query-protocol-lib";
+  PredicateTreeVisitors,
+} from "../../lib";
 
-import type { TSerializedPredicateTree } from "gabby-query-protocol-lib";
-
-import QueryPredicateTreeProvider from "../../lib/GabbyQueryProtocolContext";
+import type { TSerializedPredicateTree, TGabbyAssetsJson } from "../../lib";
 
 import NodeMux from "./NodeMux";
 import { LeafViewer } from "../ComponentizedComponents/LeafViewer";
 import { BranchViewer } from "../ComponentizedComponents/BranchViewer";
 import { DebugPredicateEditorHost } from "../PredicateEditor/DebugPredicateEditorHost";
+import { ProjectionComponent } from "../Projection";
 import * as opLabels from "../external-resources/operator-labels";
 
-import { ProjectionComponent } from "../Projection";
-
-import { GabbyAssetFactory } from "../../lib/GabbyAssetFactory";
-import type { TGabbyAssetsJson, TGabbyAssets } from "../../lib/GabbyAssetFactory";
-
-// export type TGabbyResources = {
-//   predicateFormulaEditor: PredicateFormulaEditor;
-//   projectionEditor: IProjectionEditor;
-//   operatorLabels: TPredicateOperatorLabels;
-// };
-
-// export type TGabbyAssetsJson = {
-//   subjectDictionaryJson: TPredicateSubjectDictionaryJson;
-//   predicateTreeJson?: TSerializedPredicateTree;
-//   projectionJson?: TProjectionPropertiesJson[];
-//   projectableSubjectsJson?: TProjectableSubjectsDictionaryJson;
-//   operatorLabelsJson?: TPredicateOperatorLabels;
-//   newRootId?: string;
-// };
-// projectionItemsJson: projectionExampleData.projectionJson,
-// projectableSubjectDictionaryJson:
-//   projectionExampleData.projectableSubjectDictionaryJson,
 const gabbyAssetsJson: TGabbyAssetsJson = {
-  subjectDictionaryJson: exampleData.predicateSubjectsDictionaryJson,
-  predicateTreeJson: exampleData.predicateTreeJson,
-  projectableSubjectsJson: projectionExampleData.projectableSubjectDictionaryJson,
-  projectionJson: projectionExampleData.projectionJson,
+  subjectDictionaryJson: EXAMPLE_JSON_BLUE_SKIES.LIB.predicateSubjectsDictionaryJson,
+
+  predicateTreeJson: EXAMPLE_JSON_BLUE_SKIES.LIB.predicateTreeJson,
+  projectableSubjectsJson:
+    EXAMPLE_JSON_BLUE_SKIES.PROJECTION.projectableSubjectDictionaryJson,
+
+  projectionJson: EXAMPLE_JSON_BLUE_SKIES.PROJECTION.projectionJson,
+
   operatorLabelsJson: opLabels.AR,
 };
 
@@ -57,15 +42,37 @@ interface Props {
 function QueryEditorComponentized({
   predicateFormulaEditor = gabbyAssets.predicateFormulaEditor,
 }: Props): JSX.Element {
+  //
   const [flatFile, setFlatFile] = React.useState<TSerializedPredicateTree>(
     predicateFormulaEditor.toJson().predicateTreeJson
   );
+  const [nodeCounts, setNodeCounts] = React.useState({ all: 0, leafs: 0, branches: 0 });
   const updateFlatFile = (newFlatFile: TSerializedPredicateTree) => {
     setFlatFile(newFlatFile);
+    countNodes();
+  };
+  React.useEffect(() => {
+    countNodes();
+  }, []);
+
+  const countNodes = () => {
+    const allNodeVisitor = new PredicateTreeVisitors.PredicateIdsAll();
+    const branchNodeVisitor = new PredicateTreeVisitors.PredicateIdsBranches();
+    const leafNodeVisitor = new PredicateTreeVisitors.PredicateIdsLeafs();
+
+    predicateFormulaEditor.predicateTree.acceptVisitor(allNodeVisitor);
+    predicateFormulaEditor.predicateTree.acceptVisitor(branchNodeVisitor);
+    predicateFormulaEditor.predicateTree.acceptVisitor(leafNodeVisitor);
+
+    setNodeCounts({
+      all: allNodeVisitor.predicateIds.length,
+      branches: branchNodeVisitor.predicateIds.length,
+      leafs: leafNodeVisitor.predicateIds.length,
+    });
   };
 
   return (
-    <QueryPredicateTreeProvider
+    <GabbyQueryProtocolContextProvider
       onChange={updateFlatFile}
       predicateFormulaEditor={predicateFormulaEditor}
       operatorLabels={gabbyAssets.operatorLabels}
@@ -76,6 +83,8 @@ function QueryEditorComponentized({
           <article style={{ textAlign: "left" }}>
             <h1>Internal Example Example/UseGabbyQueryProtocolContext</h1>
             <p>
+              node counts: {JSON.stringify(nodeCounts)} <br />
+              <br />
               The intent of this example is to provide out-of-box working concept with
               minimal other stuff.
               <br /> <br />
@@ -103,7 +112,7 @@ function QueryEditorComponentized({
           branchView={BranchViewer}
         />
       </main>
-    </QueryPredicateTreeProvider>
+    </GabbyQueryProtocolContextProvider>
   );
 }
 

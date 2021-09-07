@@ -19,6 +19,6 @@
 
   },
   "include": [
-    "src/lib/GabbyQueryProtocolContext/index.ts"
+    "src/lib/index.ts"
   ]
 }

@@ -1,11 +1,17 @@
-import { PredicateFormulaEditor } from "gabby-query-protocol-lib";
+import {
+  PredicateFormulaEditor,
+  PredicateFormulaEditorJson,
+} from "gabby-query-protocol-lib";
 
 import type {
   TPredicateSubjectDictionaryJson,
   TSerializedPredicateTree,
 } from "gabby-query-protocol-lib";
 
-import { IProjectionEditor } from "gabby-query-protocol-projection";
+import {
+  IProjectionEditor,
+  TProjectionProperties,
+} from "gabby-query-protocol-projection";
 import type {
   TProjectionPropertiesJson,
   TProjectableSubjectsDictionaryJson,
@@ -26,4 +32,8 @@ export type TGabbyAssetsJson = {
   projectableSubjectsJson?: TProjectableSubjectsDictionaryJson;
   operatorLabelsJson?: TPredicateOperatorLabels;
   newRootId?: string;
+};
+export type TGabbyQueryUpdatedDocuments = {
+  projection: TProjectionProperties[];
+  predicateFormula: PredicateFormulaEditorJson;
 };

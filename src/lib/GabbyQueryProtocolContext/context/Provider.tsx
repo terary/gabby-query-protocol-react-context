@@ -7,11 +7,7 @@ import type {
   TProjectionPropertiesUpdatable,
 } from "gabby-query-protocol-projection";
 
-import {
-  // TSerializedPredicateTree, // type should be imported as type
-  PredicateSubjectDictionary, // is this a type?
-  PredicateFormulaEditor,
-} from "gabby-query-protocol-lib";
+import { PredicateFormulaEditor } from "gabby-query-protocol-lib";
 
 import type {
   TSerializedPredicateTree,
@@ -21,7 +17,7 @@ import type {
 
 import { TPredicateOperatorLabels } from "../type";
 
-import { defaultOperatorLabels } from "./defaultOpLabels";
+import { defaultOperatorLabels } from "../../defaultOpLabels";
 
 import type { TGabbyQueryProtocolContextType } from "./type";
 
@@ -39,17 +35,18 @@ interface Props {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = (...a: unknown[]) => {};
 
-const PredicateTreeProvider = ({
+const GabbyQueryProtocolContextProvider = ({
   children,
   onChange = noop,
   projectionEditor,
   operatorLabels = defaultOperatorLabels,
   predicateFormulaEditor,
-}: // gabbyQueryResources,
-// operatorLabels = defaultOperatorLabels,
-Props): JSX.Element => {
+}: Props): JSX.Element => {
   //
   const [_queryExpression, setQueryExpression] = React.useState<TSerializedPredicateTree>(
+    // useState to make dependents 'aware' of change.
+    // change/state is managed by predicateFormulaEditor
+
     predicateFormulaEditor.toJson().predicateTreeJson
   );
 
@@ -187,4 +184,4 @@ Props): JSX.Element => {
   );
 };
 
-export default PredicateTreeProvider;
+export default GabbyQueryProtocolContextProvider;

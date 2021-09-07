@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-// import type { TPredicateOperatorLabels } from "gabby-query-protocol-lib";
-import type { TPredicateOperatorLabels } from "..";
+import type { TPredicateOperatorLabels } from "./index";
 
 export const defaultOperatorLabels: TPredicateOperatorLabels = {
   $and: "All of these",

@@ -1,20 +1,14 @@
 /// cspell:ignore componentized
 /* eslint-disable import/prefer-default-export */
 import * as React from "react";
-import type { TPredicateProperties } from "gabby-query-protocol-lib";
+import type { TPredicateProperties } from "../../lib";
+import { usePredicateProperties } from "../../lib";
 import styles from "./componentized.module.css";
 import { DebugPredicateEditorHost } from "../PredicateEditor/DebugPredicateEditorHost";
 
-// TODO - tmc - should be coming from '../../lib/' and not '../../lib/GabbyQueryProtocolContext'
-import { usePredicateProperties } from "../../lib/GabbyQueryProtocolContext";
-
-export const LeafViewer = ({
-  nodeId,
-}: //   operatorLabels = defaultOpLabels,
-LeafViewerProps): JSX.Element => {
+export const LeafViewer = ({ nodeId }: LeafViewerProps): JSX.Element => {
   const {
     appendPredicate,
-    // getPredicateById,
     makeEmptyPredicate,
     operatorLabels,
     queryPredicate,
@@ -28,7 +22,6 @@ LeafViewerProps): JSX.Element => {
   });
 
   const handleFinishEdit = (revisedPredicate: TPredicateProperties) => {
-    // setIsOpenForEdit(false);
     updateMe(revisedPredicate);
     setThisState({
       isOpenForEdit: false,

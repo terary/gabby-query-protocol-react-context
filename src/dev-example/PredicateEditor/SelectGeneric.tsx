@@ -1,6 +1,11 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react";
-import type { TValueLabelList } from "gabby-query-protocol-lib";
+
+type TValueLabel = {
+  value: number | string;
+  label: string;
+};
+type TValueLabelList = TValueLabel[];
 
 interface Props {
   value?: number | string;

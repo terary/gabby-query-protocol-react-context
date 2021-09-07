@@ -3,7 +3,6 @@ import React from "react";
 import type {
   TPredicatePropertiesJunction,
   TPredicateProperties,
-  TPredicateJunctionOperator,
 } from "gabby-query-protocol-lib";
 import { GabbyQueryProtocolContext, TGabbyQueryProtocolContextType } from "../context";
 
@@ -11,7 +10,7 @@ export const useJunctionProperties = (nodeId: string) => {
   const {
     appendPredicate,
     getChildrenIds,
-    // getPredicateById,
+    operatorLabels,
     getJunctionById,
     makeEmptyPredicate,
     removePredicate,
@@ -33,7 +32,10 @@ export const useJunctionProperties = (nodeId: string) => {
     getPredicateProperties: (): TPredicatePropertiesJunction => {
       return getJunctionById(nodeId);
     },
+
     makeEmptyPredicate,
+
+    operatorLabels,
 
     removeMe: () => {
       removePredicate(nodeId);
