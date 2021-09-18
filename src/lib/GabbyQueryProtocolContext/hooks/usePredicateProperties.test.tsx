@@ -15,12 +15,7 @@ import {
 } from "gabby-query-protocol-projection";
 import type { TProjectableSubjectsDictionaryJson } from "gabby-query-protocol-projection";
 
-import {
-  useJunctionProperties,
-  usePredicateProperties,
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
-} from ".";
+import { useJunctionProperties, usePredicateProperties } from ".";
 
 import PredicateTreeProvider from "../context";
 import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
@@ -62,7 +57,7 @@ function QueryContainer({ predicateFormulaEditor = formulaEditor, children }: Pr
   return (
     <PredicateTreeProvider
       predicateFormulaEditor={predicateFormulaEditor}
-      projectionEditor={contextProjection}
+      // projectionEditor={contextProjection}
     >
       {children}
     </PredicateTreeProvider>
@@ -81,7 +76,9 @@ describe("usePredicateProperties", () => {
       expect(typeof predicateMethods.queryPredicate).toBe("object");
       expect(typeof predicateMethods.removeMe).toBe("function");
       expect(typeof predicateMethods.updateMe).toBe("function");
-      expect(Object.keys(predicateMethods).length).toBe(6);
+      expect(typeof predicateMethods.validatePredicateProperties).toBe("function");
+
+      expect(Object.keys(predicateMethods).length).toBe(7);
 
       expect(predicateMethods.queryPredicate).toBeNull();
       expect(predicateMethods.appendPredicate).toThrow(

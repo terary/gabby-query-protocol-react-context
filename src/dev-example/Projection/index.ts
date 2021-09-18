@@ -1,4 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import { ProjectionComponent } from "./ProjectionComponent";
+import { DemoProjectionInitialized } from "./DemoProjectionInitialized";
 
-export { ProjectionComponent };
+export { DemoProjectionInitialized };

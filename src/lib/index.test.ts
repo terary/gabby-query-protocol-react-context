@@ -3,13 +3,13 @@ import * as libExport from ".";
 const expectedExports = [
   "CONSTS",
   "EXAMPLE_JSON_BLUE_SKIES",
-  "GabbyAssetFactory",
   "GabbyQueryProtocolContext",
   "GabbyQueryProtocolContextProvider",
   "PredicateFormulaEditor",
   "PredicateTree",
   "PredicateTreeError",
   "PredicateTreeVisitors",
+  "ProjectionEditorFactory",
   "useJunctionProperties",
   "usePredicateProperties",
   "useProjectionSubjectProperties",
@@ -26,6 +26,4 @@ describe("gabby-query-protocol-react-context exports", () => {
       expect(exportedItem in libExport).toStrictEqual(true);
     });
   });
-
-  // export { GabbyAssetFactory, GabbyQueryProtocolContext, CONSTS, EXAMPLE_JSON_BLUE_SKIES };
 });

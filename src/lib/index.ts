@@ -4,10 +4,8 @@ import {
   PredicateFormulaEditor,
   PredicateTree,
   PredicateTreeError,
+  Validators,
 } from "gabby-query-protocol-lib";
-
-import { Validators } from "gabby-query-protocol-lib/dist/validators";
-import type { TValidatorResponse } from "gabby-query-protocol-lib/dist/validators/types";
 
 import type {
   TPredicateProperties,
@@ -15,7 +13,9 @@ import type {
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
   TSerializedPredicateTree,
+  TValidatorResponse,
   IVisitor,
+  TValueLabelList,
 } from "gabby-query-protocol-lib";
 
 import { TreeVisitors as PredicateTreeVisitors } from "gabby-query-protocol-lib/dist/Predicates/TreeVisitors";
@@ -23,25 +23,30 @@ import { TreeVisitors as PredicateTreeVisitors } from "gabby-query-protocol-lib/
 import {
   CONSTS as PROJECTION_CONSTS,
   EXAMPLE_JSON_BLUE_SKIES as PROJECTION_EXAMPLE_JSON_BLUE_SKIES,
+  ProjectionEditorFactory,
 } from "gabby-query-protocol-projection";
 
-import type { TProjectionProperties } from "gabby-query-protocol-projection";
+import type {
+  TProjectionDictionary,
+  IProjectionEditor,
+  TProjectionProperties,
+} from "gabby-query-protocol-projection";
 
 import GabbyQueryProtocolContextProvider, {
   GabbyQueryProtocolContext,
   useJunctionProperties,
   usePredicateProperties,
+} from "./GabbyQueryProtocolContext";
+
+import {
   useProjectionSubjectProperties,
   useProjectionSubjects,
-} from "./GabbyQueryProtocolContext";
+} from "./GQPProjectionContext";
 
 import type {
   TGabbyQueryProtocolContextType,
   TPredicateOperatorLabels,
 } from "./GabbyQueryProtocolContext";
-
-import { GabbyAssetFactory } from "./GabbyAssetFactory";
-import type { TGabbyAssetsJson, TGabbyAssets } from "./GabbyAssetFactory";
 
 import { defaultOperatorLabels } from "./defaultOpLabels";
 
@@ -61,13 +66,13 @@ const EXAMPLE_JSON_BLUE_SKIES = {
 export {
   CONSTS,
   EXAMPLE_JSON_BLUE_SKIES,
-  GabbyAssetFactory,
   GabbyQueryProtocolContext,
   GabbyQueryProtocolContextProvider,
   PredicateFormulaEditor,
   PredicateTree,
   PredicateTreeError,
   PredicateTreeVisitors,
+  ProjectionEditorFactory,
   useJunctionProperties,
   usePredicateProperties,
   useProjectionSubjectProperties,
@@ -75,16 +80,17 @@ export {
   Validators,
 };
 export type {
+  IProjectionEditor,
   IVisitor,
-  TGabbyAssetsJson,
-  TGabbyAssets,
   TGabbyQueryProtocolContextType,
   TPredicateProperties,
   TPredicateOperator,
   TPredicateOperatorLabels,
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
+  TProjectionDictionary,
   TProjectionProperties,
   TSerializedPredicateTree,
   TValidatorResponse,
+  TValueLabelList,
 };

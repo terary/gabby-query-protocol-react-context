@@ -25,7 +25,7 @@ export type TGabbyQueryProtocolContextType = {
   operatorLabels: TPredicateOperatorLabels;
   // projection: ProjectionManager;
   // projection: Projection;
-  projectionEditor: IProjectionEditor;
+  // projectionEditor: IProjectionEditor;
 
   removePredicate: (predicateId: string) => void;
   setConjunction: (predicateId: string) => void;
@@ -34,12 +34,12 @@ export type TGabbyQueryProtocolContextType = {
   updatePredicate: (predicateId: string, node: TPredicateNode) => void;
 
   // projection
-  getOrderedProjectionList: () => TProjectionDictionary;
-  getProjectionItem: (projectionKey: string) => TProjectionProperties;
-  addProjectionItem: (projectionItem: TProjectionProperties) => string;
-  removeProjectionItem: (projectionKey: string) => void;
-  updateProjectionSubject: (
-    projectionKey: string,
-    updateProps: TProjectionPropertiesUpdatable
-  ) => void;
+  // getOrderedProjectionList: () => TProjectionDictionary;
+  // getProjectionItem: (projectionKey: string) => TProjectionProperties;
+  // addProjectionItem: (projectionItem: TProjectionProperties) => string;
+  // removeProjectionItem: (projectionKey: string) => void;
+  // updateProjectionSubject: (
+  //   projectionKey: string,
+  //   updateProps: TProjectionPropertiesUpdatable
+  // ) => void;
 };

@@ -4,8 +4,8 @@
 import QueryPredicateTreeProvider, { GabbyQueryProtocolContext } from "./context";
 
 import {
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
+  // useProjectionSubjects,
+  // useProjectionSubjectProperties,
   useJunctionProperties,
   usePredicateProperties,
 } from "./hooks";
@@ -17,8 +17,8 @@ export default QueryPredicateTreeProvider;
 
 export {
   GabbyQueryProtocolContext,
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
+  // useProjectionSubjects,
+  // useProjectionSubjectProperties,
   useJunctionProperties,
   usePredicateProperties,
 };

@@ -4,20 +4,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
-  Projection,
-  ProjectableDictionaryFactory,
-  ProjectableSubjectDictionary,
-  TProjectableSubjectsDictionaryJson,
-} from "gabby-query-protocol-projection";
-import {
-  PredicateFormulaEditor,
   PredicateFormulaEditorFactory,
-  // PredicateSubjectDictionary,
-  PredicateSubjectDictionary,
-  PredicateSubjectDictionaryFactory,
-  // ProjectionManager,
-  // ProjectableSubjects,
-  PredicateTree,
   TPredicateSubjectDictionaryJson,
 } from "gabby-query-protocol-lib";
 
@@ -30,28 +17,6 @@ import PredicateTreeProvider, { GabbyQueryProtocolContext } from ".";
 import type { TGabbyQueryProtocolContextType } from "./type";
 
 import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
-import * as projectableSubjectsJson from "../../test-resources/test-projectable-fields.json";
-import * as blueSky from "../../test-resources/test-projection-flat-file.json";
-
-// PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
-
-const predicateSubjectDictionary = PredicateSubjectDictionaryFactory.fromJson(
-  subjectsDocumentJson as TProjectableSubjectsDictionaryJson
-);
-// const predicateSubjectDictionary = PredicateSubjectDictionary.fromJson(subjectsDocumentJson);
-
-const projectableSubjects = ProjectableDictionaryFactory.fromJson(
-  projectableSubjectsJson.projectableSubjects as TProjectableSubjectsDictionaryJson
-);
-
-// const projectableSubjects = ProjectableSubjects.fromJson(
-//   projectableSubjectsJson.projectableSubjects
-// );
-
-const contextProjection = Projection.fromFlatFile(
-  blueSky.projection,
-  projectableSubjects
-);
 
 // import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
 const predicateIds: { [predicateName: string]: string } = {};
@@ -82,38 +47,19 @@ predicateIds.child1 = predicateFormulaEditor.predicatesAppend(
   }
 );
 
-// const pTree = new PredicateTree("testTree", {
-//   subjectId: "someSubjectId",
-//   operator: "$eq",
-//   value: "Component Default Tree",
-// });
-
-// const predicateIds: { [predicateName: string]: string } = {};
-// predicateIds.child0 = pTree.appendPredicate(pTree.rootNodeId, {
-//   subjectId: "subjectId_child0",
-//   operator: "$eq",
-//   value: "valueOfChild0",
-// });
-// predicateIds.child1 = pTree.appendPredicate(pTree.rootNodeId, {
-//   subjectId: "subjectId_child1",
-//   operator: "$eq",
-//   value: "valueOfChild1",
-// });
-
 interface Props {
   // predicateTree?: PredicateTree;
   children?: JSX.Element;
 }
+
 function QueryContainer({ children }: Props) {
   return (
-    <PredicateTreeProvider
-      predicateFormulaEditor={predicateFormulaEditor}
-      projectionEditor={contextProjection}
-    >
+    <PredicateTreeProvider predicateFormulaEditor={predicateFormulaEditor}>
       {children}
     </PredicateTreeProvider>
   );
 }
+
 test("GabbyQueryProtocolContext - blue sky", () => {
   const MyInjector = () => <span>The Injector</span>;
 
@@ -139,89 +85,6 @@ test(".makeEmptyPredicate - creates empty but valid QueryPredicate", () => {
       value: "",
     });
     return <span>Some dummy text</span>;
-  };
-
-  render(
-    <QueryContainer>
-      <MyInjector />
-    </QueryContainer>
-  );
-});
-test(".addProjectionItem - creates empty but valid QueryPredicate", () => {
-  const MyInjector = () => {
-    const { addProjectionItem, getProjectionItem } = React.useContext(
-      GabbyQueryProtocolContext
-    ) as TGabbyQueryProtocolContextType;
-    const newProjectionItem = {
-      subjectId: "firstname",
-      columnOrder: 1,
-      sortOrder: 1,
-      label: "Test Label",
-    };
-    React.useEffect(() => {
-      const newProjectionSubjectId = addProjectionItem(newProjectionItem);
-      const savedProjectionItem = getProjectionItem(newProjectionSubjectId);
-      expect(newProjectionItem).toStrictEqual(savedProjectionItem);
-    }, []);
-
-    return <span>Some dummy text</span>;
-  };
-
-  render(
-    <QueryContainer>
-      <MyInjector />
-    </QueryContainer>
-  );
-});
-
-test(".getOrderedProjectionList should return list of projectableSubject order by columnOrder ", () => {
-  const MyInjector = () => {
-    const { getOrderedProjectionList } = React.useContext(
-      GabbyQueryProtocolContext
-    ) as TGabbyQueryProtocolContextType;
-    const projectionList = getOrderedProjectionList();
-    const disOrderedKeys = Object.keys(projectionList);
-    let previousColumnOrder = -100000;
-    for (let i = 0; i < disOrderedKeys.length; i++) {
-      const thisProjectionItem = projectionList[disOrderedKeys[i]];
-      expect(thisProjectionItem.columnOrder).toBeGreaterThanOrEqual(previousColumnOrder);
-      previousColumnOrder = thisProjectionItem.columnOrder;
-    }
-    return <span>Some Dummy Text</span>;
-  };
-
-  render(
-    <QueryContainer>
-      <MyInjector />
-    </QueryContainer>
-  );
-});
-
-test(".getOrderedProjectionList should return list of projectableSubject order by columnOrder ", () => {
-  const MyInjector = () => {
-    // set-up
-    const { addProjectionItem, getProjectionItem, removeProjectionItem } =
-      React.useContext(GabbyQueryProtocolContext) as TGabbyQueryProtocolContextType;
-    const toBeRemovedSubject = {
-      subjectId: "firstname",
-      label: "to-be-removed",
-      columnOrder: 3,
-      sortOrder: 0,
-    };
-
-    React.useEffect(() => {
-      const removeId = addProjectionItem(toBeRemovedSubject);
-      // preCondition
-      expect(getProjectionItem(removeId)).toStrictEqual(toBeRemovedSubject);
-
-      // exercise
-      removeProjectionItem(removeId);
-
-      // post condition
-      expect(getProjectionItem(removeId)).toBeUndefined();
-    }, []);
-
-    return <span>Some Dummy Text</span>;
   };
 
   render(
@@ -416,7 +279,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
     const handleUpdate = () => {
       const revisedPredicate = {
         ...newPredicate,
-        ...{ operator: "$gte" },
+        ...{ operator: "$gt" },
       } as TPredicateProperties;
       updatePredicate(newPredicateId, revisedPredicate);
       setNewPredicate(getPredicateById(newPredicateId) || {});
@@ -474,7 +337,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
   fireEvent.click(updateButton);
   expect(
     screen.queryByText(
-      'New Predicate: {"subjectId":"firstname","operator":"$gte","value":"The New Predicate"}'
+      'New Predicate: {"subjectId":"firstname","operator":"$gt","value":"The New Predicate"}'
     )
   ).toBeInTheDocument();
 });

@@ -1,25 +1,46 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
 
 import { useProjectionSubjects, TProjectionProperties } from "../../lib";
+import type { TProjectionDictionary } from "../../lib";
+import { ProjectedSubjectWithControls } from "./ProjectedSubjectWithControls";
+import { ProjectedSubjectSimple } from "./ProjectedSubjectSimple";
 
-import { ProjectedSubject } from "./ProjectedSubject";
 import { ProjectionSubjectCreator } from "./ProjectionCreator";
+import styles from "../componentized.module.css";
+
+// const sortedByProperty = (
+//   projection: TProjectionDictionary,
+//   property: keyof TProjectionProperties
+// ) => {
+//   return Object.assign(
+//     {},
+//     ...Object.entries(projection)
+//       .sort(([xKey, xObject], [yKey, yObject]) => {
+//         // equality check not necessary for our purposes
+//         return xObject[property] > yObject[property] ? 1 : -1;
+//       })
+//       .map(([key, value]) => {
+//         return { [key]: value };
+//       })
+//   );
+// };
 
 /* eslint-disable import/prefer-default-export */
 export const ProjectionComponent = (): JSX.Element => {
-  const { projectionList, addProjectionItem, removeProjectionItem } =
-    useProjectionSubjects();
+  const {
+    addProjectionItem,
+    getProjectionOrderByProperty,
+    getColumnOrderedProjectionDictionary,
+    projectionAsJson,
+    removeProjectionItem,
+  } = useProjectionSubjects();
 
-  const [showProjectableCreator, setShowProjectableCreator] = React.useState(true);
-  // will this cause 10,000 re-render?
-  // does it cause re-render because projectionList() returns a new control every time?
-  const projection = projectionList();
-
+  const projection = getColumnOrderedProjectionDictionary();
+  // const sortedBySubjectId = sortedByProperty(projection, "label");
+  const sortedBySubjectId = getProjectionOrderByProperty("label");
   const handleAddSubject = (newProjectionItem: TProjectionProperties) => {
     addProjectionItem(newProjectionItem);
-    setShowProjectableCreator(false);
   };
 
   const handleRemoveProjectionSubjection = (projectionId: string) => {
@@ -29,44 +50,30 @@ export const ProjectionComponent = (): JSX.Element => {
   return (
     <div>
       <h3>This is the Projection</h3>
-      <span>
-        Need to make/find common state for this component? individual subject update as
-        expected but not able to update the whole thing (columnOrder should adjust)
-      </span>
-      <button
-        onClick={() => {
-          setShowProjectableCreator(true);
-        }}
-        type="button"
-      >
-        <span style={{ color: "green" }}>&#8853;</span>
-      </button>
+      <p>
+        Layout is intentionally ugly. The objective here is to demonstrate functionality.
+      </p>
+      <ProjectionSubjectCreator onFinish={handleAddSubject} />
       <br />
-      {showProjectableCreator && (
-        <ProjectionSubjectCreator
-          onFinish={handleAddSubject}
-          onCancel={() => {
-            setShowProjectableCreator(false);
-          }}
-        />
-      )}
+      <div className={styles.projectionContainerSimple}>
+        {Object.keys(projection).map((projectionKey) => {
+          return <ProjectedSubjectSimple projectionKey={projectionKey} />;
+        })}
+      </div>
       <br />
-      {Object.keys(projection).map((projectionKey) => {
-        return (
-          <React.Fragment key={projectionKey}>
-            <ProjectedSubject projectionKey={projectionKey} />
-            <button
-              onClick={() => {
+      <div className={styles.projectionContainer}>
+        {Object.keys(sortedBySubjectId).map((projectionKey) => {
+          return (
+            <ProjectedSubjectWithControls
+              projectionKey={projectionKey}
+              onRemoveItem={() => {
                 handleRemoveProjectionSubjection(projectionKey);
               }}
-              type="button"
-            >
-              <span style={{ color: "red" }}>&#10006;</span>
-            </button>
-            <br />
-          </React.Fragment>
-        );
-      })}
+            />
+          );
+        })}
+      </div>
+      Projection JSON: {JSON.stringify(projectionAsJson)}
     </div>
   );
 };

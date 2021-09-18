@@ -3,13 +3,15 @@
 import React from "react";
 import "./App.css";
 
-import QueryEditorComponentized from  "./dev-example/Componentized/QueryEditorComponentized"
+import { DemoPredicateFormulaInitialized } from  "./dev-example/PredicateFormula"
+import {DemoProjectionInitialized} from './dev-example/Projection'
 
 function App() {
   return (
     <div className="App">
+      <DemoPredicateFormulaInitialized />
       <hr />
-      <QueryEditorComponentized />
+      <DemoProjectionInitialized />
     </div>
   );
 }

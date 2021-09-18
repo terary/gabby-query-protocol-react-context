@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable import/prefer-default-export */
-
 import { useState } from "react";
 import type { TProjectionProperties } from "../../lib";
 import { useProjectionSubjects } from "../../lib";
 
 interface Props {
-  onCancel: () => void;
   onFinish: (newProjection: TProjectionProperties) => void;
 }
-export const ProjectionSubjectCreator = ({ onCancel, onFinish }: Props) => {
-  const { projectableSubjects, addProjectionItem } = useProjectionSubjects();
+
+export const ProjectionSubjectCreator = ({ onFinish }: Props): JSX.Element => {
+  //
+  const { projectableSubjects } = useProjectionSubjects();
   const [newSubject, setNewSubject] = useState({} as TProjectionProperties);
 
   const handleSubjectIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,6 +22,7 @@ export const ProjectionSubjectCreator = ({ onCancel, onFinish }: Props) => {
       columnOrder: 3,
     });
   };
+
   const handleInputChange = (
     propertyName: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -30,32 +30,32 @@ export const ProjectionSubjectCreator = ({ onCancel, onFinish }: Props) => {
     const newValue = event.currentTarget.value;
     setNewSubject({ ...newSubject, ...{ [propertyName]: newValue } });
   };
+
   const handleFinish = () => {
     onFinish(newSubject);
   };
 
   return (
     <div>
-      subject:{" "}
       <select value={newSubject.subjectId} onChange={handleSubjectIdChange}>
-        {projectableSubjects.getSubjectIds().map(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          (subjectId) => {
-            const subject = projectableSubjects.getSubjectById(subjectId);
-            return (
-              <option key={subjectId} value={subjectId}>
-                {subject.defaultLabel}
-              </option>
-            );
-          }
-        )}
+        <option value={newSubject.subjectId} selected disabled>
+          Select Column
+        </option>
+        {projectableSubjects.getSubjectIds().map((subjectId) => {
+          const subject = projectableSubjects.getSubjectById(subjectId);
+          return (
+            <option key={subjectId} value={subjectId}>
+              {subject.defaultLabel}
+            </option>
+          );
+        })}
       </select>
       <input
         value={newSubject.label}
         onChange={(e) => {
           handleInputChange("label", e);
         }}
+        placeholder="Column Label"
       />
       <input
         value={newSubject.columnOrder}
@@ -63,13 +63,13 @@ export const ProjectionSubjectCreator = ({ onCancel, onFinish }: Props) => {
         onChange={(e) => {
           handleInputChange("columnOrder", e);
         }}
+        placeholder="Column position"
       />
-      <button onClick={handleFinish} type="button">
-        <span style={{ color: "green" }}>&#10004;</span>
-      </button>
-      <button onClick={onCancel} type="button">
-        <span style={{ color: "red" }}>&#10006;</span>
-      </button>
+      {newSubject.subjectId && (
+        <button onClick={handleFinish} type="button">
+          <span style={{ color: "green" }}>&#10004; Add Column</span>
+        </button>
+      )}
     </div>
   );
 };

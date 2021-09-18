@@ -1,14 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/require-default-props */
 import * as React from "react";
-import type {
-  IProjectionEditor,
-  TProjectionProperties,
-  TProjectionPropertiesUpdatable,
-} from "gabby-query-protocol-projection";
 
-import { PredicateFormulaEditor } from "gabby-query-protocol-lib";
-
+import { PredicateFormulaEditor, Validators } from "gabby-query-protocol-lib";
 import type {
   TSerializedPredicateTree,
   TPredicateNode,
@@ -27,7 +21,7 @@ export const GabbyQueryProtocolContext =
 interface Props {
   children?: React.ReactNode;
   predicateFormulaEditor: PredicateFormulaEditor;
-  projectionEditor: IProjectionEditor;
+  // projectionEditor: IProjectionEditor;
   operatorLabels?: TPredicateOperatorLabels;
   // gabbyQueryResources: IGabbyQueryResources;
   onChange?: (flatTree: TSerializedPredicateTree) => void;
@@ -38,7 +32,7 @@ const noop = (...a: unknown[]) => {};
 const GabbyQueryProtocolContextProvider = ({
   children,
   onChange = noop,
-  projectionEditor,
+  // projectionEditor,
   operatorLabels = defaultOperatorLabels,
   predicateFormulaEditor,
 }: Props): JSX.Element => {
@@ -47,17 +41,19 @@ const GabbyQueryProtocolContextProvider = ({
     // useState to make dependents 'aware' of change.
     // change/state is managed by predicateFormulaEditor
 
-    predicateFormulaEditor.toJson().predicateTreeJson
+    predicateFormulaEditor.toJson().predicateTreeJson || {}
+    // because return time is the same as input type, input type is optional
+    // to allow for 'new' tree creation
   );
 
-  const [currentProjection, setCurrentProjection] = React.useState(
-    projectionEditor.getProjectionOrderByColumPosition()
-  );
+  // const [currentProjection, setCurrentProjection] = React.useState(
+  //   projectionEditor.getProjectionOrderByColumPosition()
+  // );
 
   // private (not exported)
-  const updateProjectionState = () => {
-    setCurrentProjection(projectionEditor.getProjectionOrderByColumPosition());
-  };
+  // const updateProjectionState = () => {
+  //   setCurrentProjection(projectionEditor.getProjectionOrderByColumPosition());
+  // };
 
   // private (not exported)
   const updateState = (newState: TSerializedPredicateTree) => {
@@ -85,8 +81,18 @@ const GabbyQueryProtocolContextProvider = ({
     return predicateFormulaEditor.predicatesGetJunctionById(nodeId);
   };
 
-  const updatePredicate = (nodeId: string, node: TPredicateNode) => {
-    predicateFormulaEditor.predicatesReplace(nodeId, node);
+  const updatePredicate = (predicateId: string, predicate: TPredicateNode) => {
+    const { hasError, errorMessages } = Validators.ValidatePredicateAgainstOperator(
+      predicate,
+      predicateFormulaEditor.subjectDictionary
+    );
+
+    if (hasError) {
+      console.log("Update Predicate had the following errors", errorMessages);
+      throw Error("Failed to update Predicate. Data validation error");
+    }
+
+    predicateFormulaEditor.predicatesReplace(predicateId, predicate);
     updateState({
       ...predicateFormulaEditor.toJson().predicateTreeJson,
     });
@@ -121,40 +127,6 @@ const GabbyQueryProtocolContextProvider = ({
   const getChildrenIds = (predicateId: string): string[] =>
     predicateFormulaEditor.predicatesGetChildrenIds(predicateId);
 
-  // **************************************     projection
-  const addProjectionItem = (projectionSubject: TProjectionProperties): string => {
-    // TODO - tmc - I think keys will change I think the getByOrder...
-    //        rekeys? the keys should remain the same but this will return {newKey:{sameKey:properties}}
-    //        ** MAYBE, I THINK **
-
-    const newProjectionKey = projectionEditor.addSubject(projectionSubject);
-    updateProjectionState();
-
-    return newProjectionKey;
-  };
-
-  const getProjectionItem = (projectionKey: string) => {
-    return projectionEditor.getProjectionSubject(projectionKey);
-  };
-
-  const getOrderedProjectionList = () => {
-    return currentProjection;
-  };
-
-  const removeProjectionItem = (projectionKey: string): void => {
-    projectionEditor.removeProjectionSubject(projectionKey);
-    updateProjectionState();
-  };
-
-  const updateProjectionSubject = (
-    projectionKey: string,
-    updateProps: TProjectionPropertiesUpdatable
-  ) => {
-    projectionEditor.updateSubject(projectionKey, updateProps);
-    updateProjectionState();
-  };
-
-  // end projection
   const exportedProperties = {
     appendPredicate,
     getChildrenIds,
@@ -162,7 +134,7 @@ const GabbyQueryProtocolContextProvider = ({
     getJunctionById,
     makeEmptyPredicate,
     operatorLabels,
-    projectionEditor,
+    // projectionEditor,
     removePredicate,
     setConjunction,
     setDisjunction,
@@ -170,11 +142,11 @@ const GabbyQueryProtocolContextProvider = ({
     updatePredicate,
 
     // projection
-    addProjectionItem,
-    getOrderedProjectionList,
-    getProjectionItem,
-    removeProjectionItem,
-    updateProjectionSubject,
+    // addProjectionItem,
+    // getOrderedProjectionList,
+    // getProjectionItem,
+    // removeProjectionItem,
+    // updateProjectionSubject,
   };
 
   return (

@@ -7,23 +7,13 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@types/jest": "^26.0.24",
+  "peerDependencies": {
     "@types/node": "^12.20.18",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
-    "commitizen": "^4.2.4",
-    "gabby-query-protocol-lib": "^1.0.0-beta.1",
-    "gabby-query-protocol-projection": "^1.0.0-beta.3",
-    "i": "^0.3.6",
-    "npm": "^7.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"
   },
   "homepage": "https://terary.github.io/gabby-query-protocol-react-context/",
@@ -59,9 +49,14 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
     "@types/lodash.clonedeep": "^4.5.6",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -72,11 +67,16 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.3"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "gabby-query-protocol-lib": "^1.1.0-beta.0",
+    "gabby-query-protocol-projection": "^1.1.0-beta.0"
   }
 }
