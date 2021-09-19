@@ -1,7 +1,10 @@
 /* eslint-disable import/prefer-default-export */
-import { EXAMPLE_JSON_BLUE_SKIES, ProjectionEditorFactory } from "../../lib";
+import {
+  EXAMPLE_JSON_BLUE_SKIES,
+  ProjectionEditorFactory,
+  GQPProjectionContextProvider,
+} from "../import-from-lib";
 
-import GQPProjectionContextProvider from "../../lib/GQPProjectionContext";
 import { ProjectionComponent } from "./ProjectionComponent";
 
 const PROJECTION_EXAMPLE_JSON = EXAMPLE_JSON_BLUE_SKIES.PROJECTION;

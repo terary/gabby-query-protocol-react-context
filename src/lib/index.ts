@@ -4,6 +4,7 @@ import {
   PredicateFormulaEditor,
   PredicateTree,
   PredicateTreeError,
+  TreeVisitors as PredicateTreeVisitors,
   Validators,
 } from "gabby-query-protocol-lib";
 
@@ -17,8 +18,6 @@ import type {
   IVisitor,
   TValueLabelList,
 } from "gabby-query-protocol-lib";
-
-import { TreeVisitors as PredicateTreeVisitors } from "gabby-query-protocol-lib/dist/Predicates/TreeVisitors";
 
 import {
   CONSTS as PROJECTION_CONSTS,
@@ -38,7 +37,8 @@ import GabbyQueryProtocolContextProvider, {
   usePredicateProperties,
 } from "./GabbyQueryProtocolContext";
 
-import {
+import GQPProjectionContextProvider, {
+  GQPProjectionContext,
   useProjectionSubjectProperties,
   useProjectionSubjects,
 } from "./GQPProjectionContext";
@@ -68,6 +68,8 @@ export {
   EXAMPLE_JSON_BLUE_SKIES,
   GabbyQueryProtocolContext,
   GabbyQueryProtocolContextProvider,
+  GQPProjectionContext,
+  GQPProjectionContextProvider,
   PredicateFormulaEditor,
   PredicateTree,
   PredicateTreeError,

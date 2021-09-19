@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import * as React from "react";
 
-import { useJunctionProperties } from "../../../lib";
+import { useJunctionProperties } from "../../import-from-lib";
 import styles from "../../componentized.module.css";
 
 export const BranchViewer = ({ nodeId, children }: BranchViewerProps): JSX.Element => {

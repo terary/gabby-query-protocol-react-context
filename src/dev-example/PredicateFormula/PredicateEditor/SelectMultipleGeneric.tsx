@@ -1,6 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useEffect, useState } from "react";
-import { TValueLabelList } from "../../../lib";
+import { TValueLabelList } from "../../import-from-lib";
 
 interface Props {
   value?: number | string;

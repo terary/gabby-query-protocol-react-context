@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { useProjectionSubjectProperties } from "../../lib";
+import { useProjectionSubjectProperties } from "../import-from-lib";
 import styles from "../componentized.module.css";
 
 interface Props {

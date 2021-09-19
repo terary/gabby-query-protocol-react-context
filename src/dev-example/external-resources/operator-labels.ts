@@ -1,5 +1,5 @@
 // cspell:disable
-import { TPredicateOperatorLabels } from "../../lib";
+import { TPredicateOperatorLabels } from "../import-from-lib";
 
 const EN: TPredicateOperatorLabels = {
   $and: "All of these",

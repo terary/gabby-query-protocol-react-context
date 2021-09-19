@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/require-default-props */
 import * as React from "react";
 
@@ -21,23 +21,21 @@ export const GabbyQueryProtocolContext =
 interface Props {
   children?: React.ReactNode;
   predicateFormulaEditor: PredicateFormulaEditor;
-  // projectionEditor: IProjectionEditor;
   operatorLabels?: TPredicateOperatorLabels;
-  // gabbyQueryResources: IGabbyQueryResources;
   onChange?: (flatTree: TSerializedPredicateTree) => void;
 }
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = (...a: unknown[]) => {};
+const noop = () => {};
 
 const GabbyQueryProtocolContextProvider = ({
   children,
   onChange = noop,
-  // projectionEditor,
   operatorLabels = defaultOperatorLabels,
   predicateFormulaEditor,
 }: Props): JSX.Element => {
   //
-  const [_queryExpression, setQueryExpression] = React.useState<TSerializedPredicateTree>(
+  //  const setQueryExpression = (param: unknown) => {};
+
+  const [queryExpression, setQueryExpression] = React.useState(
     // useState to make dependents 'aware' of change.
     // change/state is managed by predicateFormulaEditor
 
@@ -46,16 +44,6 @@ const GabbyQueryProtocolContextProvider = ({
     // to allow for 'new' tree creation
   );
 
-  // const [currentProjection, setCurrentProjection] = React.useState(
-  //   projectionEditor.getProjectionOrderByColumPosition()
-  // );
-
-  // private (not exported)
-  // const updateProjectionState = () => {
-  //   setCurrentProjection(projectionEditor.getProjectionOrderByColumPosition());
-  // };
-
-  // private (not exported)
   const updateState = (newState: TSerializedPredicateTree) => {
     onChange(newState); // pretty sure this is for debug only
     setQueryExpression(newState);
@@ -134,19 +122,11 @@ const GabbyQueryProtocolContextProvider = ({
     getJunctionById,
     makeEmptyPredicate,
     operatorLabels,
-    // projectionEditor,
     removePredicate,
     setConjunction,
     setDisjunction,
     subjectDictionary: predicateFormulaEditor.subjectDictionary,
     updatePredicate,
-
-    // projection
-    // addProjectionItem,
-    // getOrderedProjectionList,
-    // getProjectionItem,
-    // removeProjectionItem,
-    // updateProjectionSubject,
   };
 
   return (

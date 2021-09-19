@@ -8,12 +8,12 @@ import type {
   TPredicatePropertiesArrayValue,
   TPredicateSubjectWithId,
   TGabbyQueryProtocolContextType,
-} from "../../../lib";
+} from "../../import-from-lib";
 
 import InputGeneric from "./InputGeneric";
 import SelectGeneric from "./SelectGeneric";
 import SelectMultipleGeneric from "./SelectMultipleGeneric";
-import { GabbyQueryProtocolContext } from "../../../lib";
+import { GabbyQueryProtocolContext } from "../../import-from-lib";
 
 const noop = (...args: unknown[]) => {
   // console.log("PredicateBuilder noop called");

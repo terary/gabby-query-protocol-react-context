@@ -14,7 +14,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "gabby-query-protocol-lib": "^1.1.0-beta.1",
+    "gabby-query-protocol-projection": "^1.1.0-beta.0"
   },
   "homepage": "https://terary.github.io/gabby-query-protocol-react-context/",
   "repository": {
@@ -28,6 +30,7 @@
     "eject": "react-scripts eject",
     "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/lib/**/*.ts* ",
     "gabby:build": "rm -rf dist && NODE_ENV=production tsc -p tsconfig.dist.json",
+    "gabby:build:debug": "rm -rf dist && NODE_ENV=development tsc -p tsconfig.dist.json",
     "gabby:pack": "npm run gabby:build && npm pack"
   },
   "eslintConfig": {
@@ -75,8 +78,5 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "dependencies": {
-    "gabby-query-protocol-lib": "^1.1.0-beta.0",
-    "gabby-query-protocol-projection": "^1.1.0-beta.0"
-  }
+  "dependencies": {}
 }

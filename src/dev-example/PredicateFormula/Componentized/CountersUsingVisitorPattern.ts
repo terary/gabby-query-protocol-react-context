@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { PredicateFormulaEditor, PredicateTreeVisitors } from "../../../lib";
+import { PredicateFormulaEditor, PredicateTreeVisitors } from "../../import-from-lib";
 
 /**
  * Visitor pattern very useful for PredicateTree.

@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { EXAMPLE_JSON_BLUE_SKIES, PredicateFormulaEditor } from "../../../lib";
+import { EXAMPLE_JSON_BLUE_SKIES, PredicateFormulaEditor } from "../../import-from-lib";
 import QueryEditorComponent from "./QueryEditorComponent";
 import * as opLabels from "../../external-resources/operator-labels";
 

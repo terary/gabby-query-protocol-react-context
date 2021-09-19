@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { useState } from "react";
-import type { TProjectionProperties } from "../../lib";
-import { useProjectionSubjects } from "../../lib";
+import type { TProjectionProperties } from "../import-from-lib";
+import { useProjectionSubjects } from "../import-from-lib";
 
 interface Props {
   onFinish: (newProjection: TProjectionProperties) => void;

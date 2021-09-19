@@ -1,8 +1,11 @@
 /* eslint-disable react/require-default-props */
 import * as React from "react";
 
-import { GabbyQueryProtocolContextProvider, PredicateFormulaEditor } from "../../../lib";
-import type { TSerializedPredicateTree, TPredicateOperatorLabels } from "../../../lib";
+import {
+  GabbyQueryProtocolContextProvider,
+  PredicateFormulaEditor,
+} from "../../import-from-lib";
+import type { TPredicateOperatorLabels } from "../../import-from-lib";
 
 import NodeMux from "./NodeMux";
 import { LeafViewer } from "../ComponentizedComponents/LeafViewer";

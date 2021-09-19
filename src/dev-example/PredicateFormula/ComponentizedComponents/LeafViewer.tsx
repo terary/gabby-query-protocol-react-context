@@ -1,8 +1,8 @@
 /// cspell:ignore componentized
 /* eslint-disable import/prefer-default-export */
 import * as React from "react";
-import type { TPredicateProperties } from "../../../lib";
-import { usePredicateProperties } from "../../../lib";
+import type { TPredicateProperties } from "../../import-from-lib";
+import { usePredicateProperties } from "../../import-from-lib";
 import styles from "../../componentized.module.css";
 import { PredicateSubjectSelector } from "../PredicateEditor/PredicateSubjectSelector";
 

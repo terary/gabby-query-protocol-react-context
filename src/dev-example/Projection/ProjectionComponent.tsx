@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
 
-import { useProjectionSubjects, TProjectionProperties } from "../../lib";
-import type { TProjectionDictionary } from "../../lib";
+import { useProjectionSubjects } from "../import-from-lib";
+import type { TProjectionProperties } from "../import-from-lib";
 import { ProjectedSubjectWithControls } from "./ProjectedSubjectWithControls";
 import { ProjectedSubjectSimple } from "./ProjectedSubjectSimple";
 

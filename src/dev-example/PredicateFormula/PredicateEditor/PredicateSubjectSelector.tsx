@@ -3,9 +3,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
 import { PredicateEditor } from ".";
-import type { TGabbyQueryProtocolContextType, TPredicateProperties } from "../../../lib";
+import type {
+  TGabbyQueryProtocolContextType,
+  TPredicateProperties,
+} from "../../import-from-lib";
 
-import { GabbyQueryProtocolContext } from "../../../lib";
+import { GabbyQueryProtocolContext } from "../../import-from-lib";
 
 const noop = () => {};
 

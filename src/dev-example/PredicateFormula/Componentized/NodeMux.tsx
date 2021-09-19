@@ -1,6 +1,7 @@
 import * as React from "react";
-import { GabbyQueryProtocolContext } from "../../../lib";
-import type { TGabbyQueryProtocolContextType } from "../../../lib";
+import { GabbyQueryProtocolContext } from "../../import-from-lib";
+import type { TGabbyQueryProtocolContextType } from "../../import-from-lib";
+import { BranchViewer } from "../ComponentizedComponents/BranchViewer";
 
 type NodeMuxProps = {
   nodeId: string;
@@ -33,7 +34,8 @@ const NodeMux = ({ nodeId, branchView, leafView }: NodeMuxProps): JSX.Element =>
       nodeId,
       children,
     };
-    return branchView(props);
+    // return branchView(props);
+    return <BranchViewer nodeId={nodeId}>{children}</BranchViewer>;
   };
 
   const LeafView = () => {
