@@ -1,1 +1,0 @@
-gabby-query-protocol-react-context

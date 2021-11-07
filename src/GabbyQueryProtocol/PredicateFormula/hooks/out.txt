@@ -1,0 +1,8 @@
+useJunctionProperties.test.tsx.hidden
+useJunctionProperties.ts
+useOperatorLabels.ts
+usePredicateProperties.ts
+usePredicateSubjectDictionary.ts
+usePredicateSubject.ts
+usePredicateTreeUtilities.ts
+usePredicateUtilities.ts

@@ -1,0 +1,27 @@
+/* eslint-disable import/prefer-default-export */
+import React from "react";
+import type {
+  TPredicateProperties,
+  TValidatorResponse,
+  TPredicatePropertiesArrayValue,
+} from "gabby-query-protocol-lib";
+import { Validators } from "gabby-query-protocol-lib";
+import { GQPPredicateEditorContext } from "../context";
+import type { TGQPPredicateEditorContextType } from "../context";
+
+export const usePredicateUtilities = (predicateId: string) => {
+  const { getChildrenIds, isBranchNode, getPredicateById } = React.useContext(
+    GQPPredicateEditorContext
+  ) as TGQPPredicateEditorContextType;
+
+  return {
+    getChildrenIds: () => {
+      return getChildrenIds(predicateId);
+    },
+    getChildIdsOf: (predId: string) => {
+      return getChildrenIds(predId);
+    },
+    isBranchNode: isBranchNode(predicateId),
+    getPredicateById,
+  };
+};

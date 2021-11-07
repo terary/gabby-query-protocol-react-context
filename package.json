@@ -1,37 +1,59 @@
 {
-  "name": "gabby-query-protocol-react-context",
-  "version": "1.0.0-beta.1",
-  "private": false,
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "peerDependencies": {
-    "@types/node": "^12.20.18",
-    "@types/react": "^17.0.15",
+  "name": "gabby-query-protocol-mui",
+  "version": "0.1.0",
+  "homepage": "https://terary.github.io/gabby-query-protocol-www/",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@fontsource/roboto": "^4.5.1",
+    "@mui/icons-material": "^5.0.3",
+    "@mui/lab": "^5.0.0-alpha.50",
+    "@mui/material": "^5.0.3",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.28",
+    "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2",
+    "date-fns": "^2.25.0",
     "gabby-query-protocol-lib": "^1.1.0-beta.1",
-    "gabby-query-protocol-projection": "^1.1.0-beta.0"
+    "gabby-query-protocol-projection": "^1.1.0-beta.0",
+    "i18next": "^21.2.4",
+    "material-icons": "^1.8.2",
+    "material-react-toastify": "^1.0.1",
+    "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-dom": "^17.0.2",
+    "react-error-boundary": "^3.1.4",
+    "react-i18next": "^11.12.0",
+    "react-router-dom": "^5.3.0",
+    "react-test-renderer": "^17.0.2",
+    "web-vitals": "^1.1.2"
   },
-  "homepage": "https://terary.github.io/gabby-query-protocol-react-context/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/terary/gabby-query-protocol-react-context"
+  "devDependencies": {
+    "@testing-library/dom": "^8.9.1",
+    "@testing-library/user-event": "^13.3.0",
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-router-dom": "^5.3.1",
+    "@types/react-test-renderer": "^17.0.1",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript-prettier": "^4.2.0",
+    "prettier": "^2.4.1",
+    "react-scripts": "4.0.3",
+    "react-select-event": "^5.3.0",
+    "snapshot-diff": "^0.9.0",
+    "typescript": "^4.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/lib/**/*.ts* ",
-    "gabby:build": "rm -rf dist && NODE_ENV=production tsc -p tsconfig.dist.json",
-    "gabby:build:debug": "rm -rf dist && NODE_ENV=development tsc -p tsconfig.dist.json",
-    "gabby:pack": "npm run gabby:build && npm pack"
+    "test:all": "npm run test -- --watchAll=false --verbose",
+    "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/**/*.ts* "
   },
   "eslintConfig": {
     "extends": [
@@ -51,32 +73,21 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.1.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@typescript-eslint/eslint-plugin": "^4.28.5",
-    "@typescript-eslint/parser": "^4.28.5",
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "lodash.clonedeep": "^4.5.0",
-    "prettier": "^2.3.2",
-    "typescript": "^4.4.3"
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      ".*__snapshots__/.*",
+      "reportWebVitals.ts",
+      "react-app-env.d.ts",
+      "WorkBench",
+      "index.ts",
+      "type.ts",
+      "Experimental*",
+      "DateInput"
+    ]
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {}
+  }
 }

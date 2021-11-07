@@ -9,12 +9,6 @@
 /coverage
 
 # production
-/dist
-
-# testing
-/coverage
-
-# production
 /build
 
 # misc
@@ -27,11 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-predicate-tree-context-*.tgz
-notes-tmc.txt
-
-
-*.tgz
-
-*.sh
