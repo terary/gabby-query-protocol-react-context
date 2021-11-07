@@ -1,11 +1,5 @@
-import GQPProjectionContextProvider, {
-  GQPProjectionContext,
-} from "./GQPProjectionContextProvider";
+import { ProjectionContext } from "./Provider";
+import type { TProjectionContextType } from "./type";
 
-import type { TGQProjectionContextType } from "./type";
-
-export default GQPProjectionContextProvider;
-
-export { GQPProjectionContext };
-
-export type { TGQProjectionContextType };
+export { ProjectionContext };
+export type { TProjectionContextType };

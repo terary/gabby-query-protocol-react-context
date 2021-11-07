@@ -6,7 +6,7 @@ import type {
 } from "gabby-query-protocol-projection";
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 
-export type TGQProjectionContextType = {
+export type TProjectionContextType = {
   // projection
   addProjectionItem: (projectionItem: TProjectionItemProperties) => string;
   getOrderedProjectionList: () => TProjectionDictionary;

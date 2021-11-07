@@ -20,7 +20,6 @@ const projectionEditor = ProjectionEditorFactory.fromJson({
 export const DemoProjectionInitialized = (): JSX.Element => {
   const theme = useTheme();
   return (
-    // <GQPProjectionContextProvider projectionEditor={projectionEditor}>
     <div style={{ margin: "20px" }}>
       <div
         style={{
@@ -33,6 +32,5 @@ export const DemoProjectionInitialized = (): JSX.Element => {
         <ProjectionInteractive />
       </div>
     </div>
-    // </GQPProjectionContextProvider>
   );
 };

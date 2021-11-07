@@ -10,8 +10,9 @@ import {
   EXAMPLE_JSON_BLUE_SKIES,
 } from "gabby-query-protocol-projection";
 
-import { useProjectionSubjects } from "../GabbyQueryProtocol/Projections";
-import GQPProjectionContextProvider from "../GabbyQueryProtocol/Projections";
+import { ProjectionContext, ProjectionContextHooks } from "../GabbyQueryProtocol/Projections";
+const { useProjectionSubjects } = ProjectionContextHooks;
+// import GQPProjectionContextProvider from "../GabbyQueryProtocol/Projections";
 
 const PROJECTION_EXAMPLE_JSON = EXAMPLE_JSON_BLUE_SKIES;
 
@@ -93,9 +94,9 @@ export const ProjectionDemoPageRaw = (): JSX.Element => {
 export const ProjectionDemoPage = () => {
   return (
     <GabbyThemeProvider>
-      <GQPProjectionContextProvider projectionEditor={projectionEditor}>
+      <ProjectionContext.provider projectionEditor={projectionEditor}>
         <ProjectionDemoPageRaw />
-      </GQPProjectionContextProvider>
+      </ProjectionContext.provider>
     </GabbyThemeProvider>
   );
 };

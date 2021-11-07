@@ -4,13 +4,16 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useTranslation } from "react-i18next";
 import { Button, Stack } from "@mui/material";
-import { useProjectionSubjects } from "../../GabbyQueryProtocol/Projections";
+
+import { ProjectionContextHooks } from "../../GabbyQueryProtocol";
+
 import { TProjectionProperties } from "gabby-query-protocol-projection";
 import { NumberInput } from "../PredicateFormulaEditor/input/NumberInput";
 import { ButtonsFinishCancelIcon } from "../common/ButtonsFinishCancelIcon";
 import { ButtonsFinishCancelText } from "../common/ButtonsFinishCancelText";
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 import { StringInput } from "../PredicateFormulaEditor/input/StringInput";
+const { useProjectionSubjects } = ProjectionContextHooks;
 
 const nextSortOrder = (currentSortOrder: number) => {
   switch (currentSortOrder) {

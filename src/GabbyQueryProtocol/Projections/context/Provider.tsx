@@ -9,20 +9,17 @@ import type {
   TProjectionPropertiesUpdatable,
 } from "gabby-query-protocol-projection";
 
-import type { TGQProjectionContextType } from "./type";
+import type { TProjectionContextType } from "./type";
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 
-export const GQPProjectionContext = React.createContext<TGQProjectionContextType | null>(null);
+const Context = React.createContext<TProjectionContextType | null>(null);
 
-interface Props {
+type Props = {
   children?: React.ReactNode;
   projectionEditor: IProjectionEditor;
-  //   onChange?: (flatTree: TSerializedPredicateTree) => void;
-}
+};
 
-// const noop = (...a: unknown[]) => {};
-
-const GQPProjectionContextProvider = ({
+const ContextProvider = ({
   children,
   //  onChange = noop,
   projectionEditor,
@@ -102,11 +99,14 @@ Props): JSX.Element => {
     updateProjectionSubject,
   };
 
-  return (
-    <GQPProjectionContext.Provider value={exportedProperties}>
-      {children}
-    </GQPProjectionContext.Provider>
-  );
+  return <Context.Provider value={exportedProperties}>{children}</Context.Provider>;
 };
 
-export default GQPProjectionContextProvider;
+// export default GQPProjectionContextProvider;
+
+const ProjectionContext = {
+  context: Context as React.Context<TProjectionContextType>,
+  provider: ContextProvider,
+};
+
+export { ProjectionContext };

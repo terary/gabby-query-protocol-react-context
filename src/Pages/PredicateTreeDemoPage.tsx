@@ -3,17 +3,25 @@ import {
   TPredicateProperties,
   TPredicatePropertiesArrayValue,
 } from "gabby-query-protocol-lib";
-import GQPPredicateEditorContextProvider, {
-  usePredicateTreeUtilities,
-} from "../GabbyQueryProtocol/PredicateFormula";
+
+// import GQPPredicateEditorContextProvider, {
+//   usePredicateTreeUtilities,
+// } from "../GabbyQueryProtocol/PredicateFormula";
+import {
+  PredicateFormulaEditorContextHooks,
+  PredicateFormulaEditorContext,
+} from "../GabbyQueryProtocol";
+
 import { PageContentWrapper, useApplicationUtilities } from "../Application";
 import { customStyles } from "../Application/custom-styles";
 
 import { GABBY_EXAMPLE_JSON_BLUE_SKIES } from "../GabbyQueryProtocol";
-import * as predefinedOperatorLabels from "../GabbyQueryProtocol/external-resources/operator-labels";
+import { opLabelsI18N } from "../GabbyQueryProtocol";
 import { PredicateFormulaViewer } from "../GabbyComponents/PredicateFormulaViewer";
 import { Paper, Stack, Typography } from "@mui/material";
 import { TSupportedLanguages } from "../Application/i18n/type";
+const { usePredicateTreeUtilities } = PredicateFormulaEditorContextHooks;
+
 const subjectDictionaryJson =
   GABBY_EXAMPLE_JSON_BLUE_SKIES.LIB.predicateSubjectsDictionaryJson;
 const predicateFormula = GABBY_EXAMPLE_JSON_BLUE_SKIES.LIB.predicateTreeJson;
@@ -133,29 +141,29 @@ const getOperatorLabels = (languageCode: TSupportedLanguages) => {
   switch (languageCode) {
     case "ar":
     case "ar_ma":
-      return predefinedOperatorLabels.AR;
+      return opLabelsI18N.AR;
     case "en":
     case "en_gb":
     case "en_us":
-      return predefinedOperatorLabels.EN;
+      return opLabelsI18N.EN;
     case "es":
     case "es_es":
     case "es_mx":
     case "es_us":
-      return predefinedOperatorLabels.ES;
+      return opLabelsI18N.ES;
     case "th":
     case "th_th":
-      return predefinedOperatorLabels.TH;
+      return opLabelsI18N.TH;
 
     // to be explicit about missing opLabels, leave these as cases
     case "ru":
     case "ru_ru":
     case "de":
     case "de_de":
-      return predefinedOperatorLabels.EN;
+      return opLabelsI18N.EN;
 
     default:
-      return predefinedOperatorLabels.EN;
+      return opLabelsI18N.EN;
   }
 };
 
@@ -166,11 +174,11 @@ export const PredicateTreeDemoPage = (): JSX.Element => {
   const opLabels = getOperatorLabels(locale.languageCode as TSupportedLanguages);
 
   return (
-    <GQPPredicateEditorContextProvider
+    <PredicateFormulaEditorContext.provider
       predicateFormulaEditor={predicateFormulaEditor}
       operatorLabels={opLabels}
     >
       <PredicateTreeDemoPageRaw />
-    </GQPPredicateEditorContextProvider>
+    </PredicateFormulaEditorContext.provider>
   );
 };

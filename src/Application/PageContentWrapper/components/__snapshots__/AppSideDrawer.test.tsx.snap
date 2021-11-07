@@ -59,11 +59,23 @@ Array [
       >
         <a
           aria-current="page"
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding Mui-selected css-1p823my-MuiListItem-root active"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button Mui-selected css-1k05fgf-MuiButtonBase-root-MuiListItem-root active"
           href="/"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
           style={Object {}}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -89,13 +101,28 @@ Array [
               Home
             </span>
           </div>
+          <span
+            className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/predicate-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -121,13 +148,28 @@ Array [
               Predicate Tree (build)
             </span>
           </div>
+          <span
+            className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/projection-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -153,13 +195,28 @@ Array [
               Projections (Columns)
             </span>
           </div>
+          <span
+            className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/application-features"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -185,13 +242,28 @@ Array [
               Application Features
             </span>
           </div>
+          <span
+            className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/blank-page"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -217,6 +289,9 @@ Array [
               Blank Page
             </span>
           </div>
+          <span
+            className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </a>
         <li
           className="MuiListSubheader-root MuiListSubheader-gutters MuiListSubheader-inset MuiListSubheader-sticky css-mkzahr-MuiListSubheader-root"
@@ -612,11 +687,23 @@ Array [
       >
         <a
           aria-current="page"
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding Mui-selected css-1p823my-MuiListItem-root active"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button Mui-selected css-1k05fgf-MuiButtonBase-root-MuiListItem-root active"
           href="/"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
           style={Object {}}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -645,10 +732,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/predicate-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -677,10 +776,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/projection-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -709,10 +820,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/application-features"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -741,10 +864,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/blank-page"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -1144,11 +1279,23 @@ Array [
       >
         <a
           aria-current="page"
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding Mui-selected css-1p823my-MuiListItem-root active"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button Mui-selected css-1k05fgf-MuiButtonBase-root-MuiListItem-root active"
           href="/"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
           style={Object {}}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -1177,10 +1324,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/predicate-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -1209,10 +1368,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/projection-demo"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -1241,10 +1412,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/application-features"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
@@ -1273,10 +1456,22 @@ Array [
         </a>
         <a
           aria-current={null}
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-          disabled={false}
+          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-1k05fgf-MuiButtonBase-root-MuiListItem-root"
           href="/blank-page"
+          onBlur={[Function]}
           onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
         >
           <div
             className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"

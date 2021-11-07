@@ -1,38 +1,27 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react";
-
-import glib, {
-  PredicateFormulaEditor,
-  Validators,
-  TreeVisitors,
-  TPredicateJunctionPropsWithChildIds,
-} from "gabby-query-protocol-lib";
-
+import { PredicateFormulaEditor, Validators, TreeVisitors } from "gabby-query-protocol-lib";
 import type {
   TSerializedPredicateTree,
   TPredicateNode,
   TPredicateProperties,
 } from "gabby-query-protocol-lib";
-
 import { TPredicateOperatorLabels } from "../type";
-
 import { defaultOperatorLabels } from "../defaultOpLabels";
+import type { TPredicateFormulaEditorContextType } from "./type";
 
-import type { TGQPPredicateEditorContextType } from "./type";
+const Context = React.createContext<TPredicateFormulaEditorContextType | null>(null);
 
-export const GQPPredicateEditorContext =
-  React.createContext<TGQPPredicateEditorContextType | null>(null);
-
-interface Props {
+type Props = {
   children?: React.ReactNode;
   predicateFormulaEditor: PredicateFormulaEditor;
   operatorLabels?: TPredicateOperatorLabels;
   onChange?: (flatTree: TSerializedPredicateTree) => void;
-}
+};
 const noop = () => {};
 
-const GQPPredicateEditorContextProvider = ({
+const ContextProvider = ({
   children,
   onChange = noop,
   operatorLabels = defaultOperatorLabels,
@@ -172,11 +161,12 @@ const GQPPredicateEditorContextProvider = ({
     updatePredicate,
   };
 
-  return (
-    <GQPPredicateEditorContext.Provider value={exportedProperties}>
-      {children}
-    </GQPPredicateEditorContext.Provider>
-  );
+  return <Context.Provider value={exportedProperties}>{children}</Context.Provider>;
 };
 
-export default GQPPredicateEditorContextProvider;
+const PredicateFormulaEditorContext = {
+  context: Context as React.Context<TPredicateFormulaEditorContextType>,
+  provider: ContextProvider,
+};
+
+export { PredicateFormulaEditorContext };

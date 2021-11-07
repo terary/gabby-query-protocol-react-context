@@ -9,8 +9,10 @@ import type {
 } from "gabby-query-protocol-lib";
 
 import { Validators } from "gabby-query-protocol-lib";
-import { GQPPredicateEditorContext } from "../context";
-import type { TGQPPredicateEditorContextType } from "../context";
+// import { GQPPredicateEditorContext } from "../context";
+// import type { TGQPPredicateEditorContextType } from "../context";
+import { PredicateFormulaEditorContext } from "../context";
+import type { TPredicateFormulaEditorContextType } from "../context";
 
 /**
  * "NodeId" sometimes referred to as predicateId.
@@ -32,7 +34,9 @@ export const usePredicateProperties = (nodeId: string) => {
     removePredicate,
     updatePredicate,
     subjectDictionary,
-  } = React.useContext(GQPPredicateEditorContext) as TGQPPredicateEditorContextType;
+  } = React.useContext(
+    PredicateFormulaEditorContext.context
+  ) as TPredicateFormulaEditorContextType;
 
   return {
     appendPredicate: (newPredicate: TPredicateProperties) => {

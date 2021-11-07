@@ -21,12 +21,15 @@ import type {
 import { ButtonsFinishCancelText } from "../common/ButtonsFinishCancelText";
 import { ButtonsFinishCancelIcon } from "../common/ButtonsFinishCancelIcon";
 import { InputMux } from "./InputMux";
-import { usePredicateTreeUtilities } from "../../GabbyQueryProtocol/PredicateFormula";
+// import { usePredicateTreeUtilities } from "../../GabbyQueryProtocol/PredicateFormula";
+import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+
 import { Validators } from "gabby-query-protocol-lib";
 import type {
   TPredicateNodeJson,
   IPredicateSubjectDictionary,
 } from "gabby-query-protocol-lib";
+const { usePredicateTreeUtilities } = PredicateFormulaEditorContextHooks;
 
 export interface IValidatePredicateAgainstOperator {
   (

@@ -4,11 +4,12 @@ import type {
   TPredicatePropertiesArrayValue,
 } from "gabby-query-protocol-lib";
 
-import { usePredicateTreeUtilities } from "../../GabbyQueryProtocol/PredicateFormula";
+import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
 import { DateInput } from "./input/DateInput";
 import { NumberInput } from "./input/NumberInput";
 import { StringInput } from "./input/StringInput";
 import { SelectInputGeneric } from "./input/SelectInputGeneric";
+const { usePredicateTreeUtilities } = PredicateFormulaEditorContextHooks;
 
 type ValueType = number | string | (number | string)[]; // do not export.  If export is necessary change name T... (no "Type"), the convention
 

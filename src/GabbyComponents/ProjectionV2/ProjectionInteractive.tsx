@@ -1,4 +1,6 @@
-import { useProjectionSubjects } from "../../GabbyQueryProtocol/Projections";
+// import { useProjectionSubjects } from "../../GabbyQueryProtocol/Projections";
+import { ProjectionContextHooks } from "../../GabbyQueryProtocol";
+
 import { ProjectionInteractiveItemPill } from "./ProjectionInteractiveItemPill";
 import { useTheme } from "@mui/system";
 import { Theme } from "@mui/material/styles";
@@ -12,6 +14,7 @@ import {
   DraggingStyle,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
+const { useProjectionSubjects } = ProjectionContextHooks;
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);

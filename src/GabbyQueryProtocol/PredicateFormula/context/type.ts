@@ -12,7 +12,7 @@ import type {
 
 import { TPredicateOperatorLabels } from "../type";
 
-export type TGQPPredicateEditorContextType = {
+export type TPredicateFormulaEditorContextType = {
   appendPredicate: (parentNodeId: string, node: TPredicateProperties) => string;
 
   getChildrenIds: (predicateId: string) => string[];

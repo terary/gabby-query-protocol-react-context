@@ -16,7 +16,8 @@ import { IconButtonRemove } from "../common/IconButtonRemove";
 
 import { PaperItem } from "./common-utilities";
 
-import { usePredicateProperties } from "../../GabbyQueryProtocol/PredicateFormula";
+import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+const { usePredicateProperties } = PredicateFormulaEditorContextHooks;
 
 export const LeafView = ({
   predicateId,

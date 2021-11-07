@@ -9,13 +9,15 @@ import {
   TProjectableSubjectsDictionaryJson,
 } from "gabby-query-protocol-projection";
 
-import GQPProjectionContextProvider, { GQPProjectionContext } from ".";
-import type { TGQProjectionContextType } from "./type";
+// import GQPProjectionContextProvider, { GQPProjectionContext } from ".";
+import { ProjectionContext } from "./index";
+import type { TProjectionContextType } from "./type";
 
-// import * as projectableSubjectsJson from "../../test-resources/test-projectable-fields.json";
-// import * as blueSky from "../../test-resources/test-projection-flat-file.json";
 import * as projectableSubjectsJson from "../../test-data/test-projectable-fields.json";
 import * as blueSky from "../../test-data/test-projection-flat-file.json";
+
+export { ProjectionContext };
+export type { TProjectionContextType };
 
 const projectableSubjects = ProjectableDictionaryFactory.fromJson(
   projectableSubjectsJson.projectableSubjects as TProjectableSubjectsDictionaryJson
@@ -29,12 +31,9 @@ interface Props {
 }
 function QueryContainer({ children }: Props) {
   return (
-    <GQPProjectionContextProvider
-      // predicateFormulaEditor={predicateFormulaEditor}
-      projectionEditor={contextProjection}
-    >
+    <ProjectionContext.provider projectionEditor={contextProjection}>
       {children}
-    </GQPProjectionContextProvider>
+    </ProjectionContext.provider>
   );
 }
 test("GabbyQueryProtocolContext - blue sky", () => {
@@ -53,8 +52,8 @@ test("GabbyQueryProtocolContext - blue sky", () => {
 test(".addProjectionItem - creates empty but valid QueryPredicate", () => {
   const MyInjector = () => {
     const { addProjectionItem, getProjectionItem } = React.useContext(
-      GQPProjectionContext
-    ) as TGQProjectionContextType;
+      ProjectionContext.context
+    ) as TProjectionContextType;
     const newProjectionItem = {
       subjectId: "firstname",
       columnOrder: 1,
@@ -80,8 +79,8 @@ test(".addProjectionItem - creates empty but valid QueryPredicate", () => {
 test(".getOrderedProjectionList should return list of projectableSubject order by columnOrder", () => {
   const MyInjector = () => {
     const { getOrderedProjectionList } = React.useContext(
-      GQPProjectionContext
-    ) as TGQProjectionContextType;
+      ProjectionContext.context
+    ) as TProjectionContextType;
     const projectionList = getOrderedProjectionList();
     const disOrderedKeys = Object.keys(projectionList);
     let previousColumnOrder = -100000;
@@ -104,8 +103,8 @@ test(".getOrderedProjectionList should return list of projectableSubject order b
   const MyInjector = () => {
     // set-up
     const { addProjectionItem, getProjectionItem, removeProjectionItem } = React.useContext(
-      GQPProjectionContext
-    ) as TGQProjectionContextType;
+      ProjectionContext.context
+    ) as TProjectionContextType;
     const toBeRemovedSubject = {
       subjectId: "firstname",
       label: "to-be-removed",

@@ -9,7 +9,8 @@ import { PredicateEditorPopover } from "../PredicateFormulaEditor";
 import { SxProps, useTheme, Theme } from "@mui/system";
 import { blue, green } from "@mui/material/colors";
 
-import { useJunctionProperties } from "../../GabbyQueryProtocol/PredicateFormula";
+import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+const { useJunctionProperties } = PredicateFormulaEditorContextHooks;
 
 type Props = {
   predicateId: string;

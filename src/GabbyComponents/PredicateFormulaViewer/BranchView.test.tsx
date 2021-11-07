@@ -27,7 +27,8 @@ import {
 } from "gabby-query-protocol-lib";
 
 //import { AppContextProviders } from "../Application/AppContextProviders";
-import GQPPredicateEditorContextProvider from "../../GabbyQueryProtocol/PredicateFormula/context";
+// import GQPPredicateEditorContextProvider from "../../GabbyQueryProtocol/PredicateFormula/context";
+import { PredicateFormulaEditorContext } from "../../GabbyQueryProtocol";
 //import GQPPredicateEditorContextProvider from "../../GabbyQueryProtocol/contexts/GQPPredicateFormula/context";
 import { GABBY_EXAMPLE_JSON_BLUE_SKIES } from "../../GabbyQueryProtocol";
 import * as predefinedOperatorLabels from "../../GabbyQueryProtocol/external-resources/operator-labels";
@@ -59,7 +60,7 @@ type Props = {
 const PredicateEditorWithApplicationContext = ({ predicateId, children }: Props) => {
   return (
     <AppContextProviders>
-      <GQPPredicateEditorContextProvider
+      <PredicateFormulaEditorContext.provider
         predicateFormulaEditor={predicateFormulaEditor}
         operatorLabels={predefinedOperatorLabels.EN}
       >
@@ -71,7 +72,7 @@ const PredicateEditorWithApplicationContext = ({ predicateId, children }: Props)
         testSpyPredicateOnChange={testSpyPredicateOnChange}
         validator={validator}
       />{" "} */}
-      </GQPPredicateEditorContextProvider>
+      </PredicateFormulaEditorContext.provider>
     </AppContextProviders>
   );
 };

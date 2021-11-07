@@ -1,6 +1,7 @@
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 import { ProjectionItemEditor } from "./ProjectionItemEditor";
-import { useProjectionSubjects } from "../../GabbyQueryProtocol/Projections";
+import { ProjectionContextHooks } from "../../GabbyQueryProtocol";
+
 import { useRef, useState } from "react";
 import { PopoverContainer } from "../common/PopoverContainer";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +9,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import { useTheme } from "@mui/system";
 import { customStyles } from "../../Application/custom-styles";
 import { Theme } from "@mui/material/styles";
+const { useProjectionSubjects } = ProjectionContextHooks;
 
 export const ProjectionItemCreator = () => {
   const theme = useTheme;

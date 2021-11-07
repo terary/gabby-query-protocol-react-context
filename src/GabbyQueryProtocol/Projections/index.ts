@@ -1,14 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/order */
-/* eslint-disable import/first */
-import GQPProjectionContextProvider, { GQPProjectionContext } from "./context";
-
+import { ProjectionContext } from "./context";
+import type { TProjectionContextType } from "./context";
 import { useProjectionSubjects, useProjectionSubjectProperties } from "./hooks";
 
-import type { TGQProjectionContextType } from "./context";
+const ProjectionContextHooks = {
+  useProjectionSubjects,
+  useProjectionSubjectProperties,
+};
 
-export default GQPProjectionContextProvider;
-
-export { GQPProjectionContext, useProjectionSubjects, useProjectionSubjectProperties };
-
-export type { TGQProjectionContextType };
+export type { TProjectionContextType };
+export { ProjectionContextHooks, ProjectionContext };

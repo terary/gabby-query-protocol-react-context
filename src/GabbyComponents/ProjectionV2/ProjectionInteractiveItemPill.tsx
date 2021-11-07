@@ -2,13 +2,11 @@ import Chip from "@mui/material/Chip";
 import { IconButtonRemove } from "../common/IconButtonRemove";
 import { AscDesIconButton } from "./projection-pill-components/AscDesIconButton";
 
-import {
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
-} from "../../GabbyQueryProtocol/Projections";
+import { ProjectionContextHooks } from "../../GabbyQueryProtocol";
 
 import { EditableLabel } from "./projection-pill-components/EditableLabel";
 
+const { useProjectionSubjects, useProjectionSubjectProperties } = ProjectionContextHooks;
 const nextSortOrder = (currentSortOrder: number) => {
   switch (currentSortOrder) {
     case -1:

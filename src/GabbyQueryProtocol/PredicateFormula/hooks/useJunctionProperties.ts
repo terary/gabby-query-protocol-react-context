@@ -5,8 +5,9 @@ import type {
   TPredicateProperties,
 } from "gabby-query-protocol-lib";
 
-import { GQPPredicateEditorContext, TGQPPredicateEditorContextType } from "../context";
-
+// import { GQPPredicateEditorContext, TGQPPredicateEditorContextType } from "../context";
+import { PredicateFormulaEditorContext } from "../context";
+import type { TPredicateFormulaEditorContextType } from "../context";
 export const useJunctionProperties = (predicateId: string) => {
   const {
     appendPredicate,
@@ -20,7 +21,9 @@ export const useJunctionProperties = (predicateId: string) => {
     removePredicate,
     setConjunction: setNodeConjunction,
     setDisjunction: setNodeDisjunction,
-  } = React.useContext(GQPPredicateEditorContext) as TGQPPredicateEditorContextType;
+  } = React.useContext(
+    PredicateFormulaEditorContext.context
+  ) as TPredicateFormulaEditorContextType;
   //
   return {
     // queryPredicate:  getJunctionById(nodeId) as TPredicatePropertiesJunction,

@@ -13,8 +13,10 @@ import type {
   TPredicateProperties,
 } from "gabby-query-protocol-lib";
 
-import GQPPredicateEditorContextProvider, { GQPPredicateEditorContext } from "./Provider";
-import type { TGQPPredicateEditorContextType } from "./type";
+// import GQPPredicateEditorContextProvider, { GQPPredicateEditorContext } from "./Provider";
+import { PredicateFormulaEditorContext } from "./Provider";
+import type { TPredicateFormulaEditorContextType } from "./type";
+// import type { TGQPPredicateEditorContextType } from "./type";
 
 // import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
 import subjectsDocumentJson from "../../test-data/test-predicate-subject-dictionary.json";
@@ -55,9 +57,9 @@ interface Props {
 
 function QueryContainer({ children }: Props) {
   return (
-    <GQPPredicateEditorContextProvider predicateFormulaEditor={predicateFormulaEditor}>
+    <PredicateFormulaEditorContext.provider predicateFormulaEditor={predicateFormulaEditor}>
       {children}
-    </GQPPredicateEditorContextProvider>
+    </PredicateFormulaEditorContext.provider>
   );
 }
 
@@ -77,8 +79,8 @@ test("GabbyQueryProtocolContext - blue sky", () => {
 test(".makeEmptyPredicate - creates empty but valid QueryPredicate", () => {
   const MyInjector = () => {
     const { makeEmptyPredicate } = React.useContext(
-      GQPPredicateEditorContext
-    ) as TGQPPredicateEditorContextType;
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
 
     expect(makeEmptyPredicate()).toStrictEqual({
       operator: "$eq",
@@ -98,8 +100,8 @@ test(".makeEmptyPredicate - creates empty but valid QueryPredicate", () => {
 test(".getPredicateProperties works as expected", () => {
   const MyInjector = () => {
     const { getPredicateById } = React.useContext(
-      GQPPredicateEditorContext
-    ) as TGQPPredicateEditorContextType;
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
 
     const root = getPredicateById(
       predicateFormulaEditor.rootNodeId
@@ -134,8 +136,8 @@ test(".getPredicateProperties works as expected", () => {
 test(".getPredicateProperties works as expected (2)", () => {
   const MyInjector = () => {
     const { getPredicateById } = React.useContext(
-      GQPPredicateEditorContext
-    ) as TGQPPredicateEditorContextType;
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
 
     const root = getPredicateById(
       predicateFormulaEditor.rootNodeId
@@ -169,8 +171,8 @@ test(".getPredicateProperties works as expected (2)", () => {
 test(".setDisjunction, .setConjunction works as expected", () => {
   const MyInjector = () => {
     const { getPredicateById, setDisjunction, setConjunction } = React.useContext(
-      GQPPredicateEditorContext
-    ) as TGQPPredicateEditorContextType;
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
     const root = getPredicateById(
       predicateFormulaEditor.rootNodeId
     ) as TPredicatePropertiesJunction;
@@ -219,8 +221,8 @@ test(".setDisjunction, .setConjunction works as expected", () => {
 test(".removePredicate & .getChildrenIds works as expected", () => {
   const MyInjector = () => {
     const { getChildrenIds, removePredicate } = React.useContext(
-      GQPPredicateEditorContext
-    ) as TGQPPredicateEditorContextType;
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
     const childrenIds = getChildrenIds(predicateFormulaEditor.rootNodeId);
     const handleRemovePredicate = () => {
       removePredicate(predicateIds.child0);
@@ -257,7 +259,9 @@ test(".removePredicate & .getChildrenIds works as expected", () => {
 test(".appendPredicate & .updatePredicate works as expected", () => {
   const MyInjector = () => {
     const { appendPredicate, updatePredicate, getChildrenIds, getPredicateById } =
-      React.useContext(GQPPredicateEditorContext) as TGQPPredicateEditorContextType;
+      React.useContext(
+        PredicateFormulaEditorContext.context
+      ) as TPredicateFormulaEditorContextType;
 
     const [newPredicateId, setNewPredicateId] = React.useState("");
     const [newPredicate, setNewPredicate] = React.useState({});

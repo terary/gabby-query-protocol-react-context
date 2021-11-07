@@ -1,7 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 import React from "react";
-import { GQPPredicateEditorContext } from "../context";
-import type { TGQPPredicateEditorContextType } from "../context";
+// import { GQPPredicateEditorContext } from "../context";
+// import type { TGQPPredicateEditorContextType } from "../context";
+import { PredicateFormulaEditorContext } from "../context";
+import type { TPredicateFormulaEditorContextType } from "../context";
+
 import type {
   TPredicateOperator,
   TValidOperatorList,
@@ -11,8 +14,8 @@ import type {
 
 export const usePredicateTreeUtilities = () => {
   const { getPredicateTreeAsJson, operatorLabels, subjectDictionary } = React.useContext(
-    GQPPredicateEditorContext
-  ) as TGQPPredicateEditorContextType;
+    PredicateFormulaEditorContext.context
+  ) as TPredicateFormulaEditorContextType;
 
   return {
     something: () => {

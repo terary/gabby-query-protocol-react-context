@@ -1,10 +1,5 @@
-// import { PredicateTree } from "./PredicateTree";
-import GQPPredicateEditorContextProvider, { GQPPredicateEditorContext } from "./Provider";
+import { PredicateFormulaEditorContext } from "./Provider";
+import type { TPredicateFormulaEditorContextType } from "./type";
 
-import type { TGQPPredicateEditorContextType } from "./type";
-
-export default GQPPredicateEditorContextProvider;
-
-export { GQPPredicateEditorContext };
-
-export type { TGQPPredicateEditorContextType };
+export { PredicateFormulaEditorContext };
+export type { TPredicateFormulaEditorContextType };

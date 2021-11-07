@@ -1,8 +1,12 @@
 {
-  "name": "gabby-query-protocol-mui",
-  "version": "0.1.0",
-  "homepage": "https://terary.github.io/gabby-query-protocol-www/",
+  "name": "gabby-query-protocol-react-context",
+  "version": "1.0.0-beta.1",
   "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -53,7 +57,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:all": "npm run test -- --watchAll=false --verbose",
-    "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/**/*.ts* "
+    "coverage": "npm run test -- --watchAll=false --verbose --coverage  --collectCoverageFrom=src/GabbyQueryProtocol/**/*.ts* ",
+    "gabby:build": "rm -rf dist && NODE_ENV=production tsc -p tsconfig.dist.json",
+    "gabby:build:debug": "rm -rf dist && NODE_ENV=development tsc -p tsconfig.debug.json",
+    "gabby:pack": "npm run gabby:build && npm pack",
+    "gabby:rebuild:pack": "npm run gabby:build && npm run gabby:pack"
   },
   "eslintConfig": {
     "extends": [
@@ -83,6 +91,11 @@
       "type.ts",
       "Experimental*",
       "DateInput"
+    ],
+    "testMatch": [
+      "GabbyQueryProtocol/*.[jt]s?(x)",
+      "GabbyQueryProtocol/**/?(*.)+(spec|test).[jt]s?(x)",
+      "**/GabbyQueryProtocol/**/*.test.ts(x)"
     ]
   },
   "config": {

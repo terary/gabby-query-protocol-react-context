@@ -5,9 +5,8 @@ import Grid from "@mui/material/Grid";
 // import { predicateFormulaContextUtils } from "../../GabbyQueryProtocol/PredicateFormula";
 import { MuxView } from "./MuxView";
 
-import { useJunctionProperties } from "../../GabbyQueryProtocol/PredicateFormula";
-// const { usePredicateUtilities } = predicateFormulaContextUtils.hooks;
-//const { useJunctionProperties } = predicateFormulaContextUtils.hooks;
+import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+const { useJunctionProperties } = PredicateFormulaEditorContextHooks;
 
 type Props = {
   rootPredicateId: string;

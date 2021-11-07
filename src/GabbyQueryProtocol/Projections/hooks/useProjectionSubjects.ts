@@ -1,7 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 import { TProjectionItemPropertyName } from "gabby-query-protocol-projection";
 import React from "react";
-import { GQPProjectionContext, TGQProjectionContextType } from "../context";
+// import { GQPProjectionContext, TGQProjectionContextType } from "../context";
+import { ProjectionContext } from "../context";
+import type { TProjectionContextType } from "../context";
 
 export const useProjectionSubjects = () => {
   const {
@@ -11,7 +13,7 @@ export const useProjectionSubjects = () => {
     projectionEditor,
     removeProjectionItem,
     updateProjectionSubject,
-  } = React.useContext(GQPProjectionContext) as TGQProjectionContextType;
+  } = React.useContext(ProjectionContext.context) as TProjectionContextType;
   return {
     addProjectionItem,
     getColumnOrderedProjectionDictionary: getOrderedProjectionList,
