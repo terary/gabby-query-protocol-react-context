@@ -3,12 +3,29 @@
   "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
   "cSpell.words": [
-    "CONSTS",
+    "Projectable",
     "betweeni",
     "betweenx",
+    "clonedeep",
+    "consts",
     "datetime",
+    "differencewith",
     "firstname",
     "lastname",
-    "projectable"
-  ]
+    "nany",
+    "projectables",
+    "testables"
+  ],
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true
+  },
+  "jest.autoRun": {
+    "watch": false,
+    "onSave": "test-file",
+    "onStartup": ["all-tests"]
+  },
+  "jest.jestCommandLine": "npm run test --"
 }

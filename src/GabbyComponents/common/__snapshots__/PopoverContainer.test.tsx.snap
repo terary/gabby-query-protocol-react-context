@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popover Container Snapshots should be unchanged Should render component within popover container 1`] = `
+<div
+  data-testid="parent-outer-div"
+>
+  <button
+    data-testid="parent-open-button"
+    onClick={[Function]}
+  >
+    Open Child
+  </button>
+  <button
+    data-testid="click-away-button"
+    onClick={[Function]}
+  >
+    Click Away Button
+  </button>
+  <div
+    data-testid="click-away-area"
+    style={
+      Object {
+        "height": "50px",
+        "width": "50px",
+      }
+    }
+  >
+    Click-away area
+  </div>
+</div>
+`;

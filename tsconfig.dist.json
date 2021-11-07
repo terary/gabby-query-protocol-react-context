@@ -4,21 +4,14 @@
     "declaration": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "moduleResolution": "node",
     "outDir": "./dist",
     "resolveJsonModule": true,
     "strict": true,
     "skipLibCheck": true,
     "target": "es5",
-    "sourceMap": true,
-
+    "sourceMap": true
   },
-  "include": [
-    "src/lib/index.ts"
-  ]
+  "include": ["src/GabbyQueryProtocol/index.ts"]
 }

@@ -1,0 +1,19 @@
+Work out number input 
+  decimal - doesn't really accept decimal points, have to back-arrow
+  integer - doesn't accept negative - or nothing.  
+  
+  Should still accept then error value then indicate error on click 'ok'
+  
+  *** Resolved for Predicates, Projection remains an issue. 
+  This app+projection+dragdrop have issues with column index and negative numbers
+  That should be resolved before trying to fix this issue with projections. 
+https://github.com/terary/gabby-query-protocol-lib/issues/31
+
+
+Allow/Facilitate - predicate with one and only one valid operator. Specifically multi-select.
+*** Seems to work ok 
+
+rename 'TGQPPredicateEditorContextType' and other 'GQPPredicateEditor' to just plane PredicateEditor
+ 
+
+nav links should not change color for visited links. 
