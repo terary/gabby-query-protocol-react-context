@@ -1,4 +1,2 @@
-import { useProjectionSubjects } from "./useProjectionSubjects";
-import { useProjectionSubjectProperties } from "./useProjectionSubjectProperties";
-
-export { useProjectionSubjects, useProjectionSubjectProperties };
+export { useProjectionSubjects } from "./useProjectionSubjects";
+export { useProjectionUtilities } from "./useProjectionUtilities";

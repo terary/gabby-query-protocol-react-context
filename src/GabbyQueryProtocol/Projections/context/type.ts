@@ -5,6 +5,7 @@ import type {
   IProjectionEditor,
 } from "gabby-query-protocol-projection";
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
+export type { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 
 export type TProjectionContextType = {
   // projection

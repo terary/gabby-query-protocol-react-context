@@ -34,9 +34,8 @@ const ContextProvider = ({
     // useState to make dependents 'aware' of change.
     // change/state is managed by predicateFormulaEditor
 
-    predicateFormulaEditor.toJson().predicateTreeJson || {}
-    // because return time is the same as input type, input type is optional
-    // to allow for 'new' tree creation
+    //    predicateFormulaEditor.toJson().predicateTreeJson || {}
+    predicateFormulaEditor.toJson().predicateTreeJson
   );
 
   const updateState = (newState: TSerializedPredicateTree) => {
@@ -45,6 +44,13 @@ const ContextProvider = ({
   };
 
   const appendPredicate = (parentNodeId: string, term: TPredicateProperties): string => {
+    const parentNode = predicateFormulaEditor.predicateTree.getPredicateById(parentNodeId);
+    // this is a band-aid to get around the fact that the predicateFormulaEditor
+    // appends to non-existing nodes
+    // https://github.com/terary/gabby-query-protocol-lib/issues/34
+    if (parentNode === null) {
+      throw Error("parentNodeId not found");
+    }
     const newPredicateId = predicateFormulaEditor.predicatesAppend(parentNodeId, term);
     updateState({
       ...predicateFormulaEditor.toJson().predicateTreeJson,
@@ -64,12 +70,13 @@ const ContextProvider = ({
     const leafVisitor = new TreeVisitors.PredicateIdsLeafs();
 
     predicateFormulaEditor.predicateTree.acceptVisitor(leafVisitor);
-    return leafVisitor.predicateIds || [];
+    return leafVisitor.predicateIds;
+    //    return leafVisitor.predicateIds || [];
   };
 
-  const getRootId = () => {
-    return predicateFormulaEditor.rootNodeId;
-  };
+  // const getRootId = () => {
+  //   return predicateFormulaEditor.rootNodeId;
+  // };
 
   const getPredicateLeafById = (predicateId: string) => {
     return predicateFormulaEditor.predicatesGetPropertiesById(predicateId);
@@ -81,10 +88,6 @@ const ContextProvider = ({
   const getJunctionById = (nodeId: string) => {
     //  does throw
     return predicateFormulaEditor.predicatesGetJunctionById(nodeId);
-    // if (isBranchNode(nodeId)) {
-
-    // }
-    // return {} as TPredicateJunctionPropsWithChildIds;
   };
 
   const getPredicateTreeAsJson = (): TSerializedPredicateTree => {
@@ -137,10 +140,12 @@ const ContextProvider = ({
     });
   };
 
-  const getChildrenIds = (predicateId: string): string[] =>
-    isBranchNode(predicateId)
+  const getChildrenIds = (predicateId: string): string[] => {
+    const debugC = predicateFormulaEditor.predicatesGetChildrenIds(predicateId);
+    return isBranchNode(predicateId)
       ? predicateFormulaEditor.predicatesGetChildrenIds(predicateId)
       : [];
+  };
 
   const exportedProperties = {
     appendPredicate,
@@ -166,7 +171,8 @@ const ContextProvider = ({
 
 const PredicateFormulaEditorContext = {
   context: Context as React.Context<TPredicateFormulaEditorContextType>,
-  provider: ContextProvider,
+  // provider: ContextProvider,
+  Provider: ContextProvider,
 };
 
 export { PredicateFormulaEditorContext };

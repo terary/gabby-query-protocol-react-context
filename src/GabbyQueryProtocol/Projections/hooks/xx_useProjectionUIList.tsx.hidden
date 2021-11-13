@@ -1,0 +1,48 @@
+/* eslint-disable import/prefer-default-export */
+import React from "react";
+import { TProjectionItemPropertyName } from "gabby-query-protocol-projection";
+import type {
+  TProjectionDictionary,
+  IProjectableSubjectDictionary,
+} from "gabby-query-protocol-projection";
+import { ProjectionContext } from "../context";
+import type { TProjectionContextType, TProjectionItemProperties } from "../context";
+
+export interface IUseProjectionUIList {
+  // moveToColumnPosition: (projectionKey: string, columnPosition: number) => void;
+  // normalizeIndexes: () => void;
+  updateSubjectColumnPosition: (projectionKey: string, newColumnPosition: number) => void;
+}
+
+export const useProjectionUIList = (): IUseProjectionUIList => {
+  const {
+    addProjectionItem,
+    getOrderedProjectionList,
+    makeDefaultProjectionItem,
+    projectionEditor,
+    removeProjectionItem,
+    updateProjectionSubject,
+  } = React.useContext(ProjectionContext.context) as TProjectionContextType;
+  return {
+    // moveToColumnPosition: (projectionKey: string, columnPosition: number) => {
+    //   Object.entries(getOrderedProjectionList()).forEach(([key, projection], idx) => {
+    //     if (projection.columnOrder >= columnPosition) {
+    //       projection.columnOrder++;
+    //     } else if (projection.columnOrder < columnPosition) {
+    //       projection.columnOrder--;
+    //     }
+    //   });
+    //   updateProjectionSubject(projectionKey, { columnOrder: columnPosition });
+    // },
+    // normalizeIndexes: () => {
+    //   Object.keys(getOrderedProjectionList()).forEach((projectionKey, idx) => {
+    //     updateProjectionSubject(projectionKey, { columnOrder: idx });
+    //   });
+    // },
+
+    // removeProjectionItem,
+    updateSubjectColumnPosition: (projectionKey: string, newColumnPosition: number) => {
+      updateProjectionSubject(projectionKey, { columnOrder: newColumnPosition });
+    },
+  };
+};

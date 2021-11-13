@@ -6,7 +6,7 @@ import { ProjectionContextHooks } from "../../GabbyQueryProtocol";
 
 import { EditableLabel } from "./projection-pill-components/EditableLabel";
 
-const { useProjectionSubjects, useProjectionSubjectProperties } = ProjectionContextHooks;
+const { useProjectionSubjects } = ProjectionContextHooks;
 const nextSortOrder = (currentSortOrder: number) => {
   switch (currentSortOrder) {
     case -1:
@@ -24,23 +24,24 @@ type Props = {
   projectionId: string;
 };
 export const ProjectionInteractiveItemPill = ({ projectionId }: Props) => {
+  // TODO - *tmc* make sure the getProjectedItem(projectionId) doesn't wreak havoc with re-render
   const { removeProjectionItem } = useProjectionSubjects();
-
-  const {
-    projectedSubject: initialProjectionItem,
-    updateProjectionSubject: updateProjectionItem,
-  } = useProjectionSubjectProperties(projectionId);
+  const { getProjectedItem, updateProjectedItem } = useProjectionSubjects();
+  // const {
+  //   // projectedSubject: initialProjectionItem,
+  //   updateProjectionSubject: updateProjectionItem,
+  // } = useProjectionSubjectProperties(projectionId);
 
   const handleSortOrderChange = () => {
-    updateProjectionItem({
-      ...initialProjectionItem,
-      sortOrder: nextSortOrder(initialProjectionItem.sortOrder),
+    updateProjectedItem(projectionId, {
+      ...getProjectedItem(projectionId),
+      sortOrder: nextSortOrder(getProjectedItem(projectionId).sortOrder),
     });
   };
 
   const handelUpdateLabel = (newText: string) => {
-    updateProjectionItem({
-      ...initialProjectionItem,
+    updateProjectedItem(projectionId, {
+      ...getProjectedItem(projectionId),
       label: newText,
     });
   };
@@ -50,11 +51,14 @@ export const ProjectionInteractiveItemPill = ({ projectionId }: Props) => {
       icon={
         <AscDesIconButton
           onSortOrderClick={handleSortOrderChange}
-          sortOrder={initialProjectionItem.sortOrder}
+          sortOrder={getProjectedItem(projectionId).sortOrder}
         />
       }
       label={
-        <EditableLabel labelText={initialProjectionItem.label} onChange={handelUpdateLabel} />
+        <EditableLabel
+          labelText={getProjectedItem(projectionId).label}
+          onChange={handelUpdateLabel}
+        />
       }
       onDelete={() => removeProjectionItem(projectionId)}
       deleteIcon={<IconButtonRemove onClick={() => removeProjectionItem(projectionId)} />}

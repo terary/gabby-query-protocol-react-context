@@ -13,6 +13,7 @@ import { ButtonsFinishCancelIcon } from "../common/ButtonsFinishCancelIcon";
 import { ButtonsFinishCancelText } from "../common/ButtonsFinishCancelText";
 import { TProjectionItemProperties } from "gabby-query-protocol-projection/dist/ProjectionEditor";
 import { StringInput } from "../PredicateFormulaEditor/input/StringInput";
+import { useProjectionUtilities } from "../../GabbyQueryProtocol/Projections/hooks/useProjectionUtilities";
 const { useProjectionSubjects } = ProjectionContextHooks;
 
 const nextSortOrder = (currentSortOrder: number) => {
@@ -57,7 +58,9 @@ export const ProjectionItemEditor = ({
   const { t } = useTranslation();
   const [newProjectionItem, setNewProjectionItem] =
     useState<TProjectionItemProperties>(initialProjectionItem);
-  const subjectionDictionary = useProjectionSubjects().getProjectableSubjectDictionary();
+  // const subjectionDictionary = useProjectionSubjects().getProjectableSubjectDictionary();
+  const subjectionDictionary = useProjectionUtilities().getProjectableSubjectDictionary();
+
   const projectableSubjectIds = subjectionDictionary.getSubjectIds();
 
   const handleSubjectSelectChange = (event: SelectChangeEvent, child: any) => {

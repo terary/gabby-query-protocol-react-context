@@ -17,7 +17,8 @@ import { IconButtonRemove } from "../common/IconButtonRemove";
 import { PaperItem } from "./common-utilities";
 
 import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
-const { usePredicateProperties } = PredicateFormulaEditorContextHooks;
+const { usePredicateProperties, usePredicateTreeUtilities } =
+  PredicateFormulaEditorContextHooks;
 
 export const LeafView = ({
   predicateId,
@@ -38,21 +39,15 @@ export const LeafView = ({
     appendPredicate,
     getPredicateLeafProperties,
     isRoot,
-    makeEmptyPredicate,
-    operatorLabels,
-    updateMe,
+    updateCurrentPredicate,
     removeCurrentPredicate,
-    subjectDictionary,
   } = usePredicateProperties(predicateId);
+
+  const { makeEmptyPredicate, operatorLabels, subjectDictionary } =
+    usePredicateTreeUtilities();
+
   const { predicateProperties } = getPredicateLeafProperties();
   const currentSubject = subjectDictionary.getSubject(predicateProperties.subjectId);
-  // React.useEffect(() => {
-  //   setContainerWidth(
-  //     // @ts-ignore
-  //     editorContainerRef.current ? editorContainerRef.current.offsetWidth : 0
-  //     console.log('Set Container width:')
-  //   );
-  // }, [editorContainerRef.current]);
 
   const handleRemoveClick = () => {
     removeCurrentPredicate();
@@ -62,7 +57,7 @@ export const LeafView = ({
     predicateProperties: TPredicateProperties | TPredicatePropertiesArrayValue
   ) => {
     // this should run validator first
-    updateMe(predicateProperties);
+    updateCurrentPredicate(predicateProperties);
     setIsOpenForEdit(false);
   };
 

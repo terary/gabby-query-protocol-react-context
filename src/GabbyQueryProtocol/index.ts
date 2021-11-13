@@ -3,7 +3,11 @@ import {
   CONSTS as PROJECTION_CONSTS,
   EXAMPLE_JSON_BLUE_SKIES as PROJECTION_EXAMPLE_JSON_BLUE_SKIES,
 } from "gabby-query-protocol-projection";
-import { ProjectionContextHooks, ProjectionContext } from "./Projections";
+import {
+  ProjectionContext,
+  useProjectionSubjects,
+  useProjectionUtilities,
+} from "./Projections";
 import type { TProjectionContextType } from "./Projections";
 
 // ------------------ Predicate Formula
@@ -12,6 +16,7 @@ import {
   EXAMPLE_JSON_BLUE_SKIES as LIB_EXAMPLE_JSON_BLUE_SKIES,
 } from "gabby-query-protocol-lib";
 import type { TPredicateFormulaEditorContextType } from "./PredicateFormula";
+
 import {
   PredicateFormulaEditorContextHooks,
   PredicateFormulaEditorContext,
@@ -33,11 +38,16 @@ const GABBY_CONSTS = {
 // ------------------------ Export
 export { GABBY_EXAMPLE_JSON_BLUE_SKIES, GABBY_CONSTS, opLabelsI18N };
 
+export const ProjectionContextHooks = {
+  useProjectionSubjects,
+  useProjectionUtilities,
+};
+
 export {
   PredicateFormulaEditorContext,
   PredicateFormulaEditorContextHooks,
   ProjectionContext,
-  ProjectionContextHooks,
+  // ProjectionContextHooks,
 };
 
 export type { TPredicateFormulaEditorContextType, TProjectionContextType };

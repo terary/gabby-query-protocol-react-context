@@ -3,19 +3,31 @@ import React from "react";
 import type {
   TPredicatePropertiesJunction,
   TPredicateProperties,
+  TPredicateNode,
 } from "gabby-query-protocol-lib";
 
-// import { GQPPredicateEditorContext, TGQPPredicateEditorContextType } from "../context";
 import { PredicateFormulaEditorContext } from "../context";
 import type { TPredicateFormulaEditorContextType } from "../context";
-export const useJunctionProperties = (predicateId: string) => {
+
+export interface IUseJunctionProperties {
+  appendPredicate: (newPredicate: TPredicateProperties) => string;
+  getChildrenIds: () => string[];
+  getChildIdsOf: (predicateId: string) => string[];
+  getJunctionProperties: () => TPredicatePropertiesJunction;
+  getPredicateById: (predicateId: string) => TPredicateNode | null;
+  isBranchNode: boolean;
+  isRoot: boolean;
+  removeCurrentPredicateJunction: () => void;
+  setConjunction: () => void;
+  setDisjunction: () => void;
+}
+
+export const useJunctionProperties = (predicateId: string): IUseJunctionProperties => {
   const {
     appendPredicate,
     getChildrenIds,
-    operatorLabels,
     getJunctionById,
     getPredicateById,
-    makeEmptyPredicate,
     isBranchNode,
     isRoot,
     removePredicate,
@@ -24,58 +36,42 @@ export const useJunctionProperties = (predicateId: string) => {
   } = React.useContext(
     PredicateFormulaEditorContext.context
   ) as TPredicateFormulaEditorContextType;
-  //
-  return {
-    // queryPredicate:  getJunctionById(nodeId) as TPredicatePropertiesJunction,
 
+  if (!isBranchNode(predicateId)) {
+    throw new Error("Tried useJunctionProperties on non junction/branch node");
+  }
+
+  return {
     appendPredicate: (newPredicate: TPredicateProperties) => {
-      appendPredicate(predicateId, newPredicate);
+      return appendPredicate(predicateId, newPredicate);
     },
 
     getChildrenIds: () => {
       return getChildrenIds(predicateId);
     },
+    getChildIdsOf: (predicateId: string) => {
+      return getChildrenIds(predicateId);
+    },
 
-    getPredicateProperties: (): TPredicatePropertiesJunction => {
-      // *tmc* debug
+    getJunctionProperties: (): TPredicatePropertiesJunction => {
+      // does throw
       return getJunctionById(predicateId);
     },
-    isBranch: isBranchNode(predicateId),
+    getPredicateById, // utility function. getSomeOtherPredicateById(predicateId) may be better name
+
+    isBranchNode: isBranchNode(predicateId),
     isRoot: isRoot(predicateId),
-    makeEmptyPredicate,
 
-    operatorLabels,
-
-    removeMe: () => {
-      removePredicate(predicateId);
-    },
-    removePredicateJunction: () => {
+    removeCurrentPredicateJunction: () => {
       removePredicate(predicateId);
     },
 
     setConjunction: () => {
-      // untestable
-      // tests gives: "Maximum update depth exceeded"
-      // doesn't seem to be an issue when running in dev/prod.
-      // not sure why tests do it
       setNodeConjunction(predicateId);
     },
 
     setDisjunction: () => {
-      // untestable
-      // tests gives: "Maximum update depth exceeded"
-      // doesn't seem to be an issue when running in dev/prod.
-      // not sure why tests do it
       setNodeDisjunction(predicateId);
     },
-    /// *************************************************
-    // getChildrenIds: () => {
-    //   return getChildrenIds(predicateId);
-    // },
-    getChildIdsOf: (predicateId: string) => {
-      return getChildrenIds(predicateId);
-    },
-    isBranchNode: isBranchNode(predicateId),
-    getPredicateById,
   };
 };

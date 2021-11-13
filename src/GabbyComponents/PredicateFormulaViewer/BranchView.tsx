@@ -10,6 +10,7 @@ import { SxProps, useTheme, Theme } from "@mui/system";
 import { blue, green } from "@mui/material/colors";
 
 import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+import { usePredicateTreeUtilities } from "../../GabbyQueryProtocol/PredicateFormula/hooks/usePredicateTreeUtilities";
 const { useJunctionProperties } = PredicateFormulaEditorContextHooks;
 
 type Props = {
@@ -23,15 +24,15 @@ export const BranchView = ({ predicateId, children }: Props) => {
 
   const {
     appendPredicate,
-    getPredicateProperties,
+    getJunctionProperties,
+    isRoot,
+    removeCurrentPredicateJunction,
     setConjunction,
     setDisjunction,
-    isRoot,
-    makeEmptyPredicate,
-    removePredicateJunction,
   } = useJunctionProperties(predicateId);
+  const { makeEmptyPredicate } = usePredicateTreeUtilities();
 
-  const bg = getPredicateProperties()?.operator === "$and" ? green[50] : blue[50];
+  const bg = getJunctionProperties()?.operator === "$and" ? green[50] : blue[50];
 
   const handleJunctionSwitch = (operator: "$and" | "$or") => {
     if (operator === "$and") {
@@ -42,7 +43,7 @@ export const BranchView = ({ predicateId, children }: Props) => {
   };
 
   const handleRemovePredicateJunction = () => {
-    removePredicateJunction();
+    removeCurrentPredicateJunction();
   };
 
   const handleAddPredicateFinishClick = (newPredicate: TPredicateProperties) => {
@@ -63,7 +64,7 @@ export const BranchView = ({ predicateId, children }: Props) => {
     return (
       <>
         <OptionSwitch
-          operator={getPredicateProperties().operator === "$or" ? "$or" : "$and"}
+          operator={getJunctionProperties().operator === "$or" ? "$or" : "$and"}
           onChange={handleJunctionSwitch}
         />
         <IconButtonsAdd onClick={handleAddPredicateClick} />

@@ -174,11 +174,11 @@ export const PredicateTreeDemoPage = (): JSX.Element => {
   const opLabels = getOperatorLabels(locale.languageCode as TSupportedLanguages);
 
   return (
-    <PredicateFormulaEditorContext.provider
+    <PredicateFormulaEditorContext.Provider
       predicateFormulaEditor={predicateFormulaEditor}
       operatorLabels={opLabels}
     >
       <PredicateTreeDemoPageRaw />
-    </PredicateFormulaEditorContext.provider>
+    </PredicateFormulaEditorContext.Provider>
   );
 };
