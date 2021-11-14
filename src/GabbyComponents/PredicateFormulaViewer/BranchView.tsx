@@ -1,6 +1,9 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import type { TPredicateProperties } from "gabby-query-protocol-lib";
+import type {
+  TPredicateProperties,
+  TPredicatePropertiesArrayValue,
+} from "gabby-query-protocol-lib";
 // import { predicateFormulaContextUtils } from "../../GabbyQueryProtocol/PredicateFormula";
 import { IconButtonRemove } from "../common/IconButtonRemove";
 import { IconButtonsAdd } from "../common/IconButtonsAdd";
@@ -46,7 +49,9 @@ export const BranchView = ({ predicateId, children }: Props) => {
     removeCurrentPredicateJunction();
   };
 
-  const handleAddPredicateFinishClick = (newPredicate: TPredicateProperties) => {
+  const handleAddPredicateFinishClick = (
+    newPredicate: TPredicateProperties | TPredicatePropertiesArrayValue
+  ) => {
     // run validator?
     appendPredicate(newPredicate);
     setIsOpenNewPredicateEditor(false);

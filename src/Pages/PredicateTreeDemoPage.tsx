@@ -125,7 +125,7 @@ export const PredicateTreeDemoPageRaw = (): JSX.Element => {
               </Typography>
             </Paper>
           </Stack>
-          <Paper sx={{ p: "10px" }}>
+          <Paper sx={{ p: "10px", direction: "ltr" }}>
             Live Demo:
             <code>
               <pre>{JSON.stringify(getPredicateTreeAsJson(), null, 2)}</pre>

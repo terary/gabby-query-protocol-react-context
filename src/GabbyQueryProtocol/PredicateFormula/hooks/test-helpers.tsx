@@ -12,6 +12,7 @@ import subjectsDocumentJson from "../../test-data/test-predicate-subject-diction
 const predicateIds: { [predicateName: string]: string } = {};
 const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
   subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+  { subjectId: "firstName", operator: "$eq", value: "" }, // TODO - should hard code this
   { newRootId: "testTree" }
 );
 

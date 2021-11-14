@@ -11,20 +11,21 @@ import type {
 import { Validators } from "gabby-query-protocol-lib";
 import { PredicateFormulaEditorContext } from "../context";
 import type { TPredicateFormulaEditorContextType } from "../context";
-
-type PredicateItemType = TPredicateProperties | TPredicatePropertiesArrayValue;
+import { TPredicatePropertiesGeneric } from "../type";
 
 export interface IUsePredicateProperties {
-  appendPredicate: (newPredicate: PredicateItemType) => string;
+  appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => string;
   getPredicateById: (predicateId: string) => TPredicateNode | null;
   getPredicateLeafProperties: () => {
-    predicateProperties: PredicateItemType;
+    predicateProperties: TPredicatePropertiesGeneric;
     subjectProperties: TPredicateSubjectWithId;
   };
   isRoot: boolean;
   removeCurrentPredicate: () => void;
-  updateCurrentPredicate: (changes: PredicateItemType) => void; // will throw?
-  validatePredicateProperties: (predicateProperties: PredicateItemType) => TValidatorResponse;
+  updateCurrentPredicate: (changes: TPredicatePropertiesGeneric) => void; // will throw?
+  validatePredicateProperties: (
+    predicateProperties: TPredicatePropertiesGeneric
+  ) => TValidatorResponse;
 }
 export const usePredicateProperties = (predicateId: string): IUsePredicateProperties => {
   const {
@@ -38,9 +39,8 @@ export const usePredicateProperties = (predicateId: string): IUsePredicateProper
   } = React.useContext(
     PredicateFormulaEditorContext.context
   ) as TPredicateFormulaEditorContextType;
-
   return {
-    appendPredicate: (newPredicate: TPredicateProperties) => {
+    appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => {
       return appendPredicate(predicateId, newPredicate);
     },
 
@@ -59,7 +59,7 @@ export const usePredicateProperties = (predicateId: string): IUsePredicateProper
       removePredicate(predicateId);
     },
 
-    updateCurrentPredicate: (changes: PredicateItemType) => {
+    updateCurrentPredicate: (changes: TPredicatePropertiesGeneric) => {
       updatePredicate(predicateId, changes);
     },
 

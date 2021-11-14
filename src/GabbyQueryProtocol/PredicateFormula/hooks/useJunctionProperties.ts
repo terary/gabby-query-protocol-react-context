@@ -4,13 +4,14 @@ import type {
   TPredicatePropertiesJunction,
   TPredicateProperties,
   TPredicateNode,
+  TPredicatePropertiesArrayValue,
 } from "gabby-query-protocol-lib";
 
 import { PredicateFormulaEditorContext } from "../context";
 import type { TPredicateFormulaEditorContextType } from "../context";
-
+import { TPredicatePropertiesGeneric } from "../type";
 export interface IUseJunctionProperties {
-  appendPredicate: (newPredicate: TPredicateProperties) => string;
+  appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => string;
   getChildrenIds: () => string[];
   getChildIdsOf: (predicateId: string) => string[];
   getJunctionProperties: () => TPredicatePropertiesJunction;
@@ -42,7 +43,7 @@ export const useJunctionProperties = (predicateId: string): IUseJunctionProperti
   }
 
   return {
-    appendPredicate: (newPredicate: TPredicateProperties) => {
+    appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => {
       return appendPredicate(predicateId, newPredicate);
     },
 

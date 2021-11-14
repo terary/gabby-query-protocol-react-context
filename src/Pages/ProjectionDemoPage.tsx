@@ -79,7 +79,7 @@ export const ProjectionDemoPageRaw = (): JSX.Element => {
               </section>
             </Typography>
           </Paper>
-          <Paper sx={{ p: "10px" }}>
+          <Paper sx={{ p: "10px", direction: "ltr" }}>
             Live Demo:
             <code>
               <pre>{JSON.stringify(getProjectionAsJson(), null, 2)}</pre>

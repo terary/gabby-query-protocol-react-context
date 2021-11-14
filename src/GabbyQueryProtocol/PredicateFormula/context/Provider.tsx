@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react";
-import { PredicateFormulaEditor, Validators, TreeVisitors } from "gabby-query-protocol-lib";
+import {
+  PredicateFormulaEditor,
+  Validators,
+  TreeVisitors,
+  TPredicatePropertiesArrayValue,
+} from "gabby-query-protocol-lib";
 import type {
   TSerializedPredicateTree,
   TPredicateNode,
   TPredicateProperties,
 } from "gabby-query-protocol-lib";
-import { TPredicateOperatorLabels } from "../type";
+import { TPredicateOperatorLabels, TPredicatePropertiesGeneric } from "../type";
 import { defaultOperatorLabels } from "../defaultOpLabels";
 import type { TPredicateFormulaEditorContextType } from "./type";
 
@@ -42,12 +47,16 @@ const ContextProvider = ({
     onChange(newState); // pretty sure this is for debug only
     setQueryExpression(newState);
   };
-
-  const appendPredicate = (parentNodeId: string, term: TPredicateProperties): string => {
+  const appendPredicate = (
+    parentNodeId: string,
+    term: TPredicatePropertiesGeneric
+    // term: TPredicateProperties | TPredicatePropertiesArrayValue
+  ): string => {
     const parentNode = predicateFormulaEditor.predicateTree.getPredicateById(parentNodeId);
     // this is a band-aid to get around the fact that the predicateFormulaEditor
     // appends to non-existing nodes
     // https://github.com/terary/gabby-query-protocol-lib/issues/34
+    // issues has been resolved.  Leaving band-aid until such time revision can be tested
     if (parentNode === null) {
       throw Error("parentNodeId not found");
     }

@@ -17,7 +17,6 @@ import type {
   TValueLabelList,
   TOperatorOptions,
 } from "gabby-query-protocol-lib";
-import { PredicateIdsBranches } from "gabby-query-protocol-lib/dist/Predicates/TreeVisitors/PredicateIdsBranches";
 
 export interface IUsePredicateTreeUtilities {
   getChildrenIds: (predicateId: string) => string[];
