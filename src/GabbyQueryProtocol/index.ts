@@ -51,3 +51,4 @@ export {
 };
 
 export type { TPredicateFormulaEditorContextType, TProjectionContextType };
+export type { TPredicateOperatorLabels } from "./PredicateFormula";

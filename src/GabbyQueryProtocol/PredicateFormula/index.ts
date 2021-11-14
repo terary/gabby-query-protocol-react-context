@@ -16,3 +16,4 @@ const PredicateFormulaEditorContextHooks = {
 export { PredicateFormulaEditorContextHooks, PredicateFormulaEditorContext };
 
 export type { TPredicateFormulaEditorContextType };
+export type { TPredicateOperatorLabels } from "./type";

@@ -17,7 +17,6 @@ import type {
 import { PredicateFormulaEditorContext } from "./Provider";
 import type { TPredicateFormulaEditorContextType } from "./type";
 import subjectsDocumentJson from "../../test-data/test-predicate-subject-dictionary.json";
-import { debug } from "console";
 
 const predicateIds: { [predicateName: string]: string } = {};
 const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
