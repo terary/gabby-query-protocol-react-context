@@ -60,7 +60,7 @@ type Props = {
 const PredicateEditorWithApplicationContext = ({ predicateId, children }: Props) => {
   return (
     <AppContextProviders>
-      <PredicateFormulaEditorContext.provider
+      <PredicateFormulaEditorContext.Provider
         predicateFormulaEditor={predicateFormulaEditor}
         operatorLabels={predefinedOperatorLabels.EN}
       >
@@ -72,7 +72,7 @@ const PredicateEditorWithApplicationContext = ({ predicateId, children }: Props)
         testSpyPredicateOnChange={testSpyPredicateOnChange}
         validator={validator}
       />{" "} */}
-      </PredicateFormulaEditorContext.provider>
+      </PredicateFormulaEditorContext.Provider>
     </AppContextProviders>
   );
 };

@@ -20,8 +20,8 @@
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
     "date-fns": "^2.25.0",
-    "gabby-query-protocol-lib": "^1.1.0-beta.1",
-    "gabby-query-protocol-projection": "^1.1.0-beta.0",
+    "gabby-query-protocol-lib": "file:gabby-query-protocol-lib-1.1.0-beta.2.tgz",
+    "gabby-query-protocol-projection": "file:gabby-query-protocol-projection-1.1.0-beta.0.tgz",
     "i18next": "^21.2.4",
     "material-icons": "^1.8.2",
     "material-react-toastify": "^1.0.1",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@testing-library/dom": "^8.9.1",
+    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.3.0",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-router-dom": "^5.3.1",

@@ -1,11 +1,11 @@
 import { ProjectionContext } from "./context";
 import type { TProjectionContextType } from "./context";
-import { useProjectionSubjects, useProjectionSubjectProperties } from "./hooks";
+export { useProjectionSubjects, useProjectionUtilities } from "./hooks";
 
-const ProjectionContextHooks = {
-  useProjectionSubjects,
-  useProjectionSubjectProperties,
-};
+// const ProjectionContextHooks = {
+//   useProjectionSubjects,
+//   useProjectionUtilities,
+// };
 
 export type { TProjectionContextType };
-export { ProjectionContextHooks, ProjectionContext };
+export { ProjectionContext };

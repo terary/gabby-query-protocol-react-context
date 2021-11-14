@@ -5,6 +5,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
   PredicateFormulaEditorFactory,
+  TPredicateNode,
   TPredicateSubjectDictionaryJson,
 } from "gabby-query-protocol-lib";
 
@@ -13,18 +14,15 @@ import type {
   TPredicateProperties,
 } from "gabby-query-protocol-lib";
 
-// import GQPPredicateEditorContextProvider, { GQPPredicateEditorContext } from "./Provider";
 import { PredicateFormulaEditorContext } from "./Provider";
 import type { TPredicateFormulaEditorContextType } from "./type";
-// import type { TGQPPredicateEditorContextType } from "./type";
-
-// import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
 import subjectsDocumentJson from "../../test-data/test-predicate-subject-dictionary.json";
+import { debug } from "console";
 
-// import subjectsDocumentJson from "../../test-resources/test-subject-document.json";
 const predicateIds: { [predicateName: string]: string } = {};
 const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
   subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+  { subjectId: "firstName", operator: "$eq", value: "initial root node" },
   { newRootId: "testTree" }
 );
 predicateFormulaEditor.predicatesAppend("testTree", {
@@ -50,16 +48,37 @@ predicateIds.child1 = predicateFormulaEditor.predicatesAppend(
   }
 );
 
+const fixedTreeJson = predicateFormulaEditor.toJson().predicateTreeJson;
+// @ts-ignore - bug work around.  Validator should reject but validator not ran on root (initial) node
+fixedTreeJson["testTree:0"].payload.value = "Some value";
+Object.freeze(fixedTreeJson);
 interface Props {
-  // predicateTree?: PredicateTree;
   children?: JSX.Element;
 }
 
 function QueryContainer({ children }: Props) {
+  // const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
+  //   subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+  //   { newRootId: "testTree" }
+  // );
+  const options = { newRootId: "testTree" };
+  // @ts-ignore
+  fixedTreeJson["testTree:0"].payload.value = "Some value";
+  const testPredicateFormulaEditor = PredicateFormulaEditorFactory.fromJson(
+    {
+      predicateTreeJson: fixedTreeJson,
+      subjectDictionaryJson: subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+    },
+    undefined,
+    options
+  );
+
   return (
-    <PredicateFormulaEditorContext.provider predicateFormulaEditor={predicateFormulaEditor}>
+    <PredicateFormulaEditorContext.Provider
+      predicateFormulaEditor={testPredicateFormulaEditor}
+    >
       {children}
-    </PredicateFormulaEditorContext.provider>
+    </PredicateFormulaEditorContext.Provider>
   );
 }
 
@@ -317,7 +336,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
   expect(screen.queryByText(/New Child ID:/)).toBeInTheDocument();
 
   const displayTextBefore = screen.queryByText(
-    'Children: ["testTree:0","testTree:1","testTree:3"]'
+    'Children: ["testTree:0","testTree:1","testTree:2","testTree:3"]'
   );
   expect(displayTextBefore).toBeInTheDocument();
   expect(screen.queryByText("New Predicate: {}")).toBeInTheDocument();
@@ -329,7 +348,7 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
   expect(newChildIdDisplay).toBeInTheDocument();
 
   const displayTextAfter = screen.queryByText(
-    'Children: ["testTree:0","testTree:1","testTree:3","testTree:4"]'
+    'Children: ["testTree:0","testTree:1","testTree:2","testTree:3","testTree:4"]'
   );
 
   expect(displayTextAfter).toBeInTheDocument();
@@ -346,4 +365,287 @@ test(".appendPredicate & .updatePredicate works as expected", () => {
       'New Predicate: {"subjectId":"firstname","operator":"$gt","value":"The New Predicate"}'
     )
   ).toBeInTheDocument();
+});
+
+test(".getLeafIdsAll -  Find all leaf IDs", () => {
+  const mockReportLeafIds = jest.fn();
+  interface IReportAllChildrenIds {
+    reportAllChildrenId: (childrenIds: string[]) => void;
+  }
+
+  const MyInjector = ({ reportAllChildrenId }: IReportAllChildrenIds) => {
+    const { getLeafIdsAll } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafIds = () => {
+      reportAllChildrenId(getLeafIdsAll());
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafIds}>
+          get leaf ids
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportAllChildrenId={mockReportLeafIds} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf ids");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportLeafIds).toHaveBeenCalledWith([
+    "testTree:0",
+    "testTree:1",
+    "testTree:2",
+    "testTree:3",
+  ]);
+});
+test(".getPredicateLeafById -ok", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (childrenIds: object) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { getPredicateLeafById } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      const childPredicate = getPredicateLeafById("testTree:0");
+      reportChildPredicate(childPredicate);
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportChildPredicate={mockReportChildPredicate} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith({
+    operator: "$eq",
+    subjectId: "firstname",
+    value: "Some value",
+  });
+});
+test(".getJunctionById -ok", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (childrenIds: object) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { getJunctionById } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      const childPredicate = getJunctionById("testTree");
+      reportChildPredicate(childPredicate);
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <>
+        getChildrenIds
+        <MyInjector reportChildPredicate={mockReportChildPredicate} />
+      </>
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith({
+    operator: "$and",
+    childrenIds: ["testTree:0", "testTree:1", "testTree:2", "testTree:3"],
+  });
+});
+
+test(".getPredicateTreeAsJson -ok", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (childrenIds: object) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { getPredicateTreeAsJson } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      const childPredicate = getPredicateTreeAsJson();
+      reportChildPredicate(childPredicate);
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportChildPredicate={mockReportChildPredicate} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith(fixedTreeJson);
+});
+test(".isRoot -ok", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (isNodeRoot: boolean) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { isRoot } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      const childPredicate = isRoot("testTree");
+      reportChildPredicate(childPredicate);
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportChildPredicate={mockReportChildPredicate} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith(true);
+});
+
+test(".updatePredicate - will throw validation error", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (result: TPredicateNode | unknown | null) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { updatePredicate, getPredicateById } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      try {
+        updatePredicate("testTree:0", {
+          operator: "$eq",
+          subjectId: "firstname",
+          //@ts-ignore
+          value: null, // we is isEmpty for empty strings - not $eq
+        });
+        const x = getPredicateById("testTree:0");
+
+        reportChildPredicate(getPredicateById("testTree:0"));
+      } catch (error) {
+        //@ts-ignore
+        reportChildPredicate(error.message);
+      }
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportChildPredicate={mockReportChildPredicate} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith(
+    "Failed to update Predicate. Data validation error"
+  );
+});
+
+test(".getChildrenIds returns empty array for leaf node", () => {
+  const mockReportChildPredicate = jest.fn();
+  interface IReportAllChildrenIds {
+    reportChildPredicate: (result: TPredicateNode | unknown | null) => void;
+  }
+
+  const MyInjector = ({ reportChildPredicate }: IReportAllChildrenIds) => {
+    const { getChildrenIds } = React.useContext(
+      PredicateFormulaEditorContext.context
+    ) as TPredicateFormulaEditorContextType;
+
+    const handleGetLeafById = () => {
+      reportChildPredicate(getChildrenIds("testTree:0"));
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleGetLeafById}>
+          get leaf by id
+        </button>
+      </>
+    );
+  };
+
+  render(
+    <QueryContainer>
+      <MyInjector reportChildPredicate={mockReportChildPredicate} />
+    </QueryContainer>
+  );
+  const buttonGetLeafIds = screen.getByText("get leaf by id");
+
+  // exercise 1
+  fireEvent.click(buttonGetLeafIds);
+  expect(mockReportChildPredicate).toHaveBeenCalledWith([]);
 });

@@ -125,7 +125,7 @@ export const PredicateTreeDemoPageRaw = (): JSX.Element => {
               </Typography>
             </Paper>
           </Stack>
-          <Paper sx={{ p: "10px" }}>
+          <Paper sx={{ p: "10px", direction: "ltr" }}>
             Live Demo:
             <code>
               <pre>{JSON.stringify(getPredicateTreeAsJson(), null, 2)}</pre>
@@ -174,11 +174,11 @@ export const PredicateTreeDemoPage = (): JSX.Element => {
   const opLabels = getOperatorLabels(locale.languageCode as TSupportedLanguages);
 
   return (
-    <PredicateFormulaEditorContext.provider
+    <PredicateFormulaEditorContext.Provider
       predicateFormulaEditor={predicateFormulaEditor}
       operatorLabels={opLabels}
     >
       <PredicateTreeDemoPageRaw />
-    </PredicateFormulaEditorContext.provider>
+    </PredicateFormulaEditorContext.Provider>
   );
 };

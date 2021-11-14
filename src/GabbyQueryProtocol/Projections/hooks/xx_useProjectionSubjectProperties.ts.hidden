@@ -1,9 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import React from "react";
 import type { TProjectionPropertiesUpdatable } from "gabby-query-protocol-projection";
-// import { GQPProjectionContext, TGQProjectionContextType } from "../context";
 import { ProjectionContext } from "../context";
-import type { TProjectionContextType } from "../context";
+import type { TProjectionContextType, TProjectionItemProperties } from "../context";
+
+export interface IUseProjectionSubjectProperties {
+  projectedSubject: TProjectionItemProperties;
+  updateProjectionSubject: (updateProps: TProjectionPropertiesUpdatable) => void;
+}
 
 export const useProjectionSubjectProperties = (projectionKey: string) => {
   const { getProjectionItem, updateProjectionSubject } = React.useContext(
@@ -14,7 +18,7 @@ export const useProjectionSubjectProperties = (projectionKey: string) => {
   };
 
   return {
-    projectedSubject: getProjectionItem(projectionKey),
-    updateProjectionSubject: updateSubject,
+    // projectedSubject: getProjectionItem(projectionKey),
+    // updateProjectionSubject: updateSubject,
   };
 };

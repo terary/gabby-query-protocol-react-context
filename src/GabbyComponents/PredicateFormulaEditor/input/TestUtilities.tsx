@@ -36,7 +36,7 @@ const predicate: TPredicateProperties = {
 };
 
 export const withGabbyPredicateFormulaContext = ({ children }: { children: JSX.Element }) => {
-  return PredicateFormulaEditorContext.provider({
+  return PredicateFormulaEditorContext.Provider({
     children,
     predicateFormulaEditor: predicateFormulaEditor,
     operatorLabels: opLabelsI18N.AR,

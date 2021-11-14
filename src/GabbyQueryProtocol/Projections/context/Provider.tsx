@@ -69,9 +69,10 @@ Props): JSX.Element => {
     }
 
     const justSomeSubject = subjectDictionary.getSubjectById(justSomeSubjectId);
-    if (!justSomeSubject) {
-      throw new Error("Found no subjects in Subject Dictionary");
-    }
+    // I dont think this is possible
+    // if (!justSomeSubject) {
+    //   throw new Error("Found no subjects in Subject Dictionary");
+    // }
 
     return {
       subjectId: justSomeSubjectId,
@@ -106,7 +107,7 @@ Props): JSX.Element => {
 
 const ProjectionContext = {
   context: Context as React.Context<TProjectionContextType>,
-  provider: ContextProvider,
+  Provider: ContextProvider,
 };
 
 export { ProjectionContext };

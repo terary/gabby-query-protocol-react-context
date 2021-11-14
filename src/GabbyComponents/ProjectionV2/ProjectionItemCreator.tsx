@@ -9,13 +9,16 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import { useTheme } from "@mui/system";
 import { customStyles } from "../../Application/custom-styles";
 import { Theme } from "@mui/material/styles";
+import { useProjectionUtilities } from "../../GabbyQueryProtocol/Projections/hooks/useProjectionUtilities";
 const { useProjectionSubjects } = ProjectionContextHooks;
 
 export const ProjectionItemCreator = () => {
   const theme = useTheme;
   const [isOpenForEdit, setIsOpenForEdit] = useState(false);
   const [newProjectionItem, setNewProjectionItem] = useState({});
-  const { addProjectionItem, makeDefaultProjectionItem } = useProjectionSubjects();
+  const { addProjectionItem } = useProjectionSubjects();
+  const { makeDefaultProjectionItem } = useProjectionUtilities();
+
   const projectionItem = makeDefaultProjectionItem();
   const containerRef = useRef(null);
   const handleFinish = (updatedProjectionItem: TProjectionItemProperties) => {

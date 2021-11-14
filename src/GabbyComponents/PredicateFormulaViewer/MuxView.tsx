@@ -6,6 +6,7 @@ import { BranchView } from "./BranchView";
 import { LeafView } from "./LeafView";
 
 import { PredicateFormulaEditorContextHooks } from "../../GabbyQueryProtocol";
+import { usePredicateTreeUtilities } from "../../GabbyQueryProtocol/PredicateFormula/hooks/usePredicateTreeUtilities";
 const { useJunctionProperties } = PredicateFormulaEditorContextHooks;
 
 type Props = {
@@ -16,8 +17,9 @@ type Props = {
 
 export const MuxView = ({ predicateId, numberOfChildren, childIndex }: Props) => {
   // const { getChildIdsOf, isBranchNode } = usePredicateUtilities(predicateId);
-  const { getChildIdsOf, isBranchNode } = useJunctionProperties(predicateId);
-  const childrenIds = getChildIdsOf(predicateId);
+  // const { getChildIdsOf, isBranchNode } = useJunctionProperties(predicateId);
+  const { getChildrenIds, testIsBranchNode } = usePredicateTreeUtilities();
+  const childrenIds = getChildrenIds(predicateId);
   const [containerWidth, setContainerWidth] = React.useState(-1);
   const editorContainerRef = React.useRef(null);
 
@@ -55,8 +57,8 @@ export const MuxView = ({ predicateId, numberOfChildren, childIndex }: Props) =>
   };
   return (
     <>
-      {isBranchNode && <BranchingNode />}
-      {!isBranchNode && <SingleNode />}
+      {testIsBranchNode(predicateId) && <BranchingNode />}
+      {!testIsBranchNode(predicateId) && <SingleNode />}
     </>
   );
 };

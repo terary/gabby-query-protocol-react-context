@@ -14,6 +14,9 @@ import {
   DraggingStyle,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
+// TODO - *tmc* this should import like this
+import { useProjectionUtilities } from "../../GabbyQueryProtocol/Projections/hooks/useProjectionUtilities";
+
 const { useProjectionSubjects } = ProjectionContextHooks;
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
@@ -58,8 +61,13 @@ const getItemStyle = (
 
 export const ProjectionInteractive = () => {
   const theme = useTheme();
-  const { updateSubjectColumnPosition, getColumnOrderedProjectionDictionary } =
-    useProjectionSubjects();
+  const { getColumnOrderedProjectionDictionary } = useProjectionUtilities();
+  const { updateProjectedItem } = useProjectionSubjects();
+
+  const updateSubjectColumnPosition = (projectionKey: string, newColumnPosition: number) => {
+    // updateProjectionSubject(projectionKey, { columnOrder: newColumnPosition });
+    updateProjectedItem(projectionKey, { columnOrder: newColumnPosition });
+  };
 
   const onDragEndProjection = (result: DropResult) => {
     if (!result.destination) {

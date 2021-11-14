@@ -9,12 +9,13 @@ import {
   TProjectableSubjectsDictionaryJson,
 } from "gabby-query-protocol-projection";
 
-// import GQPProjectionContextProvider, { GQPProjectionContext } from ".";
+import * as OpLabelModule from "../../external-resources/operator-labels";
 import { ProjectionContext } from "./index";
 import type { TProjectionContextType } from "./type";
 
 import * as projectableSubjectsJson from "../../test-data/test-projectable-fields.json";
 import * as blueSky from "../../test-data/test-projection-flat-file.json";
+import { act } from "@testing-library/react-hooks";
 
 export { ProjectionContext };
 export type { TProjectionContextType };
@@ -23,19 +24,30 @@ const projectableSubjects = ProjectableDictionaryFactory.fromJson(
   projectableSubjectsJson.projectableSubjects as TProjectableSubjectsDictionaryJson
 );
 
+const emptyProjectableSubjects = ProjectableDictionaryFactory.fromJson({});
+
 const contextProjection = Projection.fromFlatFile(blueSky.projection, projectableSubjects);
+const emptyContextProjection = Projection.fromFlatFile([], emptyProjectableSubjects);
 
 interface Props {
-  // predicateTree?: PredicateTree;
   children?: JSX.Element;
 }
 function QueryContainer({ children }: Props) {
   return (
-    <ProjectionContext.provider projectionEditor={contextProjection}>
+    <ProjectionContext.Provider projectionEditor={contextProjection}>
       {children}
-    </ProjectionContext.provider>
+    </ProjectionContext.Provider>
   );
 }
+
+function EmptyQueryContainer({ children }: Props) {
+  return (
+    <ProjectionContext.Provider projectionEditor={emptyContextProjection}>
+      {children}
+    </ProjectionContext.Provider>
+  );
+}
+
 test("GabbyQueryProtocolContext - blue sky", () => {
   const MyInjector = () => <span>The Injector</span>;
 
@@ -132,4 +144,35 @@ test(".getOrderedProjectionList should return list of projectableSubject order b
       <MyInjector />
     </QueryContainer>
   );
+});
+
+test(".makeDefaultProjectionItem - empty ProjectableSubject", () => {
+  const willThrow = () => {
+    const MyInjector = () => {
+      // set-up
+      const { makeDefaultProjectionItem } = React.useContext(
+        ProjectionContext.context
+      ) as TProjectionContextType;
+
+      React.useEffect(() => {
+        const projectedItem = makeDefaultProjectionItem();
+      }, []);
+
+      return <span>Some Dummy Text</span>;
+    };
+
+    render(
+      <EmptyQueryContainer>
+        <MyInjector />
+      </EmptyQueryContainer>
+    );
+  };
+  act(() => {
+    expect(willThrow).toThrow("Found no subject id in Subject Dictionary");
+  });
+});
+
+test("- OperatorLabel exports", () => {
+  // here for coverage reports.  The module is basically JSON
+  expect(Object.keys(OpLabelModule).length).toBe(6);
 });

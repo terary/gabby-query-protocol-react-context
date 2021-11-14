@@ -1,68 +1,68 @@
 /* eslint-disable import/prefer-default-export */
 import React from "react";
 import type {
-  TOperatorOptions,
+  TPredicateNode,
   TPredicateProperties,
   TValidatorResponse,
-  TValueLabelList,
   TPredicatePropertiesArrayValue,
+  TPredicateSubjectWithId,
 } from "gabby-query-protocol-lib";
 
 import { Validators } from "gabby-query-protocol-lib";
-// import { GQPPredicateEditorContext } from "../context";
-// import type { TGQPPredicateEditorContextType } from "../context";
 import { PredicateFormulaEditorContext } from "../context";
 import type { TPredicateFormulaEditorContextType } from "../context";
+import { TPredicatePropertiesGeneric } from "../type";
 
-/**
- * "NodeId" sometimes referred to as predicateId.
- * The difference is context. Predicates have no ID. Nodes can be ID'd
- * the tree structure. nodeId can uniquely identify a predicate.
- *
- * @param nodeId - key to retrieve node,
- * @returns
- */
-export const usePredicateProperties = (nodeId: string) => {
+export interface IUsePredicateProperties {
+  appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => string;
+  getPredicateById: (predicateId: string) => TPredicateNode | null;
+  getPredicateLeafProperties: () => {
+    predicateProperties: TPredicatePropertiesGeneric;
+    subjectProperties: TPredicateSubjectWithId;
+  };
+  isRoot: boolean;
+  removeCurrentPredicate: () => void;
+  updateCurrentPredicate: (changes: TPredicatePropertiesGeneric) => void; // will throw?
+  validatePredicateProperties: (
+    predicateProperties: TPredicatePropertiesGeneric
+  ) => TValidatorResponse;
+}
+export const usePredicateProperties = (predicateId: string): IUsePredicateProperties => {
   const {
     appendPredicate,
-    getLeafIdsAll,
     getPredicateById,
     getPredicateLeafById,
     isRoot,
-    makeEmptyPredicate,
-    operatorLabels,
     removePredicate,
     updatePredicate,
     subjectDictionary,
   } = React.useContext(
     PredicateFormulaEditorContext.context
   ) as TPredicateFormulaEditorContextType;
-
   return {
-    appendPredicate: (newPredicate: TPredicateProperties) => {
-      appendPredicate(nodeId, newPredicate);
+    appendPredicate: (newPredicate: TPredicatePropertiesGeneric) => {
+      return appendPredicate(predicateId, newPredicate);
     },
-    getLeafIdsAll,
+
     getPredicateLeafProperties: () => {
-      const predicateProperties = getPredicateLeafById(nodeId);
+      const predicateProperties = getPredicateLeafById(predicateId);
       const subjectProperties = subjectDictionary.getSubject(predicateProperties.subjectId);
 
-      return { subjectProperties, predicateProperties };
+      return { predicateProperties, subjectProperties };
     },
-    isRoot: isRoot(nodeId),
-    makeEmptyPredicate,
-    operatorLabels,
-    queryPredicate: getPredicateById(nodeId) as TPredicateProperties, // maybe obsolete
-    removeMe: () => {
-      removePredicate(nodeId);
-    },
+
+    getPredicateById,
+
+    isRoot: isRoot(predicateId),
+
     removeCurrentPredicate: () => {
-      removePredicate(nodeId);
+      removePredicate(predicateId);
     },
-    subjectDictionary,
-    updateMe: (change: TPredicateProperties | TPredicatePropertiesArrayValue) => {
-      updatePredicate(nodeId, change);
+
+    updateCurrentPredicate: (changes: TPredicatePropertiesGeneric) => {
+      updatePredicate(predicateId, changes);
     },
+
     validatePredicateProperties: (
       predicateProperties: TPredicateProperties | TPredicatePropertiesArrayValue
     ): TValidatorResponse => {
