@@ -22,6 +22,7 @@ import { debug } from "console";
 const predicateIds: { [predicateName: string]: string } = {};
 const predicateFormulaEditor = PredicateFormulaEditorFactory.fromEmpty(
   subjectsDocumentJson as TPredicateSubjectDictionaryJson,
+  { subjectId: "firstName", operator: "$eq", value: "initial root node" },
   { newRootId: "testTree" }
 );
 predicateFormulaEditor.predicatesAppend("testTree", {
@@ -68,6 +69,7 @@ function QueryContainer({ children }: Props) {
       predicateTreeJson: fixedTreeJson,
       subjectDictionaryJson: subjectsDocumentJson as TPredicateSubjectDictionaryJson,
     },
+    undefined,
     options
   );
 
